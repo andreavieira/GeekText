@@ -1,0 +1,25 @@
+[debug] [2019-09-26T19:05:02.204Z] ----------------------------------------------------------------------
+[debug] [2019-09-26T19:05:02.207Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\natal\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-09-26T19:05:02.207Z] CLI Version:   7.3.2
+[debug] [2019-09-26T19:05:02.207Z] Platform:      win32
+[debug] [2019-09-26T19:05:02.207Z] Node Version:  v10.16.3
+[debug] [2019-09-26T19:05:02.209Z] Time:          Thu Sep 26 2019 15:05:02 GMT-0400 (Eastern Daylight Time)
+[debug] [2019-09-26T19:05:02.209Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-09-26T19:05:02.219Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-09-26T19:05:02.220Z] > authorizing via signed-in user
+[debug] [2019-09-26T19:05:02.220Z] [iam] checking project bookstore-c3315 for permissions ["firebase.projects.get"]
+[debug] [2019-09-26T19:05:02.222Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/bookstore-c3315:testIamPermissions  
+
+[debug] [2019-09-26T19:05:02.592Z] <<< HTTP RESPONSE 200
+[debug] [2019-09-26T19:05:02.595Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/bookstore-c3315  
+ 
+[debug] [2019-09-26T19:05:02.901Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\natal\OneDrive\Documents\FIU\Fall 2019\Software Engineering\cart'...
+[info] 
+[debug] [2019-09-26T19:05:02.907Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/bookstore-c3315/webApps/-/config  
+ 
+[debug] [2019-09-26T19:05:03.318Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
