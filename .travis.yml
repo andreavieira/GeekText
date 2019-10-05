@@ -6,4 +6,4 @@ script:
 install:
   - npm install -g firebase-tools
 after_success:
-  - firebase deploy --project bookstore-c3315 --token 1/ow-KLpADTZYtEwYWyB3oCR-juyISUzZxNeIUpnkl03k
+  - firebase deploy --project bookstore-c3315 --token 1//052YlOMSpKm8HCgYIARAAGAUSNwF-L9IrD4kg4UMBMzGdcJn6INx1u2WVo899mqwfPAK9Pp8HVuBkThLWnwzug9hO-BiMQ_OqZEE
