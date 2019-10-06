@@ -12,6 +12,7 @@ html,body{
 }
 .nav ul{
     margin: 0;
+    padding: 0;
 }
 
 .nav li{
@@ -20,17 +21,20 @@ html,body{
 
 .nav a {
     display: inline-block;
-    padding: .5em;
+    padding: .9em;
     color: rgb(0, 0, 0);
     text-decoration: none;
 }
 
 
 .main-nav{
+    top: 0;
     text-align: center;
     font-size: 1.1em;
     font-weight: lighter;
     background-color: rgb(197, 197, 197);
+    overflow: hidden;
+
 }
 
 .nav a:hover {
@@ -38,19 +42,20 @@ html,body{
 }
 
 .main-nav il{
-    padding: 0 5%;
+    padding: 30px;
 }
 .main-header{
-    background-color: rgb(127, 206, 252);
+    background-color: rgb(134, 211, 255);
     background-image: url('images/header1.png');
     background-repeat: no-repeat;
     background-blend-mode: multipy;
     background-size: contain;
-    padding-bottom: 90px;
+    padding-bottom: 220px;
+    padding-top: 0px
 }
 
 .content-section{
-    margin: 1em
+    margin-top: 10px;
 }
 
 .container{
@@ -60,7 +65,7 @@ html,body{
 }
 
 .item-image{
-    height: 100px;
+    height: 150px;
     width: 100px;
 }
 
@@ -73,6 +78,7 @@ html,body{
 .main-footer-container{
     display: flex;
     align-items: center;
+    margin: 0;
 }
 
 .main-footer-container ul{
