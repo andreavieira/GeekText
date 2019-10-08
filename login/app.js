@@ -1,6 +1,4 @@
 (function() {
-
-
 	// Your web app's Firebase configuration
 	var firebaseConfig = {
     	apiKey: "AIzaSyDbjxds4lv8aivC4Kh-ZwBZ-PV8Csz1sWw",
