@@ -1,0 +1,93 @@
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/6.6.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shopping Cart</title>
+    <meta tag="description" content="View your shopping cart items.">
+    <link rel="stylesheet" href="style.css"/>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/6.6.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/6.6.1/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/6.6.1/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="nav main-nav">
+        <ul>
+          <li><a href="">HOME</a></li>
+          <li><a href="">STORE</a></li>
+          <li><a href="">ACCOUNT</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="content-section container">
+      <div>
+        <h1>SHOPPING CART</h1>
+        <div class="cart-row">
+          <span class="cart-item cart-header
+          cart-column">ITEM</span>
+          <span class="cart-description cart-header
+          cart-column">DESCRIPTION</span>
+          <span class="cart-price cart-header
+          cart-column">PRICE</span>
+          <span class="cart-quantity cart-header
+          cart-column">QUANTITY</span>
+        </div>
+        <div class="cart-items">
+          <div class="cart-row">
+            <div class="cart-item cart-column">
+              <img class="item-image" src="images/shopping-cart.png" width="100">
+            </div>
+            <div class="cart-description cart-column">
+              <span><i>Book Title</i> By Author</span>
+            </div>
+            <span class="item-price cart-column">$10.99</span>
+            <div class="cart-quantity cart-column">
+              <input class="cart-quantity-input"
+              type="number" value="1">
+              <button class="btn btn-danger cart-quantity-button"
+              type="button">REMOVE</button>
+            </div>
+          </div>
+          </div>
+          <div class="cart-total">
+            <strong class="cart-total-title">TOTAL:</strong>
+            <span class="cart-total-price">$10.99</span>
+          </div>
+            <button class="btn btn-primary btn-purchase"
+            role="button">PURCHASE</button>
+        </div>
+    </section>
+
+    <ul>
+    <footer class="main-footer">
+      <hr>
+        <nav class="nav footer-nav">
+            <li><a href="">HOME</a></li>
+            <li><a href="">STORE</a></li>
+            <li><a href="">ACCOUNT</a></li>
+          </nav>
+    </foot>
+  </body>
+
+
+
+</html>
