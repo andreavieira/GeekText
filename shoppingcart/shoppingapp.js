@@ -1,9 +1,24 @@
+//Initializing database 
+const db = firebase.firestore();
+let bookDetails = db.collection('bookdetails').doc('ZfM58lOJR2WZNA0SMGDX');
+let doc = bookDetails.get().then( doc => {
+    if(!doc.exists) {
+      console.log('No document');
+    } else {
+      console.log("Document Data: ", doc.data());
+    }
+  })
+  .catch(err => {
+    console.log('Error getting Document', err);
+  });
+
 //waits for document to load
 if (document.readyState == 'loading'){
     document.addEventListener('DOMContentLoaded', ready)
 } else {
     ready()
 }
+
 
 /**
  *  Eventlistener constructors
@@ -63,8 +78,5 @@ function updateCartTotal() {
     }
     total = Math.round(total * 100) / 100                                   //rounds total price
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total //calculate total price, adds $ to string
-
-
-
-    //FIX ME!! - ADD TO CART BUTTON
 }
+
