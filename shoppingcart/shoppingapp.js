@@ -1,16 +1,35 @@
+
+
 //Initializing database 
 const db = firebase.firestore();
-let bookDetails = db.collection('bookdetails').doc('ZfM58lOJR2WZNA0SMGDX');
-let doc = bookDetails.get().then( doc => {
-    if(!doc.exists) {
-      console.log('No document');
-    } else {
-      console.log("Document Data: ", doc.data());
-    }
-  })
-  .catch(err => {
-    console.log('Error getting Document', err);
-  });
+db.settings({ timestampsInSnapshots: true});
+
+const bookList = document.querySelector('#cart-row');
+
+function renderList(doc){
+    let bookItem = document.createElement('cart-item');
+    let title = document.createElement('span');
+    let authorFN = document.createElement('span');
+    let authorLN = document.createElement('span');
+
+    bookItem.setAttribute('data-id', doc.id);
+    title.textContent = doc.data().BookTitle;
+    authorFN.textContent = doc.data().AuthorFn;
+    authorLN.textContent = doc.data().AuthorLn;
+    
+
+    bookItem.appendChild(title);
+    bookItem.appendChild(authorFN);
+    bookItem.appendChild(authorLN);
+    
+}
+
+//Getting data
+db.collection('shoppingcart').get().then((snapshot) => {
+    snapshot.docs.forEach(doc =>{
+        renderList(doc);
+    })
+});
 
 //waits for document to load
 if (document.readyState == 'loading'){
@@ -18,7 +37,6 @@ if (document.readyState == 'loading'){
 } else {
     ready()
 }
-
 
 /**
  *  Eventlistener constructors
@@ -45,7 +63,8 @@ function ready(){
  */
 function removeCartItem(event){
     var buttonClicked = event.target
-    buttonClicked.parentElement.parentElement.remove()
+    let id = buttonClicked.parentElement.parentElement.getAttribute('data-id');
+    db.collection('shoppingcart').doc(id).delete();
     updateCartTotal()
 }
 

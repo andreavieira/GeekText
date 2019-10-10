@@ -1,10 +1,60 @@
+<script src="/__/firebase/6.6.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shopping Cart</title>
+    <meta tag="description" content="View your shopping cart items.">
+    <link rel="stylesheet" href="style.css"/>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/6.6.1/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/6.6.1/firebase-auth.js"></script>
+    <script defer src="/__/firebase/6.6.1/firebase-database.js"></script>
+    <script defer src="/__/firebase/6.6.1/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/6.6.1/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
 </head>
 <body>
-<h1>yooooo wazza</h1>
+<header class="main-header">
+    <nav class="nav main-nav">
+        <ul>
+            <li><a href="../homepage.html">HOME</a></li>
+            <li><a href="/public/bookdetails.html">DETAILS</a></li>
+            <li><a href="">STORE</a></li>
+            <li><a href="">ACCOUNT</a></li>
+        </ul>
+    </nav>
+</header>
+<img id="bookCover" src="https://images-na.ssl-images-amazon.com/images/I/51Z0nLAfLmL.jpg" style="width:100%;max-width:300px">
+
+<!-- The Modal -->
+
+<p><strong>Title:</strong> The Alchemist </p>
+<p><strong>Author:</strong> Paulo Coelho</p>
+<p><strong>Bio:</strong> The Alchemist is a novel by Brazilian author Paulo Coelho that was first published in 1988. Originally written in Portuguese, it became a widely translated international bestseller.</p>
+<p><strong>Genres:</strong> Drama, Quest, Fantasy Fiction</p>
+<p><strong>Description:</strong> The Alchemist is the magical story of Santiago, an Andalusian shepherd boy who yearns to travel in search of a worldly treasure as extravagant as any ever found. From his home in Spain he journeys to the markets of Tangiers and across the Egyptian desert to a fateful encounter with the alchemist. </p>
+
+<h2>Publishing Information</h2>
+<p><strong>Publisher:</strong> Harper Collins</p>
+<p><strong>Release Date:</strong> 1998</p>
+
+<p><strong>Rating:</strong> 5/5 </p>
+
+
+<a href="url">Similar Books</a>
 </body>
+
 </html>
