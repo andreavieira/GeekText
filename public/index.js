@@ -1,10 +1,12 @@
-var config = {
-    apiKey: "apiKey",
-    authDomain: "projectId.firebaseapp.com",
-    databaseURL: "https://databaseName.firebaseio.com",
-    storageBucket: "bucket.appspot.com"
-  };
-  firebase.initializeApp(config);
-  
-var database = firebase.database();
-
+const db = firebase.firestore();
+let bookDetails = db.collection('bookdetails').doc('ZfM58lOJR2WZNA0SMGDX');
+let doc = bookDetails.get().then( doc => {
+    if(!doc.exists) {
+      console.log('No document');
+    } else {
+      console.log("Document Data: ", doc.data());
+    }
+  })
+  .catch(err => {
+    console.log('Error getting Document', err);
+  })
