@@ -1,9 +1,11 @@
-body {
-	
-	background-image:url('loginBG.png');
+body {	
+	background-image:url('bookBG.jpg');
+	height: 100%;
 	background-repeat: no-repeat;
-	background-size: 200% auto;
+	background-size: 100% auto;
 	font-family: Arial, Helvetica, sans-serif; /* Makes the font for the entire body */
+	padding-bottom: 150px;
+
 }
 
 
@@ -31,11 +33,22 @@ body {
 }
 
 .loginBox button {
-	text-align: center;
-	background-color: #3255D5;
+	background: #5d8ffc;
 	color: #fff;
-	padding: 10px;
-	width: 70%;
+	border: 1px solid #5d8ffc;
+	border-radius: 5px;
+	padding: 15px;
+	display: block;
+	width: 100%;
+	transition: 0.3s;
+
+}
+
+.loginBox button:hover {
+	background: #fff;
+	color: #5d8ffc;
+	border: 1px solid #5d8ffc;
+	cursor: pointer;
 }
 
 .signUpBox {
