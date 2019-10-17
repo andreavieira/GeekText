@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "login",
+    "public": "shoppingcart",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -9,7 +9,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "index.html"
       }
     ]
   },
