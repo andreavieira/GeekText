@@ -1,0 +1,98 @@
+body {	
+	background-image:url('bookBG.jpg');
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	font-family: Arial, Helvetica, sans-serif; /* Makes the font for the entire body */
+	padding-bottom: 150px;
+
+}
+
+
+.container {
+	/* Can set to px but it doesnt charge accordingly so percent is better */
+	width: 40%;	/* Makes the horizontal width of the box */
+	margin:auto; /* Centers the box */
+}
+
+.loginBox {
+	background-color: #fff; /* Makes the loginBox color white */
+	margin-top: 50%; /* Makes it vertically in the middle of the screen */
+	padding: 20px; /* Ensures padding along the box*/
+	text-align: center; 
+}
+
+.loginBox input {
+	padding: 10px; /* Makes the input box thicker */ 
+	width: 95%; /* Makes the input box fill up the entire container */
+}
+
+.loginBox p {
+	text-align: left;
+	font-size: 12px;
+}
+
+.loginBox button {
+	background: #5d8ffc;
+	color: #fff;
+	border: 1px solid #5d8ffc;
+	border-radius: 5px;
+	padding: 15px;
+	display: block;
+	width: 100%;
+	transition: 0.3s;
+
+}
+
+.loginBox button:hover {
+	background: #fff;
+	color: #5d8ffc;
+	border: 1px solid #5d8ffc;
+	cursor: pointer;
+}
+
+.signUpBox {
+	background-color: #fff;
+	margin-top: 50%;
+	padding: 20px;
+	text-align: center;
+}
+
+.signUpBox input {
+	padding: 10px; /* Makes the input box thicker */ 
+	width: 95%; /* Makes the input box fill up the entire container */
+}
+
+.signUpBox button {
+	text-align: center;
+	background-color: #3255D5;
+	color: #fff;
+	padding: 10px;
+	width: 70%;
+}
+
+
+.resetBox {
+	background-color: #fff;
+	margin-top: 50%;
+	padding: 20px;
+	text-align: center;
+}
+
+.resetBox input {
+	padding: 10px; /* Makes the input box thicker */ 
+	width: 95%; /* Makes the input box fill up the entire container */
+}
+
+.resetBox p {
+	text-align: left;
+	font-size: 12px;
+}
+
+.resetBox button {
+	text-align: center;
+	background-color: #3255D5;
+	color: #fff;
+	padding: 10px;
+	width: 70%;
+}
