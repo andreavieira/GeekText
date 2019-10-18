@@ -2,34 +2,40 @@
 
 //Initializing database 
 const db = firebase.firestore();
-db.settings({ timestampsInSnapshots: true});
 
-const bookList = document.querySelector('#cart-row');
 
-function renderList(doc){
-    let bookItem = document.createElement('cart-item');
-    let title = document.createElement('span');
-    let authorFN = document.createElement('span');
-    let authorLN = document.createElement('span');
+const cartDocRef = db.collection("users").doc("nrodr047").collection("cart")
+const outputDescript = document.querySelector("#description")
+const outputImage = document.querySelector("#item-image")
+const outputPrice = document.querySelector("#item-price")
+const cartList = document.querySelector("#cart-items")
 
-    bookItem.setAttribute('data-id', doc.id);
-    title.textContent = doc.data().BookTitle;
-    authorFN.textContent = doc.data().AuthorFn;
-    authorLN.textContent = doc.data().AuthorLn;
-    
+function renderCart(doc){
 
-    bookItem.appendChild(title);
-    bookItem.appendChild(authorFN);
-    bookItem.appendChild(authorLN);
-    
+    let bkTitle = doc.get("title");
+    let bkAuthor = doc.get("authorName");
+    //const bkImage = doc.get("image");
+    let bkPrice = doc.get("price");
+    outputDescript.innerHTML = bkTitle + " By: " + bkAuthor;
+    //outputImage = bkImage;
+    outputPrice.innerHTML = "$" + bkPrice;
+
 }
 
-//Getting data
-db.collection('shoppingcart').get().then((snapshot) => {
-    snapshot.docs.forEach(doc =>{
-        renderList(doc);
-    })
-});
+getRealtimeUpdates = function(){
+    let allItems = cartDocRef.get()
+        .then(snapshot => {
+            snapshot.forEach(doc =>{
+                console.log(doc.id, '=>', doc.data());
+                renderCart(doc);
+            });
+        })
+        .catch(err =>{
+            console.log('Error getting documents', err);
+        });
+}
+
+getRealtimeUpdates();
 
 //waits for document to load
 if (document.readyState == 'loading'){
@@ -64,7 +70,7 @@ function ready(){
 function removeCartItem(event){
     var buttonClicked = event.target
     let id = buttonClicked.parentElement.parentElement.getAttribute('data-id');
-    db.collection('shoppingcart').doc(id).delete();
+    db.collection('users').doc('nrodr047').collection('cart').doc(id).delete();
     updateCartTotal()
 }
 
