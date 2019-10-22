@@ -16,7 +16,9 @@ Bookstore.prototype.initTemplates = function() {
 
 //Render functions
 
+
 Bookstore.prototype.viewHeader = function() {
+
   var me = this;
   var cartButton = document.querySelector('#cart-btn');
   cartButton.addEventListener('click', function(event) {
@@ -34,21 +36,21 @@ Bookstore.prototype.viewHeader = function() {
 
 
 Bookstore.prototype.viewHome = function() {
-  var mainEl = document.querySelector('#home-page');
-
+var homePage = document.querySelector('#home-page');
+  console.log(mainEl);
 //ALL VISUAL HOME CODE GOES HERE:
 
 
+  var mainEl = homePage.cloneNode(true);
   mainEl.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), mainEl);
 
 }
 
 Bookstore.prototype.viewCart = function() {
-  console.log("in view cart");
-  var mainEl = document.querySelector('#shopping-cart');
+  var cartPage = document.querySelector('#shopping-cart');
 
-
+  var mainEl = cartPage.cloneNode(true);
   mainEl.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), mainEl);
 }
