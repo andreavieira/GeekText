@@ -34,13 +34,22 @@ Bookstore.prototype.viewHeader = function() {
 
 
 Bookstore.prototype.viewHome = function() {
-  var mainEl = this.renderTemplate('homepage');
+  var mainEl = document.querySelector('#home-page');
+
+//ALL VISUAL HOME CODE GOES HERE:
+
+
+  mainEl.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), mainEl);
 
 }
 
 Bookstore.prototype.viewCart = function() {
-  var mainEl = this.renderTemplate('shopping-cart');
+  console.log("in view cart");
+  var mainEl = document.querySelector('#shopping-cart');
+
+
+  mainEl.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), mainEl);
 }
 
