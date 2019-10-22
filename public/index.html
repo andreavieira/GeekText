@@ -11,12 +11,21 @@
 
   </head>
   <body>
+  <div>
+    <!--
+    ALL HIDDEN ELEMENTS WILL REPLACE THESE ELEMENTS
+  -->
+  <header></header>
+  <main></main>
+
+
+  <div hidden class="template" id="main-header">
     <header class="main-header">
         <img class="logo" src="/images/header1.png" width="200" height="50">
         <nav>
           <ul class="nav main-nav">
-            <li><a href="../homepage.html">HOME</a></li>
-            <li><a href="/public/bookdetails.html">BOOK-DETAILS</a></li>
+            <li><a id="home-btn">HOME</a></li>
+            <li><a href="bookdetails.html">BOOK-DETAILS</a></li>
             <li><a href="">ACCOUNT</a></li>
           </ul>
         </nav>
@@ -27,7 +36,7 @@
           </a>
         </div>
         <div class="shop-box">
-          <a class="shop-btn" href="#">
+          <a class="shop-btn" id="cart-btn">
             <img class="shopping-icon" src="/images/shopping-cart.png" width="25" height="25">
           </a>
         </div>
@@ -41,47 +50,55 @@
             </ul> -->
         </div>
     </header>
+</div>
 
-    <section class="content-section container">
-        <div>
-            <h1>SHOPPING CART</h1>
-            <div class="cart-row">
-              <span class="cart-item cart-header
-              cart-column">ITEM</span>
-              <span class="cart-description cart-header
-              cart-column">DESCRIPTION</span>
-              <span class="cart-price cart-header
-              cart-column">PRICE</span>
-              <span class="cart-quantity cart-header
-              cart-column">QUANTITY</span>
-            </div>
 
-          <div class ="cart-items">
-              <div class ="cart-row">
-                <div class="cart-item cart-column">
-                  <img class="item-image" src="images/100yr.jpg" width="100" height="200">
+
+    <div hidden class="template" id="homepage">
+      <h1> TEST HOME PAGE </h1>
+    </div>
+    <div hidden class="template" id="shopping-cart">
+      <section class="content-section container">
+          <div>
+              <h1>SHOPPING CART</h1>
+              <div class="cart-row">
+                <span class="cart-item cart-header
+                cart-column">ITEM</span>
+                <span class="cart-description cart-header
+                cart-column">DESCRIPTION</span>
+                <span class="cart-price cart-header
+                cart-column">PRICE</span>
+                <span class="cart-quantity cart-header
+                cart-column">QUANTITY</span>
+              </div>
+
+            <div class ="cart-items">
+                <div class ="cart-row">
+                  <div class="cart-item cart-column">
+                    <img class="item-image" src="images/100yr.jpg" width="100" height="200">
+                  </div>
+                  <div class="cart-description cart-column">
+                    <span id="description"><i>Book Title</i> By Author</span>
+                  </div>
+                  <span class="cart-price cart-column"><span id ="item-price">$10.99</span></span>
+                  <div class="cart-quantity cart-column">
+                    <input class="cart-quantity-input"
+                    type="number" value="1">
+                    <button class="btn btn-danger cart-quantity-button"
+                    type="button">REMOVE</button>
+                  </div>
                 </div>
-                <div class="cart-description cart-column">
-                  <span id="description"><i>Book Title</i> By Author</span>
-                </div>
-                <span class="cart-price cart-column"><span id ="item-price">$10.99</span></span>
-                <div class="cart-quantity cart-column">
-                  <input class="cart-quantity-input"
-                  type="number" value="1">
-                  <button class="btn btn-danger cart-quantity-button"
-                  type="button">REMOVE</button>
                 </div>
               </div>
-              </div>
-            </div>
-              <div class="cart-total">
-                <strong class="cart-total-title">TOTAL:</strong>
-                <span class="cart-total-price">$32.97</span>
-              </div>
-              <button class="btn btn-primary btn-purchase"
-                role="button">PURCHASE </button>
-      </div>
-    </section>
+                <div class="cart-total">
+                  <strong class="cart-total-title">TOTAL:</strong>
+                  <span class="cart-total-price">$32.97</span>
+                </div>
+                <button class="btn btn-primary btn-purchase"
+                  role="button">PURCHASE </button>
+        </div>
+      </section>
+    </div>
 
     <ul>
     <footer class="main-footer">
@@ -93,13 +110,20 @@
           </nav>
     </foot>
 
-        <!-- update the version number as needed -->
-        <script src="/__/firebase/7.1.0/firebase-app.js"></script>
-        <!-- include only the Firebase features as you need -->
-        <script src="/__/firebase/7.1.0/firebase-auth.js"></script>
-        <script src="/__/firebase/7.1.0/firebase-firestore.js"></script>
-        <!-- initialize the SDK after all desired features are loaded -->
-        <script src="/__/firebase/init.js"></script>
-        <script src="shoppingapp.js"></script>
+
+
+  </div>
+  <!-- update the version number as needed -->
+  <script src="/__/firebase/7.1.0/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script src="/__/firebase/7.1.0/firebase-auth.js"></script>
+  <script src="/__/firebase/7.1.0/firebase-firestore.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script src="/__/firebase/init.js"></script>
+  <script src="//unpkg.com/navigo@6"></script>
+  <script src="shoppingapp.js"></script>
+
+  <script src="/Scripts/bookstore.js"></script>
+  <script src="/Scripts/View.js"></script>
   </body>
 </html>
