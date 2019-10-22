@@ -39,8 +39,16 @@ Bookstore.prototype.viewHeader = function() {
 
 
 Bookstore.prototype.viewHome = function() {
-var homePage = document.querySelector('#home-page').cloneNode(true);
+  var homePage = document.querySelector('#home-page').cloneNode(true);
 //ALL VISUAL HOME CODE GOES HERE:
+  var me = this;
+  var bookDetails = homePage.querySelector('.book-details');
+
+
+  bookDetails.addEventListener('click', function() {
+    me.router.navigate('/book/' + bookDetails.id);
+  });
+
 
 
   homePage.removeAttribute('hidden');
@@ -55,6 +63,10 @@ Bookstore.prototype.viewCart = function() {
   this.replaceElement(document.querySelector('main'), cartPage);
 }
 
+Bookstore.prototype.viewBookDetails = function(bid) {
+  //RENDER BOOK DETAILS HERE
+  console.log("test book id:" + bid);
+}
 
 
 //TODO CLEANUP

@@ -3,6 +3,7 @@
 function Bookstore() {
 
   var me = this;
+  var db = firebase.firestore();
   me.initTemplates();
   me.initRouter();
   me.viewHeader();
@@ -36,7 +37,7 @@ Bookstore.prototype.initRouter = function() {
   this.router
   .on({
       "/book/:id": function(params){
-        viewBookDetails(params.id);
+        that.viewBookDetails(params.id);
       }
   }).resolve();
 
