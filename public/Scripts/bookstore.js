@@ -35,6 +35,13 @@ Bookstore.prototype.initRouter = function() {
 
   this.router
   .on({
+      "/book/:id": function(params){
+        viewBookDetails(params.id);
+      }
+  }).resolve();
+
+  this.router
+  .on({
     '/cart': function() {
       that.viewCart();
     }
