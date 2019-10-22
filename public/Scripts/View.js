@@ -18,41 +18,41 @@ Bookstore.prototype.initTemplates = function() {
 
 
 Bookstore.prototype.viewHeader = function() {
-
+  //grab clone of template header
+  var header = document.querySelector('#main-header').cloneNode(true);
   var me = this;
-  var cartButton = document.querySelector('#cart-btn');
+
+
+  var cartButton = header.querySelector('#cart-btn');
   cartButton.addEventListener('click', function(event) {
     me.router.navigate('/cart');
   });
-  var homeButton = document.querySelector('#home-btn');
+  var homeButton = header.querySelector('#home-btn');
   homeButton.addEventListener('click', function(event) {
     me.router.navigate('/');
   });
 
-  var headerEl = document.querySelector('#main-header');
-  headerEl.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('header'), headerEl);
+
+  header.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('header'), header);
 }
 
 
 Bookstore.prototype.viewHome = function() {
-var homePage = document.querySelector('#home-page');
-  console.log(mainEl);
+var homePage = document.querySelector('#home-page').cloneNode(true);
 //ALL VISUAL HOME CODE GOES HERE:
 
 
-  var mainEl = homePage.cloneNode(true);
-  mainEl.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('main'), mainEl);
+  homePage.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), homePage);
 
 }
 
 Bookstore.prototype.viewCart = function() {
-  var cartPage = document.querySelector('#shopping-cart');
+  var cartPage = document.querySelector('#shopping-cart').cloneNode(true);
 
-  var mainEl = cartPage.cloneNode(true);
-  mainEl.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('main'), mainEl);
+  cartPage.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), cartPage);
 }
 
 
