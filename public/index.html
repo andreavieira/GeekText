@@ -1,32 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shopping Cart</title>
+  <meta tag="description" content="View your shopping cart items.">
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Shopping Cart</title>
-    <meta tag="description" content="View your shopping cart items.">
-    <link rel="stylesheet" href="style.css"/>
-
-  </head>
-  <body>
+<body>
   <div>
-    <!--
-    ALL HIDDEN ELEMENTS WILL REPLACE THESE ELEMENTS
-  -->
-  <header></header>
-  <main></main>
+    <header></header>
+    <main></main>
 
-
-  <div hidden class="template" id="main-header">
-    <header class="main-header">
-        <img class="logo" src="/images/header1.png" width="200" height="50">
+    <!--Navigation-->
+    <div hidden class="template" id="main-header">
+      <header class="main-header">
+        <a class="button" id="home-btn">
+          <img class="logo" src="/images/logo.png" width="250" height="40">
+        </a>
         <nav>
           <ul class="nav main-nav">
-            <li><a id="home-btn">HOME</a></li>
-            <li><a href="bookdetails.html">BOOK-DETAILS</a></li>
-            <li><a href="">ACCOUNT</a></li>
+            <li><a id="home-btn"></a></li>
           </ul>
         </nav>
         <div class="search-box">
@@ -43,89 +39,158 @@
         <div class="account-box">
           <a class="account-btn" href="#">
             <img class="account-icon" src="/images/user-icon.png" width="25" height="25">
-        </a>
-            <!-- <ul class="account-drop">
-              <li><a href="">Profile</a></li>
-              <li><a href="">Account Settings</a></li>
-            </ul> -->
+          </a>
+          <!-- <ul class="account-drop">
+                  <li><a href="">Profile</a></li>
+                  <li><a href="">Account Settings</a></li>
+                </ul> -->
         </div>
-    </header>
-</div>
-
-
-
-    <div hidden class="template" id="home-page">
-      <h1> TEST HOME PAGE </h1>
+      </header>
     </div>
 
+    <!--Home Book Sort Container-->
+    <div hidden class="template" id="home-page">
+      <section class="content-section container">
+        <div style="margin-top:20px 0;">
+          <h1>Welcome to GeekText! We offer the convenience of shopping for online books online, at your leisure.</h1>
+        </div>
+        <div style="margin:20px auto; padding:20px 0">
+          <hr/> 
+          <div class="dropdown">
+            <button onclick="sort()" class="dropbtn">Sort By:</button>
+            <div id="sortDropdown" class="dropdown-content">
+              <a href="#">Best Sellers</a>
+              <a href="#">Top Rated</a>
+              <a href="#">Genre</a>
+            </div>
+          </div>
+          <h1>BROWSE ALL BOOKS</h1>
+        </div>
 
+        <div style="margin:20px auto; padding:20px 0">
+          <div class="cart-row">
+            <span class="cart-item cart-header
+                cart-column">COVER</span>
+            <span class="cart-description cart-header
+                cart-column">TITLE</span>
+            <span class="cart-price cart-header
+                cart-column">PRICE</span>
+            <span class="cart-quantity cart-header
+                cart-column">RATING</span>
+          </div>
+
+          <div class="cart-items">
+            <div class="cart-row">
+              <div class="cart-item cart-column">
+                <img class="item-image" src="images/100yr.jpg" width="100" height="200">
+              </div>
+              <div class="cart-description cart-column">
+                <span id="description"><i>Book Title</i> By Author</span>
+              </div>
+              <span class="cart-price cart-column"><span id="item-price">$10.99</span></span>
+              <div class="cart-quantity cart-column">
+                  <div class="rate">
+                      <input type="radio" id="star5" name="rate" value="5" />
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="rate" value="4" />
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="rate" value="3" />
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="rate" value="2" />
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="rate" value="1" />
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!--Shopping Cart Container-->
     <div hidden class="template" id="shopping-cart">
       <section class="content-section container">
-          <div>
-              <h1>SHOPPING CART</h1>
-              <div class="cart-row">
-                <span class="cart-item cart-header
+        <div>
+          <h1>SHOPPING CART</h1>
+          <div class="cart-row">
+            <span class="cart-item cart-header
                 cart-column">ITEM</span>
-                <span class="cart-description cart-header
+            <span class="cart-description cart-header
                 cart-column">DESCRIPTION</span>
-                <span class="cart-price cart-header
+            <span class="cart-price cart-header
                 cart-column">PRICE</span>
-                <span class="cart-quantity cart-header
+            <span class="cart-quantity cart-header
                 cart-column">QUANTITY</span>
-              </div>
+          </div>
 
-            <div class ="cart-items">
-                <div class ="cart-row">
-                  <div class="cart-item cart-column">
-                    <img class="item-image" src="images/100yr.jpg" width="100" height="200">
-                  </div>
-                  <div class="cart-description cart-column">
-                    <span id="description"><i>Book Title</i> By Author</span>
-                  </div>
-                  <span class="cart-price cart-column"><span id ="item-price">$10.99</span></span>
-                  <div class="cart-quantity cart-column">
-                    <input class="cart-quantity-input"
-                    type="number" value="1">
-                    <button class="btn btn-danger cart-quantity-button"
-                    type="button">REMOVE</button>
-                  </div>
-                </div>
-                </div>
+          <div class="cart-items">
+            <div class="cart-row">
+              <div class="cart-item cart-column">
+                <img class="item-image" src="images/100yr.jpg" width="100" height="200">
               </div>
-                <div class="cart-total">
-                  <strong class="cart-total-title">TOTAL:</strong>
-                  <span class="cart-total-price">$32.97</span>
-                </div>
-                <button class="btn btn-primary btn-purchase"
-                  role="button">PURCHASE </button>
+              <div class="cart-description cart-column">
+                <span id="description"><i>Book Title</i> By Author</span>
+              </div>
+              <span class="cart-price cart-column"><span id="item-price">$10.99</span></span>
+              <div class="cart-quantity cart-column">
+                <input class="cart-quantity-input" type="number" value="1">
+                <button class="btn btn-danger cart-quantity-button" type="button">REMOVE</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
+        <div class="cart-total">
+          <strong class="cart-total-title">TOTAL:</strong>
+          <span class="cart-total-price">$32.97</span>
+        </div>
+        <button class="btn btn-primary btn-purchase" role="button">PURCHASE</button>
     </div>
+    </section>
+  </div>
 
-    <ul>
+  <!--Book Details/Reviews Container-->
+  <div hidden class="template" id="book-details">
+    <section class="content-section container">
+        <p><strong>Title:</strong> The Alchemist </p>
+        <p><strong>Author:</strong> Paulo Coelho</p>
+        <p><strong>Bio:</strong> The Alchemist is a novel by Brazilian author Paulo Coelho that was first published in 1988. Originally written in Portuguese, it became a widely translated international bestseller.</p>
+        <p><strong>Genres:</strong> Drama, Quest, Fantasy Fiction</p>
+        <p><strong>Description:</strong> The Alchemist is the magical story of Santiago, an Andalusian shepherd boy who yearns to travel in search of a worldly treasure as extravagant as any ever found. From his home in Spain he journeys to the markets of Tangiers and across the Egyptian desert to a fateful encounter with the alchemist. </p>
+        
+        <h2>Publishing Information</h2>
+        <p><strong>Publisher:</strong> Harper Collins</p>
+        <p><strong>Release Date:</strong> 1998</p>
+        <p><strong>Rating:</strong> 5/5 </p>
+      
+        <a href="url">Similar Books</a>
+    </section>
+  </div>
+
+  <!--Footer-->
+  <ul>
     <footer class="main-footer">
       <hr>
-        <nav class="nav footer-nav">
-            <li><a href="">HOME</a></li>
-            <li><a href="">STORE</a></li>
-            <li><a href="">ACCOUNT</a></li>
-          </nav>
-    </foot>
+      <nav class="nav footer-nav">
+        <li><a href="">HOME</a></li>
+        <li><a href="">ABOUT</a></li>
+        <li><a href="">FAQ</a></li>
+      </nav>
+      </foot>
 
+      </div>
+      <!-- update the version number as needed -->
+      <script src="/__/firebase/7.1.0/firebase-app.js"></script>
+      <!-- include only the Firebase features as you need -->
+      <script src="/__/firebase/7.1.0/firebase-auth.js"></script>
+      <script src="/__/firebase/7.1.0/firebase-firestore.js"></script>
+      <!-- initialize the SDK after all desired features are loaded -->
+      <script src="/__/firebase/init.js"></script>
+      <script src="//unpkg.com/navigo@6"></script>
 
+      <script src="shoppingcart.js"></script>
 
-  </div>
-  <!-- update the version number as needed -->
-  <script src="/__/firebase/7.1.0/firebase-app.js"></script>
-  <!-- include only the Firebase features as you need -->
-  <script src="/__/firebase/7.1.0/firebase-auth.js"></script>
-  <script src="/__/firebase/7.1.0/firebase-firestore.js"></script>
-  <!-- initialize the SDK after all desired features are loaded -->
-  <script src="/__/firebase/init.js"></script>
-  <script src="//unpkg.com/navigo@6"></script>
-  <script src="shoppingapp.js"></script>
+      <script src="/scripts/bookstore.js"></script>
+      <script src="/scripts/view.js"></script>
+</body>
 
-  <script src="/Scripts/bookstore.js"></script>
-  <script src="/Scripts/View.js"></script>
-  </body>
 </html>
