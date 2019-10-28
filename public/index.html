@@ -20,33 +20,45 @@
         <a class="button" id="home-btn">
           <img class="logo" src="/images/logo.png" width="250" height="40">
         </a>
+
         <nav>
           <ul class="nav main-nav">
             <li><a id="home-btn"></a></li>
           </ul>
         </nav>
+
         <div class="search-box">
           <input class="search-text" name="" placeholder="Type to search">
           <a class="search-btn" href="#">
             <img class="mag-glass" src="/images/search.png" width="25" height="25">
           </a>
         </div>
+
         <div class="shop-box">
           <a class="shop-btn" id="cart-btn">
             <img class="shopping-icon" src="/images/shopping-cart.png" width="25" height="25">
           </a>
         </div>
+
         <div class="account-box">
-          <a class="account-btn" href="#">
-            <img class="account-icon" src="/images/user-icon.png" width="25" height="25">
-          </a>
-          <!-- <ul class="account-drop">
-                  <li><a href="">Profile</a></li>
-                  <li><a href="">Account Settings</a></li>
-                </ul> -->
-        </div>
+            <a onclick="accountDrop()" class="account-btn">
+                <img class="account-icon" src="/images/user-icon.png" width="25" height="25">
+            </a>
+            <div id="accDropdown" class="account-dropdown-content">
+                <div id="not-loggedin-div">
+                    <input id="userEmailin" type="email" placeholder="Email"/>
+                    <input id="userPassword" type="password" placeholder="Password"/>
+                    <button onclick="login()">Sign in</button>
+                </div>
+                <div id="loggedin-div">
+                    <p id="welcome-user"></p>
+                    <a href="#profile">Profile</a>
+                    <button onclick="logout()">Sign out</button>
+                </div>
+            </div>
+        </div> 
       </header>
-    </div>
+    </div> <!-- end of main-header class-->
 
     <!--Home Book Sort Container-->
     <div hidden class="template" id="home-page">
@@ -175,14 +187,14 @@
         <li><a href="">ABOUT</a></li>
         <li><a href="">FAQ</a></li>
       </nav>
-      </foot>
-
+      </footer>
       </div>
+
       <!-- update the version number as needed -->
-      <script src="/__/firebase/7.1.0/firebase-app.js"></script>
+      <script src="/__/firebase/7.2.2/firebase-app.js"></script>
       <!-- include only the Firebase features as you need -->
-      <script src="/__/firebase/7.1.0/firebase-auth.js"></script>
-      <script src="/__/firebase/7.1.0/firebase-firestore.js"></script>
+      <script src="/__/firebase/7.2.2/firebase-auth.js"></script>
+      <script src="/__/firebase/7.2.2/firebase-firestore.js"></script>
       <!-- initialize the SDK after all desired features are loaded -->
       <script src="/__/firebase/init.js"></script>
       <script src="//unpkg.com/navigo@6"></script>
@@ -191,6 +203,7 @@
 
       <script src="/scripts/bookstore.js"></script>
       <script src="/scripts/view.js"></script>
-</body>
+      <script src="/scripts/login.js"></script>
 
+</body>
 </html>
