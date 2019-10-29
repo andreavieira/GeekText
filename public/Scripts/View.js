@@ -42,7 +42,7 @@ Bookstore.prototype.viewHome = function() {
   var homePage = document.querySelector('#home-page').cloneNode(true);
 //ALL VISUAL HOME CODE GOES HERE:
   var me = this;
-  var bookDetails = homePage.querySelector('.book-details');
+  var bookDetails = homePage.querySelector('.book-details-link');
 
 
   bookDetails.addEventListener('click', function() {
@@ -65,25 +65,28 @@ Bookstore.prototype.viewCart = function() {
 
 Bookstore.prototype.viewBookDetails = function(bid) {
   //RENDER BOOK DETAILS HERE
-  console.log("test book id:" + bid);
+  var bookDetails = document.querySelector('#book-details').cloneNode(true);
+
+
+  var rating = 0;
+  var dialog = bookDetails.querySelector('#add-review-section');
+  this.renderRating(bid, dialog);
+
+
+
+
+
+
+
+
+
+
+  bookDetails.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), bookDetails);
 }
 
 
-//TODO CLEANUP
-Bookstore.prototype.renderTemplate = function(id, data) {
-  var template = this.templates[id];
-  var el = template.cloneNode(true);
-  el.removeAttribute('hidden');
-  this.render(el, data);
-  return el;
-}
 
-Bookstore.prototype.render = function(el, data) {
-  if(!data){
-    return;
-  }
-
-}
 
 Bookstore.prototype.getDeepItem = function(obj,path) {
   path.split('/').forEach(function(chunck) {
@@ -97,4 +100,55 @@ Bookstore.prototype.getDeepItem = function(obj,path) {
 Bookstore.prototype.replaceElement = function(parent, content){
   parent.innerHTML = '';
   parent.append(content);
+}
+
+Bookstore.prototype.renderRating = function(bid, dialog) {
+
+  //GET RATINGS OF BOOK
+  let reviewRef = db.collection("bookdetails").doc(bid).collection("Reviews");
+  let bReviews = [];
+  let query = reviewRef.get()
+    .then(snapshot => {
+      if(snapshot.empty) {
+        //NO REVIEWS
+        return;
+      }
+      snapshot.forEach(doc => {
+          bReviews.push(doc.data());
+      });
+    }).catch(err => {
+        console.log("Error getting reviews: ", err);
+    });
+
+
+
+  /*dialog.querySelectorAll('star-input i').forEach(function(el) {
+    var rate = function() {
+      var after = false;
+      rating = 0;
+      [].slice.call(el.parentNode.children).forEach(function(child) {
+        if(!after) {
+          rating++;
+          child.innerText = 'star';
+          console.log('innerText= star');
+        } else {
+          child.innerText = 'star_border';
+        }
+        after = after || child.isSameNode(el);
+      });
+    };
+    el.addEventListener('mouseover',rate);
+  });
+
+  dialog.querySelectorAll('star-input i').forEach(function(child) {
+    var img = document.createElement('img');
+    if(child.innerText == 'star') {
+      img.src = '/images/star-rating-filled.png';
+    } else {
+      img.src = '/images/star-rating-border.png';
+    }
+    img.width = 50;
+    img.height = 50;
+    child.appendChild(img);
+  });*/
 }

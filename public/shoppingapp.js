@@ -1,6 +1,6 @@
 
 
-//Initializing database 
+//Initializing database
 const db = firebase.firestore();
 
 
@@ -26,7 +26,7 @@ getRealtimeUpdates = function(){
     let allItems = cartDocRef.get()
         .then(snapshot => {
             snapshot.forEach(doc =>{
-                console.log(doc.id, '=>', doc.data());
+                //console.log(doc.id, '=>', doc.data());
                 renderCart(doc);
             });
         })
@@ -49,11 +49,11 @@ if (document.readyState == 'loading'){
  */
 function ready(){
     var removeCartItemButtons = document.getElementsByClassName('btn-danger')   //for btn-danger class
-    console.log(removeCartItemButtons)  
+    //console.log(removeCartItemButtons)
     for (var i = 0; i <removeCartItemButtons.length; i++){                      //loops through all buttons in cart
         var button = removeCartItemButtons[i]                                   //listener for 'click' event
         button.addEventListener('click', removeCartItem)
-            
+
     }
 
     var quanityInputs = document.getElementsByClassName('cart-quantity-input')
@@ -76,7 +76,7 @@ function removeCartItem(event){
 
 /**
  * Checks if inputted value is an int greater than 1 and calls updateCartTotal.
- * @param {*} event used when quantity value is changed 
+ * @param {*} event used when quantity value is changed
  */
 function quanityChanged(event){
     var input = event.target                        //changed event
@@ -104,4 +104,3 @@ function updateCartTotal() {
     total = Math.round(total * 100) / 100                                   //rounds total price
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total //calculate total price, adds $ to string
 }
-
