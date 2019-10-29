@@ -6,6 +6,7 @@ function Bookstore() {
   me.initTemplates();
   me.initRouter();
   me.viewHeader();
+  me.db = firebase.firestore();
   //SECURITY CODE GOES here
 }
 
@@ -36,7 +37,20 @@ Bookstore.prototype.initRouter = function() {
   this.router
   .on({
       "/book/:id": function(params){
-        that.viewBookDetails(params.id);
+        let detailsRef = that.db.collection("bookdetails").doc(params.id);
+        let getDoc = detailsRef.get()
+        .then(doc => {
+           if (!doc.exists) {
+             console.log('No such document!');
+           } else {
+             that.viewBookDetails(doc);
+           }
+         })
+         .catch(err => {
+           console.log('Error getting document', err);
+         });
+
+
       }
   }).resolve();
 
