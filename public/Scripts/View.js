@@ -60,12 +60,23 @@ Bookstore.prototype.viewCart = function() {
   this.replaceElement(document.querySelector('main'), cartPage);
 }
 
+<<<<<<< HEAD
 Bookstore.prototype.viewBookDetails = function(doc, bReviews) {
+=======
+/**
+Book Details: Fetches attributes of a given book by ID
+ */
+Bookstore.prototype.viewBookDetails = function(doc) {
+>>>>>>> upstream/master
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
-  var titleBlock = bookDetails.querySelector(".book-title");
-  titleBlock.innerHTML = doc.get("BookTitle");
 
+  var bookTitle = bookDetails.querySelector(".book-title");
+  bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
 
+  var author = bookDetails.querySelector(".author-fn");
+  author.innerHTML = "<strong> Author: </strong> " + doc.get("AuthorFn") + " " +doc.get("AuthorLn") ;
+
+<<<<<<< HEAD
   /**
   let query = doc.collection("Reviews").get()
     .then(snapshot => {
@@ -79,6 +90,28 @@ Bookstore.prototype.viewBookDetails = function(doc, bReviews) {
     }).catch(err => {
         console.log("Error getting reviews: ", err);
     });*/
+=======
+  var bookDesc = bookDetails.querySelector(".book-description");
+  bookDesc.innerHTML = "<strong> Description: </strong> " + doc.get("BookDesc")  ;
+
+  var authorBio = bookDetails.querySelector(".author-bio");
+  authorBio.innerHTML = "<strong> Biography: </strong> " + doc.get("AuthorBio")  ;
+
+  var publishDate = bookDetails.querySelector(".publish-date");
+  publishDate.innerHTML = "<strong> Publish Date: </strong> " + doc.get("PublishDate")  ;
+
+  var publisher = bookDetails.querySelector(".publish-date");
+  publisher.innerHTML = "<strong> Publisher: </strong> " + doc.get("Publisher")  ;
+
+  var price = bookDetails.querySelector(".price");
+  price.innerHTML = "<strong> Price: </strong> " + doc.get("Price")  ;
+
+  var rating = bookDetails.querySelector(".rating");
+  rating.innerHTML = "<strong> Rating: </strong> " + doc.get("Rating")  ;
+
+  var numSales = bookDetails.querySelector(".num-sales");
+  numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales")  ;
+>>>>>>> upstream/master
 
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
