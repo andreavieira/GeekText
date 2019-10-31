@@ -164,7 +164,7 @@
 
   <!--Book Details/Reviews Container-->
   <div hidden class="template" id="book-details">
-    <section class="content-section container">
+    <section class="content-section-container">
         <p class="book-title"> The Alchemist </p>
         <p><strong>Author:</strong> Paulo Coelho</p>
         <p><strong>Bio:</strong> The Alchemist is a novel by Brazilian author Paulo Coelho that was first published in 1988. Originally written in Portuguese, it became a widely translated international bestseller.</p>
@@ -177,6 +177,24 @@
         <p><strong>Rating:</strong> 5/5 </p>
 
         <a href="url">Similar Books</a>
+    </section>
+    <section class="review-section-container">
+      <div class="filled-review-container">
+        <div hidden class="filled-rating">
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+          </div>
+        <div class="filled-review">
+          <p id="-1"></p>
+        </div>
+      </div>
     </section>
   </div>
 

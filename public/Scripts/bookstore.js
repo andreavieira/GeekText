@@ -43,7 +43,10 @@ Bookstore.prototype.initRouter = function() {
            if (!doc.exists) {
              console.log('No such document!');
            } else {
-             that.viewBookDetails(doc);
+             let bReviews = [];
+             doc.get("Reviews");
+             console.log(bReviews);
+             that.viewBookDetails(doc, bReviews);
            }
          })
          .catch(err => {

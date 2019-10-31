@@ -60,18 +60,25 @@ Bookstore.prototype.viewCart = function() {
   this.replaceElement(document.querySelector('main'), cartPage);
 }
 
-Bookstore.prototype.viewBookDetails = function(doc) {
+Bookstore.prototype.viewBookDetails = function(doc, bReviews) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
   var titleBlock = bookDetails.querySelector(".book-title");
   titleBlock.innerHTML = doc.get("BookTitle");
 
 
-
-
-
-
-
-
+  /**
+  let query = doc.collection("Reviews").get()
+    .then(snapshot => {
+      if(snapshot.empty) {
+        //NO REVIEWS
+        return;
+      }
+      snapshot.forEach(doc => {
+          bReviews.push(doc.data());
+      });
+    }).catch(err => {
+        console.log("Error getting reviews: ", err);
+    });*/
 
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
