@@ -229,6 +229,10 @@ html,body{
     display: flex;
 }
 
+.save-row{
+    display: flex;
+}
+
 .cart-item{
     width: 30%
 }
@@ -254,12 +258,23 @@ html,body{
     color: white;
     background-color: rgb(231, 77, 77);
     border: none;
-    border-radius: .2em;
+    border-radius: .15em;
     font-weight: bold;
 }
 
 .btn-danger:hover{
     background-color: rgb(182, 31, 31)
+}
+
+.btn-save{
+    color: white;
+    background-color: rgb(152, 218, 104);
+    border: none;
+    border-radius: .15em;
+    font-weight: bold;
+}
+.btn-save:hover{
+    background-color: rgb(54, 138, 68);
 }
 
 .cart-quantity-input{
