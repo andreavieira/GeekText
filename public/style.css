@@ -284,15 +284,11 @@ hr {
     display: flex;
 }
 
-<<<<<<< HEAD
 .save-row{
     display: flex;
 }
 
 .cart-item{
-=======
-.cart-item {
->>>>>>> dd52f2d09ed22648d6e1650b8a1211fc528acd5e
     width: 30%
 }
 
@@ -324,7 +320,6 @@ hr {
     background-color: rgb(153, 0, 0);
 }
 
-<<<<<<< HEAD
 .btn-save{
     color: white;
     background-color: rgb(152, 218, 104);
@@ -337,9 +332,6 @@ hr {
 }
 
 .cart-quantity-input{
-=======
-.cart-quantity-input {
->>>>>>> dd52f2d09ed22648d6e1650b8a1211fc528acd5e
     height: 34px;
     width: 50px;
     border-radius: 5px;
