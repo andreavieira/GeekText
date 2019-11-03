@@ -283,7 +283,11 @@ hr {
     display: flex;
 }
 
-.cart-item {
+.save-row{
+    display: flex;
+}
+
+.cart-item{
     width: 30%
 }
 
@@ -307,7 +311,7 @@ hr {
     color: white;
     background-color:  rgb(153, 0, 0);
     border: none;
-    border-radius: .2em;
+    border-radius: .15em;
     font-weight: bold;
 }
 
@@ -315,7 +319,18 @@ hr {
     background-color: rgb(153, 0, 0);
 }
 
-.cart-quantity-input {
+.btn-save{
+    color: white;
+    background-color: rgb(152, 218, 104);
+    border: none;
+    border-radius: .15em;
+    font-weight: bold;
+}
+.btn-save:hover{
+    background-color: rgb(54, 138, 68);
+}
+
+.cart-quantity-input{
     height: 34px;
     width: 50px;
     border-radius: 5px;
