@@ -59,36 +59,50 @@ Bookstore.prototype.viewCart = function(doc) {
   cartPage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), cartPage);
 
-  //const cartDocRef = this.collection("users").doc("nrodr047").collection("cart")
-  const outputDescript = document.querySelector("#description")
-  //const outputImage = document.querySelector("#item-image")
-  const outputPrice = document.querySelector("#item-price")
-  const cartList = document.querySelector("#cart-list")
+  //const cartList = document.querySelector("#cart-list")
+
 
   function renderCart(){
-      let li = document.createElement('li');                  //creates a line for the nodes
-      let description = document.createElement('div');       //creates a span for title/author
-      let price = document.createElement('div');             //creates a span for price
-      //let image = document.createElement('div');
 
-      li.setAttribute('data-id', doc.id);                     //sets the data-id to the doc.id for parent node
-      
-      let bkTitle = doc.get("title");                               //gets the title field from database
-      let author = doc.get("authorName");                         //gets authorname from database
-      //image = doc.get("image");
-      
-      let bkPrice= doc.get("price");                          //tmp var for price from database
-      price.textContent = "$" + bkPrice;                      //sets price with '$'
-      description.textContent = " " + bkTitle + " By: " + author + " ";     //sets description to title and author
+      // outputDescript.innerHTML = ((cartList.appendChild(li).firstChild).textContent);
+      // outputPrice.innerHTML = ((cartList.appendChild(li).lastChild).textContent);
 
+      // var  descriptionOutput = document.querySelector("#description");
+      // descriptionOutput.innerHTML = "<i> " + doc.get("title") + "</i> By: " + doc.get("authorName") + " ";
 
-      li.appendChild(description);                                //appends decription to node
-      li.appendChild(price);
+      // var priceOutput = document.querySelector("#item-price");
+      // priceOutput.innerHTML = " $" + doc.get("price");
 
-
-      outputDescript.innerHTML = ((cartList.appendChild(li).firstChild).textContent);
-      outputPrice.innerHTML = ((cartList.appendChild(li).lastChild).textContent);
-
+      var cartRow = document.createElement('div');
+      cartRow.classList.add('cart-row')
+        var cartRowContents = `
+                  <div class="cart-item cart-column">
+                    <img class="item-image" src="images/100yr.jpg" width="100" height="200">
+                  </div>
+                  <div class="cart-description cart-column">
+                    <span id="description">${"<i> " + doc.get("title") + "</i> By: " + doc.get("authorName") + " "}</span>
+                  </div>
+                  <span class="cart-price cart-column">
+                    <span id ="item-price">${doc.get("price")}</span>
+                  </span>
+                  <div class="cart-quantity cart-column">
+                    <input class="cart-quantity-input"
+                    type="number" value="1">
+                    <ul style="list-style-type:none;">
+                    <li>
+                    <button class="btn btn-danger cart-quantity-button"
+                    type="button">REMOVE</button>
+                    <button class="btn btn-save cart-quantity-button"
+                    type="button">SAVE FOR LATER</button>
+                    </li>
+                    </ul>
+                  </div>
+                </div>
+                </div>
+              </div>`
+      cartRow.innerHTML = cartRowContents
+      var cartItems = document.getElementsByClassName('cart-items')[0];
+      cartItems.append(cartRow);
       //probably need a for loop to creat another row in my code
   }
 
