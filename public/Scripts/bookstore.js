@@ -1,5 +1,4 @@
 
-
 function Bookstore() {
 
   var me = this;
@@ -57,7 +56,17 @@ Bookstore.prototype.initRouter = function() {
   this.router
   .on({
     '/cart': function() {
-      that.viewCart();
+      let cartDocRef = that.db.collection("users").doc("nrodr047").collection("cart")
+      let allItems = cartDocRef.get()
+          .then(snapshot => {
+              snapshot.forEach(doc =>{
+                  console.log(doc.id, '=>', doc.data());
+                  that.viewCart(doc);
+              });
+          })
+          .catch(err =>{
+              console.log('Error getting documents', err);
+          });
     }
   }).resolve();
 
