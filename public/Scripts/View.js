@@ -1,7 +1,6 @@
 /**
   ALL VISUAL/RENDERING CODE GOES HERE.
 */
-
 'use strict'
 
 Bookstore.prototype.initTemplates = function() {
@@ -45,6 +44,59 @@ Bookstore.prototype.viewHome = function() {
   });
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
+
+  // const bookDocRef = db.collection("bookdetails")
+  // const outputDescript = document.querySelector("#description")
+  // const outputImage = document.querySelector("#item-image")
+  // const outputPrice = document.querySelector("#item-price")
+  // const dlist = document.querySelector("#cart-row")
+
+  // function renderCart(doc){
+  //     let li = document.createElement('li');  
+  //     let description = document.createElement('div');
+  //     let price = document.createElement('div'); 
+  //     //let image = document.createElement('div');
+
+  //     li.setAttribute('data-id', doc.id);                  
+
+  //     title = doc.get("BookTitle");      
+  //     authorFn = doc.get("AuthorFn");  
+  //     authorLn = doc.get("AuthorLn");
+  //     //image = doc.get("image");
+      
+  //     let bkPrice= doc.get("Price");       
+  //     price.textContent = "$" + bkPrice;    
+  //     description.textContent = " " + title + " By: " + author + " ";     
+
+  //     li.appendChild(description);        
+  //     li.appendChild(price);
+
+  //     outputDescript.innerHTML = ((cartList.appendChild(li).firstChild).textContent);
+  //     outputPrice.innerHTML = ((cartList.appendChild(li).lastChild).textContent);
+  // }
+
+  // getRealtimeUpdates = function(){
+  //     let i = 0;
+  //     let allItems = bookDocRef.get()
+  //         .then(snapshot => {
+  //             snapshot.forEach(doc =>{
+  //                 console.log(doc.id, '=>', doc.data());
+  //                 renderCart(doc);
+  //             });
+  //         })
+  //         .catch(err =>{
+  //             console.log('Error getting documents', err);
+  //         });
+  // }
+
+  // getRealtimeUpdates();
+
+  // //waits for document to load
+  // if (document.readyState == 'loading'){
+  //     document.addEventListener('DOMContentLoaded', ready)
+  // } else {
+  //     ready()
+  // }
 }
 
 /** SHOPPING SCRIPTS */
