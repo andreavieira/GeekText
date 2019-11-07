@@ -309,11 +309,14 @@ hr {
 }
 
 .btn-danger {
+    display: block;
+    font-size: 0.7em;
     color: white;
-    background-color:  rgb(153, 0, 0);
-    border: none;
-    border-radius: .15em;
+    background-color: rgb(230, 100, 100);
+    border-radius: .2em;
+    padding: 10px;
     font-weight: bold;
+    border: none;
 }
 
 .btn-danger:hover {
@@ -321,14 +324,18 @@ hr {
 }
 
 .btn-save{
+    display: block;
+    margin-top: 2px;
+    font-size: 0.7em;
     color: white;
-    background-color: rgb(152, 218, 104);
-    border: none;
-    border-radius: .15em;
+    background-color: rgb(80, 150, 85);
+    border-radius: .2em;
+    padding: 10px;
     font-weight: bold;
+    border: none;
 }
 .btn-save:hover{
-    background-color: rgb(54, 138, 68);
+    background-color: rgb(43, 107, 54);
 }
 
 .cart-quantity-input{

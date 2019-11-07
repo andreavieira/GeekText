@@ -20,6 +20,7 @@ Bookstore.prototype.viewHeader = function () {
   var header = document.querySelector('#main-header').cloneNode(true);
   var me = this;
 
+
   var cartButton = header.querySelector('#cart-btn');
   cartButton.addEventListener('click', function (event) {
     me.router.navigate('/cart');
@@ -49,6 +50,7 @@ Bookstore.prototype.viewHome = function () {
 
 /* SHOPPING CART SCRIPTS */
 Bookstore.prototype.viewCart = function (doc) {
+
   var cartPage = document.querySelector('#shopping-cart').cloneNode(true);
 
   cartPage.removeAttribute('hidden');
@@ -199,6 +201,7 @@ Bookstore.prototype.render = function (el, data) {
   if (!data) {
     return;
   }
+
 }
 
 Bookstore.prototype.getDeepItem = function (obj, path) {
@@ -207,6 +210,7 @@ Bookstore.prototype.getDeepItem = function (obj, path) {
   });
   return obj;
 };
+
 
 //USED FOR RENDERING;
 Bookstore.prototype.replaceElement = function (parent, content) {
