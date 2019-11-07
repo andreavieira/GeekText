@@ -62,6 +62,7 @@ function login() {
 
 
 // Creating user in function
+//NAT CAN U SEE THIS
 function createUser() {
     // TODO: Validate for REAL email
 
