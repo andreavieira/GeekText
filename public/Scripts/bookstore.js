@@ -44,7 +44,7 @@ Bookstore.prototype.initRouter = function() {
              console.log('No such document!');
            } else {
              let bReviews = [];
-             doc.get("Reviews");
+             doc.getCollections().;
              console.log(bReviews);
              that.viewBookDetails(doc, bReviews);
            }
