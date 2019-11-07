@@ -31,9 +31,9 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-  var accntButton = header.querySelector('#profile-btn');
-  accntButton.addEventListener('click', function(event) {
-    me.router.navigate('/profile');
+  // var accntButton = header.querySelector('#profile-btn');
+  // accntButton.addEventListener('click', function(event) {
+  //   me.router.navigate('/profile');
 
 
   header.removeAttribute('hidden');
@@ -41,14 +41,14 @@ Bookstore.prototype.viewHeader = function () {
 }
 
 // STEVEN ---------------------
-Bookstore.prototype.viewProfile = function(doc) {
-  var profilePage = document.querySelector('#profile-page').cloneNode(true);
+// Bookstore.prototype.viewProfile = function(doc) {
+//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
 
-  profilePage.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('main'), profilePage);
+//   profilePage.removeAttribute('hidden');
+//   this.replaceElement(document.querySelector('main'), profilePage);
 
-  //STEVEN ADD YOUR PROFILE PAGE CODE HERE
-}
+//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
+// }
 
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (doc) {

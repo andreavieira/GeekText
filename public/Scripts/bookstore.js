@@ -45,24 +45,24 @@ Bookstore.prototype.initRouter = function () {
 
   this.router
 
-  .on({
-      "/profile": function(params){
-        let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
-        let getDoc = detailsRef.get()
-        .then(doc => {
-           if (!doc.exists) {
-             console.log('No such document!');
-           } else {
-             that.viewBookDetails(doc);
-           }
-         })
-         .catch(err => {
-           console.log('Error getting document', err);
-         });
+  // .on({
+  //     "/profile": function(params){
+  //       let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
+  //       let getDoc = detailsRef.get()
+  //       .then(doc => {
+  //          if (!doc.exists) {
+  //            console.log('No such document!');
+  //          } else {
+  //            that.viewBookDetails(doc);
+  //          }
+  //        })
+  //        .catch(err => {
+  //          console.log('Error getting document', err);
+  //        });
 
 
-      }
-  }).resolve();
+  //     }
+  // }).resolve();
 
 
   this.router
