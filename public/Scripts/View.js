@@ -2,6 +2,8 @@
   ALL VISUAL/RENDERING CODE GOES HERE.
 */
 
+// STEVEN DO NOT TOUCH!!!!!!!!!!!!!!!!!!!!!!
+
 'use strict'
 
 Bookstore.prototype.initTemplates = function () {
@@ -29,15 +31,29 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
+  // var accntButton = header.querySelector('#profile-btn');
+  // accntButton.addEventListener('click', function(event) {
+  //   me.router.navigate('/profile');
 
 
   header.removeAttribute('hidden');
   this.replaceElement(document.querySelector('header'), header);
 }
 
+// STEVEN ---------------------
+// Bookstore.prototype.viewProfile = function(doc) {
+//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
+
+//   profilePage.removeAttribute('hidden');
+//   this.replaceElement(document.querySelector('main'), profilePage);
+
+//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
+// }
+
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (doc) {
   var homePage = document.querySelector('#home-page').cloneNode(true);
+
 
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
@@ -116,6 +132,7 @@ Bookstore.prototype.viewCart = function (doc) {
   function removeCartItem(event) {
     var buttonClicked = event.target
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+    
     updateCartTotal()
   }
 
@@ -160,9 +177,11 @@ Bookstore.prototype.viewCart = function (doc) {
     cartRow.innerHTML = cartRowContents
     var cartItems = document.getElementsByClassName('cart-items')[0];
     cartItems.append(cartRow);
-    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
-    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
-  }
+
+    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
+    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
+}
+
 
   renderCart();
 
