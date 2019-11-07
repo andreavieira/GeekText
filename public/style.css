@@ -284,7 +284,11 @@ hr {
     display: flex;
 }
 
-.cart-item {
+.save-row{
+    display: flex;
+}
+
+.cart-item{
     width: 30%
 }
 
@@ -305,18 +309,36 @@ hr {
 }
 
 .btn-danger {
+    display: block;
+    font-size: 0.7em;
     color: white;
-    background-color:  rgb(153, 0, 0);
-    border: none;
+    background-color: rgb(230, 100, 100);
     border-radius: .2em;
+    padding: 10px;
     font-weight: bold;
+    border: none;
 }
 
 .btn-danger:hover {
     background-color: rgb(153, 0, 0);
 }
 
-.cart-quantity-input {
+.btn-save{
+    display: block;
+    margin-top: 2px;
+    font-size: 0.7em;
+    color: white;
+    background-color: rgb(80, 150, 85);
+    border-radius: .2em;
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+}
+.btn-save:hover{
+    background-color: rgb(43, 107, 54);
+}
+
+.cart-quantity-input{
     height: 34px;
     width: 50px;
     border-radius: 5px;
