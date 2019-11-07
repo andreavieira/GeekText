@@ -110,6 +110,7 @@ Bookstore.prototype.viewCart = function(doc) {
   cartPage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), cartPage);
 
+<<<<<<< HEAD
   //const cartDocRef = this.collection("users").doc("nrodr047").collection("cart")
   const outputDescript = document.querySelector("#description")
   //const outputImage = document.querySelector("#item-image")
@@ -143,6 +144,52 @@ Bookstore.prototype.viewCart = function(doc) {
 
       outputDescript.innerHTML = ((cartList.appendChild(li).firstChild).textContent);
       outputPrice.innerHTML = ((cartList.appendChild(li).lastChild).textContent);
+=======
+  //const cartList = document.querySelector("#cart-list")
+
+
+  function renderCart(){
+
+      // outputDescript.innerHTML = ((cartList.appendChild(li).firstChild).textContent);
+      // outputPrice.innerHTML = ((cartList.appendChild(li).lastChild).textContent);
+
+      // var  descriptionOutput = document.querySelector("#description");
+      // descriptionOutput.innerHTML = "<i> " + doc.get("title") + "</i> By: " + doc.get("authorName") + " ";
+
+      // var priceOutput = document.querySelector("#item-price");
+      // priceOutput.innerHTML = " $" + doc.get("price");
+
+      var cartRow = document.createElement('div');
+      cartRow.classList.add('cart-row')
+        var cartRowContents = `
+                  <div class="cart-item cart-column">
+                    <img class="item-image" src="images/100yr.jpg" width="100" height="200">
+                  </div>
+                  <div class="cart-description cart-column">
+                    <span id="description">${"<i> " + doc.get("title") + "</i> By: " + doc.get("authorName") + " "}</span>
+                  </div>
+                  <span class="cart-price cart-column">
+                    <span id ="item-price">${doc.get("price")}</span>
+                  </span>
+                  <div class="cart-quantity cart-column">
+                    <input class="cart-quantity-input"
+                    type="number" value="1">
+                    <ul style="list-style-type:none;">
+                    <li>
+                    <button class="btn btn-danger cart-quantity-button"
+                    type="button">REMOVE</button>
+                    <button class="btn btn-save cart-quantity-button"
+                    type="button">SAVE FOR LATER</button>
+                    </li>
+                    </ul>
+                  </div>
+                </div>
+                </div>
+              </div>`
+      cartRow.innerHTML = cartRowContents
+      var cartItems = document.getElementsByClassName('cart-items')[0];
+      cartItems.append(cartRow);
+>>>>>>> 8b824f561e896426d948637ac38e20f23c01da4d
       //probably need a for loop to creat another row in my code
   }
 
