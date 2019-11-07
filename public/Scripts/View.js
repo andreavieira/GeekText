@@ -2,6 +2,8 @@
   ALL VISUAL/RENDERING CODE GOES HERE.
 */
 
+// STEVEN DO NOT TOUCH!!!!!!!!!!!!!!!!!!!!!!
+
 'use strict'
 
 Bookstore.prototype.initTemplates = function () {
@@ -29,28 +31,75 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
+  // var accntButton = header.querySelector('#profile-btn');
+  // accntButton.addEventListener('click', function(event) {
+  //   me.router.navigate('/profile');
 
 
   header.removeAttribute('hidden');
   this.replaceElement(document.querySelector('header'), header);
 }
 
+// STEVEN ---------------------
+// Bookstore.prototype.viewProfile = function(doc) {
+//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
+
+//   profilePage.removeAttribute('hidden');
+//   this.replaceElement(document.querySelector('main'), profilePage);
+
+//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
+// }
+
 /* HOME SCRIPTS */
-Bookstore.prototype.viewHome = function () {
+Bookstore.prototype.viewHome = function (doc) {
   var homePage = document.querySelector('#home-page').cloneNode(true);
+
+
+  homePage.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), homePage);
+
+  function renderRating(bookRating) {
+    return bookRating
+    // Will turn double rating in DB to star representation
+  }
+  
+  function renderCart() {
+    var bookRow = document.createElement('div');
+    bookRow.classList.add('cart-row')
+    // TODO make routing work for pertaining books!
+    var bookRowContents = `
+                <div class="cart-item cart-column">
+                  <i class="book-details-link" id="ZyeZCXscDEzIKRG7gqUJ">
+                  <img class="item-image" src="${doc.get("Cover")}" width="100" height="200">
+                  </i>
+                </div>
+                <div class="cart-description cart-column">
+                  <span id="description">${"<i> " + doc.get("BookTitle") + "</i> By: " + doc.get("AuthorFn") + " " + doc.get("AuthorLn")}</span>
+                </div>
+                <span class="cart-price cart-column">
+                  <span id ="item-price">$${doc.get("Price")}</span>
+                </span>
+                <div class="cart-quantity cart-column">
+                  <span>${renderRating(doc.get("Rating"))}</span>
+                </div>
+              </div>
+              </div>
+            </div>`
+    bookRow.innerHTML = bookRowContents
+    var bookItems = document.getElementsByClassName('cart-items')[0];
+    bookItems.append(bookRow);
+  }
+  renderCart();
+
   let bs = this;
   var bookDetails = homePage.querySelector('.book-details-link');
   bookDetails.addEventListener('click', function () {
     bs.router.navigate('/book/' + bookDetails.id);
   });
-
-  homePage.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('main'), homePage);
 }
 
 /* SHOPPING CART SCRIPTS */
 Bookstore.prototype.viewCart = function (doc) {
-
   var cartPage = document.querySelector('#shopping-cart').cloneNode(true);
 
   cartPage.removeAttribute('hidden');
@@ -83,21 +132,21 @@ Bookstore.prototype.viewCart = function (doc) {
   function removeCartItem(event) {
     var buttonClicked = event.target
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+    
     updateCartTotal()
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
   // @param {*} event used when quantity value is changed 
   function quantityChanged(event) {
-    var input = event.target                        //changed event
-    if (isNaN(input.value) || input.value <= 0) {     //if input is not an int or <0
-      input.value = 1                             //change value to 1
+    var input = event.target                        
+    if (isNaN(input.value) || input.value <= 0) {
+      input.value = 1                             
     }
-    updateCartTotal()                               //update cart total
+    updateCartTotal()                               
   }
 
   function renderCart() {
-
     var cartRow = document.createElement('div');
     cartRow.classList.add('cart-row')
     var cartRowContents = `
@@ -128,9 +177,11 @@ Bookstore.prototype.viewCart = function (doc) {
     cartRow.innerHTML = cartRowContents
     var cartItems = document.getElementsByClassName('cart-items')[0];
     cartItems.append(cartRow);
-    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
-    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
-  }
+
+    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
+    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
+}
+
 
   renderCart();
 
