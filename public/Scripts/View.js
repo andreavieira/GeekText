@@ -1,6 +1,7 @@
 /**
   ALL VISUAL/RENDERING CODE GOES HERE.
 */
+
 'use strict'
 
 Bookstore.prototype.initTemplates = function() {
@@ -15,11 +16,12 @@ Bookstore.prototype.initTemplates = function() {
 
 //Render functions
 
-/** HEADER SCRIPTS */
+
 Bookstore.prototype.viewHeader = function() {
   //grab clone of template header
   var header = document.querySelector('#main-header').cloneNode(true);
   var me = this;
+
 
   var cartButton = header.querySelector('#cart-btn');
   cartButton.addEventListener('click', function(event) {
@@ -30,114 +32,32 @@ Bookstore.prototype.viewHeader = function() {
     me.router.navigate('/');
   });
 
+
   header.removeAttribute('hidden');
   this.replaceElement(document.querySelector('header'), header);
 }
 
-/** HOME SCRIPTS */
+
 Bookstore.prototype.viewHome = function() {
-  var homePage = document.querySelector('#home-page').cloneNode(true);
-  let bs = this;
-  var bookDetails = homePage.querySelector('.book-details-link');
-  bookDetails.addEventListener('click', function() {
-    bs.router.navigate('/book/' + bookDetails.id);
-  });
+var homePage = document.querySelector('#home-page').cloneNode(true);
+let bs = this;
+var bookDetails = homePage.querySelector('.book-details-link');
+bookDetails.addEventListener('click', function() {
+  bs.router.navigate('/book/' + bookDetails.id);
+});
+//ALL VISUAL HOME CODE GOES HERE:
+
+
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
 
-  // const bookDocRef = db.collection("bookdetails")
-  // const outputDescript = document.querySelector("#description")
-  // const outputImage = document.querySelector("#item-image")
-  // const outputPrice = document.querySelector("#item-price")
-  // const dlist = document.querySelector("#cart-row")
-
-  // function renderCart(doc){
-  //     let li = document.createElement('li');  
-  //     let description = document.createElement('div');
-  //     let price = document.createElement('div'); 
-  //     //let image = document.createElement('div');
-
-  //     li.setAttribute('data-id', doc.id);                  
-
-  //     title = doc.get("BookTitle");      
-  //     authorFn = doc.get("AuthorFn");  
-  //     authorLn = doc.get("AuthorLn");
-  //     //image = doc.get("image");
-      
-  //     let bkPrice= doc.get("Price");       
-  //     price.textContent = "$" + bkPrice;    
-  //     description.textContent = " " + title + " By: " + author + " ";     
-
-  //     li.appendChild(description);        
-  //     li.appendChild(price);
-
-  //     outputDescript.innerHTML = ((cartList.appendChild(li).firstChild).textContent);
-  //     outputPrice.innerHTML = ((cartList.appendChild(li).lastChild).textContent);
-  // }
-
-  // getRealtimeUpdates = function(){
-  //     let i = 0;
-  //     let allItems = bookDocRef.get()
-  //         .then(snapshot => {
-  //             snapshot.forEach(doc =>{
-  //                 console.log(doc.id, '=>', doc.data());
-  //                 renderCart(doc);
-  //             });
-  //         })
-  //         .catch(err =>{
-  //             console.log('Error getting documents', err);
-  //         });
-  // }
-
-  // getRealtimeUpdates();
-
-  // //waits for document to load
-  // if (document.readyState == 'loading'){
-  //     document.addEventListener('DOMContentLoaded', ready)
-  // } else {
-  //     ready()
-  // }
 }
 
-/** SHOPPING SCRIPTS */
-Bookstore.prototype.viewCart = function() {
+Bookstore.prototype.viewCart = function(doc) {
   var cartPage = document.querySelector('#shopping-cart').cloneNode(true);
 
   cartPage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), cartPage);
-
-
-  //const cartDocRef = this.collection("users").doc("nrodr047").collection("cart")
-  const outputDescript = document.querySelector("#description")
-  //const outputImage = document.querySelector("#item-image")
-  const outputPrice = document.querySelector("#item-price")
-  const cartList = document.querySelector("#cart-list")
-
-  function renderCart(){
-      let li = document.createElement('li');                  //creates a line for the nodes
-      let description = document.createElement('div');       //creates a span for title/author
-      let price = document.createElement('div');             //creates a span for price
-      //let image = document.createElement('div');
-
-      li.setAttribute('data-id', doc.id);                     //sets the data-id to the doc.id for parent node
-
-      title = doc.get("title");                               //gets the title field from database
-      author = doc.get("authorName");                         //gets authorname from database
-
-      //image = doc.get("image");
-      
-      let bkPrice= doc.get("price");                          //tmp var for price from database
-      price.textContent = "$" + bkPrice;                      //sets price with '$'
-      description.textContent = " " + bkTitle + " By: " + author + " ";     //sets description to title and author
-
-      li.appendChild(description);                                //appends decription to node
-      li.appendChild(price);
-
-      outputDescript.innerHTML = ((cartList.appendChild(li).firstChild).textContent);
-      outputPrice.innerHTML = ((cartList.appendChild(li).lastChild).textContent);
-  }
-
-  renderCart();
 
 
   if (document.readyState == 'loading') {
@@ -146,7 +66,9 @@ Bookstore.prototype.viewCart = function() {
     ready()
 }
 
-  //Eventlistener constructors
+  /**
+   *  Eventlistener constructors
+   */
   function ready(){
       var removeCartItemButtons = document.getElementsByClassName('btn-danger')   //for btn-danger class
       console.log(removeCartItemButtons)  
@@ -163,32 +85,27 @@ Bookstore.prototype.viewCart = function() {
       }
   }
 
-  //Function calls the updateCartTotal function when remove button is clicked.
-  //@param {*} event even when remove button is clicked
+  /**
+   * Function calls the updateCartTotal function when remove button is clicked.
+   * @param {*} event even when remove button is clicked
+   */
   function removeCartItem(event){
     var buttonClicked = event.target
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
     updateCartTotal()
   }
 
-
   /**
    * Checks if inputted value is an int greater than 1 and calls updateCartTotal.
    * @param {*} event used when quantity value is changed 
    */
   function quantityChanged(event){
-
-  //Checks if inputted value is an int greater than 1 and calls updateCartTotal.
-  //@param {*} event used when quantity value is changed 
-  function quanityChanged(event){
-
       var input = event.target                        //changed event
       if (isNaN(input.value) || input.value <=0){     //if input is not an int or <0
           input.value = 1                             //change value to 1
       }
       updateCartTotal()                               //update cart total
   }
-
 
   function renderCart(){
 
@@ -248,26 +165,11 @@ renderCart();
 }
 
 
-
-  //Function calculates cart total based on quantity and price
-  function updateCartTotal() {
-      var cartItemContainer = document.getElementsByClassName('cart-items')[0] //container that contains class cart-items
-      var cartRows = cartItemContainer.getElementsByClassName('cart-row')     //all elements within the cart-row
-      var total = 0                                                           //price total
-      for (var i = 0; i < cartRows.length; i++){                               //loops through all items
-          var cartRow = cartRows[i]                                           //gets item in current cart row
-          var priceElement = cartRow.getElementsByClassName('cart-price')[0]  //all elements within the cart-price class
-          var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0] //all elements within quantity input class
-          var price = parseFloat(priceElement.innerText.replace('$',''))      //gets the string from the input text, removes $, and changes to float
-          var quantity = quantityElement.value
-          total = total + (price * quantity)
-      }
-      total = Math.round(total * 100) / 100                                   //rounds total price
-      document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total //calculate total price, adds $ to string
-
 }
 
-/** BOOK DETAILS SCRIPTS */
+/**
+Book Details: Fetches attributes of a given book by ID
+ */
 Bookstore.prototype.viewBookDetails = function(doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
 
@@ -302,8 +204,10 @@ Bookstore.prototype.viewBookDetails = function(doc) {
   this.replaceElement(document.querySelector('main'), bookDetails);
 }
 
+
 //TODO CLEANUP
 Bookstore.prototype.renderTemplate = function(id, data) {
+  var template = this.templates[id];
   var el = template.cloneNode(true);
   el.removeAttribute('hidden');
   this.render(el, data);
@@ -314,6 +218,7 @@ Bookstore.prototype.render = function(el, data) {
   if(!data){
     return;
   }
+
 }
 
 Bookstore.prototype.getDeepItem = function(obj,path) {
@@ -322,6 +227,7 @@ Bookstore.prototype.getDeepItem = function(obj,path) {
   });
   return obj;
 };
+
 
 //USED FOR RENDERING;
 Bookstore.prototype.replaceElement = function(parent, content){
