@@ -77,8 +77,7 @@ Bookstore.prototype.initRouter = function () {
           });
       }
     }).resolve();
-
-
+    
   //FIRESTORE LOAD COLLECTIONS
   return this.router;
 }
