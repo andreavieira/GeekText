@@ -29,11 +29,18 @@ firebase.auth().onAuthStateChanged(function(user) {
 
         var user = firebase.auth().currentUser;
 
-        if(user != null){
+        if(user != null) {
             var email_id = user.email;
             var email_verified = user.emailVerified;
-            document.getElementById("welcome-user").innerHTML = "Welcome: " + email_id +
-                                                                "User Verification: " + email_verified; 
+            
+            if(email_verified) {
+                document.getElementById("welcome-user").innerHTML = "Welcome: " + email_id + "\n";
+                document.getElementById("verify-btn").style.display = "none";
+            } else {
+                document.getElementById("welcome-user").innerHTML = "Welcome: " + email_id +
+                                                                "\n" + "User NOT Verified"; 
+                document.getElementById("verify-btn").style.display = "block";
+            }
         }
 
     } else {
@@ -45,24 +52,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
-// Signing user in function
-function login() {
-    // Obtains and initializes var with user email and pass
-    var userEmail = document.getElementById("userEmailin").value;
-    var userPass = document.getElementById("userPassword").value;
-
-    // Sign into firebase with email and pass. Stores to a promise for error catching
-    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-
-        // Handle errors here
-        var errorCode = error.code;
-        var errorMessage = error.message;
-    });    
-}
-
-
 // Creating user in function
-//NAT CAN U SEE THIS
 function createUser() {
     // TODO: Validate for REAL email
 
@@ -80,8 +70,33 @@ function createUser() {
 }
 
 
+// Signing user in function
+function login() {
+    // Obtains and initializes var with user email and pass
+    var userEmail = document.getElementById("userEmailin").value;
+    var userPass = document.getElementById("userPassword").value;
+
+    // Sign into firebase with email and pass. Stores to a promise for error catching
+    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+
+        // Handle errors here
+        var errorCode = error.code;
+        var errorMessage = error.message;
+    });    
+}
 
 // Sign out function
 function logout() {
     firebase.auth().signOut();
+}
+
+// Send user verification by email to ensure that the email account belongs to the user
+function sendUserVerification() {
+    var user = firebase.auth().currentUser;
+
+    user.sendEmailVerification().then(function() {
+        window.alert("Verification sent");   // Email sent.
+    }).catch(function(error) {
+        window.alert("Error: " + error.message);// An error happened.
+    });
 }

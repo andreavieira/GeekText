@@ -48,13 +48,14 @@
                 <div id="not-loggedin-div">
                     <input id="userEmailin" type="email" placeholder="Email"/>
                     <input id="userPassword" type="password" placeholder="Password"/>
-                    <button onclick="login()">Log In</button>
-                    <button onclick="createUser()">Sign Up</button>
+                    <a onclick="login()">Log In</a>
+                    <a onclick="createUser()">Sign Up</a>
                 </div>
                 <div id="loggedin-div">
                     <p id="welcome-user"></p>
-                    <a href="#profile">Profile</a>
-                    <button onclick="logout()">Sign out</button>
+                    <a id="verify-btn" onclick="sendUserVerification()">Send Verification</a>
+                    <a href="#profile">Edit Profile</a>
+                    <a onclick="logout()">Sign out</a>
                 </div>
             </div>
         </div>
