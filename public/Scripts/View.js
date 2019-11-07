@@ -106,6 +106,7 @@ Bookstore.prototype.viewCart = function() {
   cartPage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), cartPage);
 
+
   //const cartDocRef = this.collection("users").doc("nrodr047").collection("cart")
   const outputDescript = document.querySelector("#description")
   //const outputImage = document.querySelector("#item-image")
@@ -139,6 +140,12 @@ Bookstore.prototype.viewCart = function() {
   renderCart();
 
 
+  if (document.readyState == 'loading') {
+    document.addEventListener('DOMContentLoaded', ready)
+} else {
+    ready()
+}
+
   //Eventlistener constructors
   function ready(){
       var removeCartItemButtons = document.getElementsByClassName('btn-danger')   //for btn-danger class
@@ -149,31 +156,98 @@ Bookstore.prototype.viewCart = function() {
               
       }
 
-      var quanityInputs = document.getElementsByClassName('cart-quantity-input')
-      for (var i = 0; i < quanityInputs.length; i++){
-          var input = quanityInputs[i]
-          input.addEventListener('change', quanityChanged)
+      var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+      for (var i = 0; i < quantityInputs.length; i++){
+          var input = quantityInputs[i]
+          input.addEventListener('change', quantityChanged)
       }
   }
 
   //Function calls the updateCartTotal function when remove button is clicked.
   //@param {*} event even when remove button is clicked
   function removeCartItem(event){
-      var buttonClicked = event.target
-      let id = buttonClicked.parentElement.parentElement.get(doc.id);
-      db.collection('users').doc('nrodr047').collection('cart').doc(id).delete();
-      updateCartTotal();
+    var buttonClicked = event.target
+    buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+    updateCartTotal()
   }
+
+
+  /**
+   * Checks if inputted value is an int greater than 1 and calls updateCartTotal.
+   * @param {*} event used when quantity value is changed 
+   */
+  function quantityChanged(event){
 
   //Checks if inputted value is an int greater than 1 and calls updateCartTotal.
   //@param {*} event used when quantity value is changed 
   function quanityChanged(event){
+
       var input = event.target                        //changed event
       if (isNaN(input.value) || input.value <=0){     //if input is not an int or <0
           input.value = 1                             //change value to 1
       }
       updateCartTotal()                               //update cart total
   }
+
+
+  function renderCart(){
+
+    var cartRow = document.createElement('div');
+    cartRow.classList.add('cart-row')
+      var cartRowContents = `
+                <div class="cart-item cart-column">
+                  <img class="item-image" src="${doc.get("image")}" width="100" height="200">
+                </div>
+                <div class="cart-description cart-column">
+                  <span id="description">${"<i> " + doc.get("title") + "</i> By: " + doc.get("authorName") + " "}</span>
+                </div>
+                <span class="cart-price cart-column">
+                  <span id ="item-price">${doc.get("price")}</span>
+                </span>
+                <div class="cart-quantity cart-column">
+                  <input class="cart-quantity-input"
+                  type="number" value="1">
+                  <ul style="list-style-type:none;">
+                  <li>
+                  <button class="btn btn-danger cart-quantity-button"
+                  type="button">REMOVE</button>
+                  <button class="btn btn-save cart-quantity-button"
+                  type="button">SAVE FOR LATER</button>
+                  </li>
+                  </ul>
+                </div>
+              </div>
+              </div>
+            </div>`
+    cartRow.innerHTML = cartRowContents
+    var cartItems = document.getElementsByClassName('cart-items')[0];
+    cartItems.append(cartRow);
+    cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
+    cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
+}
+
+renderCart();
+
+  /**
+   * Function calculates cart total based on quantity and price
+   */
+  function updateCartTotal() {
+    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
+    var total = 0
+    for (var i = 0; i < cartRows.length; i++) {
+        var cartRow = cartRows[i]
+        var priceElement = cartRow.getElementsByClassName('cart-price')[0]
+        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
+        var price = parseFloat(priceElement.innerText.replace('$', ''))
+        var quantity = quantityElement.value
+        total = total + (price * quantity)
+    }
+    total = Math.round(total * 100) / 100
+    document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
+}
+
+
 
   //Function calculates cart total based on quantity and price
   function updateCartTotal() {
@@ -190,7 +264,7 @@ Bookstore.prototype.viewCart = function() {
       }
       total = Math.round(total * 100) / 100                                   //rounds total price
       document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total //calculate total price, adds $ to string
-  }
+
 }
 
 /** BOOK DETAILS SCRIPTS */
