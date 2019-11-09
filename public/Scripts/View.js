@@ -131,9 +131,18 @@ Bookstore.prototype.viewCart = function (doc) {
   // @param {*} event even when remove button is clicked
   function removeCartItem(event) {
     var buttonClicked = event.target
+    var ID = document.getElementById("data-id").textContent
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
-    
-    updateCartTotal()
+
+    let cartDocRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart")
+    let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+          var deleteDoc =  cartDocRef.doc(ID).delete();
+            });
+          })
+    //updateCartTotal();
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
@@ -151,6 +160,7 @@ Bookstore.prototype.viewCart = function (doc) {
     cartRow.classList.add('cart-row')
     var cartRowContents = `
                 <div class="cart-item cart-column">
+                <div id ="data-id" hidden>${doc.id}</div>
                   <img class="item-image" src="${doc.get("image")}" width="100" height="200">
                 </div>
                 <div class="cart-description cart-column">
@@ -160,8 +170,8 @@ Bookstore.prototype.viewCart = function (doc) {
                   <span id ="item-price">${doc.get("price")}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <input class="cart-quantity-input"
-                  type="number" value="1">
+                  <input class="cart-quantity-input" id="quant"
+                  type="number" value=${doc.get("quantity")}></input>
                   <ul style="list-style-type:none;">
                   <li>
                   <button class="btn btn-danger cart-quantity-button"
@@ -186,17 +196,20 @@ Bookstore.prototype.viewCart = function (doc) {
   renderCart();
 
   // Function calculates cart total based on quantity and price
-  function updateCartTotal() {
+  function updateCartTotal(event) {
+
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
     var total = 0
     for (var i = 0; i < cartRows.length; i++) {
-      var cartRow = cartRows[i]
-      var priceElement = cartRow.getElementsByClassName('cart-price')[0]
-      var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-      var price = parseFloat(priceElement.innerText.replace('$', ''))
-      var quantity = quantityElement.value
-      total = total + (price * quantity)
+      var cartRow = cartRows[i];
+      var priceElement = document.getElementById('item-price').innerHTML;
+      var price = parseFloat(priceElement.replace('$',''));
+      console.log(price)
+      var quantityElement = document.getElementById('quant').value;
+      console.log(quantityElement);
+      var quantity = quantityElement;
+      total = total + (price * quantity);
     }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
