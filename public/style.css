@@ -310,6 +310,7 @@ hr {
 
 .btn-danger {
     display: block;
+    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(230, 100, 100);
@@ -325,7 +326,6 @@ hr {
 
 .btn-save{
     display: block;
-    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(80, 150, 85);
@@ -336,6 +336,21 @@ hr {
 }
 .btn-save:hover{
     background-color: rgb(43, 107, 54);
+}
+
+.btn-add {
+    display: block;
+    font-size: 0.7em;
+    color: white;
+    background-color: rgb(74, 115, 202);
+    border-radius: .2em;
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-add:hover {
+    background-color: rgb(38, 41, 199);
 }
 
 .cart-quantity-input{
