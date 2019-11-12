@@ -133,7 +133,7 @@ hr {
 }
 
 .account-btn {
-    width: 20px;
+    width: 100px;
     height: 20px;
     border-radius: 50%;
     display: flex;
@@ -143,7 +143,10 @@ hr {
     border: none;
     transition: 0.4s;
     cursor: pointer;
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 }
 
 .account-dropdown-content {
@@ -243,6 +246,7 @@ hr {
     width: 100px;
 }
 
+
 .main-footer {
     text-align: center;
     background-color:rgb(168, 168, 168);
@@ -310,6 +314,7 @@ hr {
 
 .btn-danger {
     display: block;
+    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(230, 100, 100);
@@ -325,7 +330,6 @@ hr {
 
 .btn-save{
     display: block;
-    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(80, 150, 85);
@@ -336,6 +340,21 @@ hr {
 }
 .btn-save:hover{
     background-color: rgb(43, 107, 54);
+}
+
+.btn-add {
+    display: block;
+    font-size: 0.7em;
+    color: white;
+    background-color: rgb(74, 115, 202);
+    border-radius: .2em;
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-add:hover {
+    background-color: rgb(38, 41, 199);
 }
 
 .cart-quantity-input{
