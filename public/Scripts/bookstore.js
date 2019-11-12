@@ -26,10 +26,22 @@ function Bookstore() {
 Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
+  let booksDocRef = firebase.firestore().collection("bookdetails")
+
+  function sortByRating() {
+    booksDocRef.orderBy("Rating");
+  }
+
+  function sortByAuthor() {
+    booksDocRef.orderBy("AuthorLn");
+  }
+
   this.router
     .on({
       '/': function () { // navigation string '/' leads to viewHome()
-        let booksDocRef = firebase.firestore().collection("bookdetails")
+        // sortByRating(booksDocRef)
+        sortByAuthor()
+
         let allItems = booksDocRef.get()
           .then(snapshot => {
             snapshot.forEach(doc => {
