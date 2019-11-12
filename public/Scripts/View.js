@@ -87,7 +87,7 @@ Bookstore.prototype.viewCart = function (doc) {
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
-  // @param {*} event used when quantity value is changed 
+  // @param {*} event used when quantity value is changed
   function quantityChanged(event) {
     var input = event.target                        //changed event
     if (isNaN(input.value) || input.value <= 0) {     //if input is not an int or <0
@@ -183,11 +183,36 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
 
+
+  let bReviews = [];
+  let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
+  reviewRef.get().then(snapshot => {
+    snapshot.forEach(review => {
+      bReviews.push(review.data());
+    });
+    this.renderReviews(bReviews, bookDetails);
+  });
+
+
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
 }
 
+Bookstore.prototype.renderReviews = function (bReviews, details_El) {
+  let review_Container = document.createElement("div");
+  bReviews.forEach(review => {
+    let review_El = details_El.querySelector(".filled-review-container").cloneNode(true);
+    review_El.querySelector(".filled-rating").rating = review.Rating;
+    review_El.querySelector(".filled-review-text").innerHTML = review.Text;
 
+    review_El.removeAttribute("hidden");
+    review_Container.appendChild(review_El);
+  });
+  details_El.querySelector(".filled-review-container").removeAttribute("hidden");
+  details_El.querySelector(".filled-review-container").innerHTML = '';
+  details_El.querySelector(".filled-review-container").appendChild(review_Container);
+
+}
 //TODO CLEANUP
 Bookstore.prototype.renderTemplate = function (id, data) {
   var template = this.templates[id];

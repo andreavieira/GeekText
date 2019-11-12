@@ -42,10 +42,8 @@ Bookstore.prototype.initRouter = function() {
            if (!doc.exists) {
              console.log('No such document!');
            } else {
-             let bReviews = [];
-             doc.getCollections().;
-             console.log(bReviews);
-             that.viewBookDetails(doc, bReviews);
+
+             that.viewBookDetails(doc);
            }
          })
          .catch(err => {

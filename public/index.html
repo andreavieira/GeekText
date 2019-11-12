@@ -90,7 +90,7 @@
             <span class="cart-quantity cart-header
                 cart-column">RATING</span>
           </div>
-          
+
           <div class ="cart-items">
             <div class ="cart-row">
               <div class="cart-item cart-column">
@@ -141,7 +141,7 @@
                     <span class="cart-quantity cart-header
                     cart-column">QUANTITY</span>
                   </div>
-                
+
                 <ul style="list-style-type: none" id="cart-list">
                 <div class ="cart-items">
                     <div class ="cart-row">
@@ -194,8 +194,8 @@
         <!--Link to Andrea's sorting page-->
     </section>
     <section class="review-section-container">
-      <div class="filled-review-container" id="-1">
-        <div hidden class="filled-rating">
+      <div hidden class="filled-review-container" id="-1">
+        <div hidden class="filled-rating" rating="-1">
             <label for="star5" title="text">5 stars</label>
             <input type="radio" id="star4" name="rate" value="4" />
             <label for="star4" title="text">4 stars</label>
@@ -207,8 +207,15 @@
             <label for="star1" title="text">1 star</label>
           </div>
         <div class="filled-review">
-          <p class="filled-review-text">TEXT</p>
+          <p class="filled-review-text">Filled Review Box</p>
         </div>
+      </div>
+      <div class="empty-review-container">
+        <div class="empty-rating"></div>
+        <div class="empty-review">
+          <textarea>Please Enter Review</textarea>
+        </div>
+      </div>
       </div>
     </section>
   </div>
