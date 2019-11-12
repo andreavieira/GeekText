@@ -26,6 +26,7 @@ function Bookstore() {
 Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
+
   this.router
     .on({
       '/': function () { // navigation string '/' leads to viewHome()
@@ -44,25 +45,24 @@ Bookstore.prototype.initRouter = function () {
     }).resolve();
 
   this.router
+    // .on({
+    //     "/profile": function(params) {
 
-  // .on({
-  //     "/profile": function(params){
-  //       let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
-  //       let getDoc = detailsRef.get()
-  //       .then(doc => {
-  //          if (!doc.exists) {
-  //            console.log('No such document!');
-  //          } else {
-  //            that.viewBookDetails(doc);
-  //          }
-  //        })
-  //        .catch(err => {
-  //          console.log('Error getting document', err);
-  //        });
-
-
-  //     }
-  // }).resolve();
+            // let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
+            // let getDoc = detailsRef.get()
+            // .then(doc => {
+            // if (!doc.exists) {
+            //     console.log('No such document!');
+            // } else {
+            //     that.viewBookDetails(doc);
+            // }
+            // })
+            // .catch(err => {
+            // console.log('Error getting document', err);
+            // });
+            
+        //   }
+        // }).resolve();
 
 
   this.router

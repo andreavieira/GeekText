@@ -3,7 +3,9 @@ toggle between hiding and showing the dropdown content */
 function accountDrop() {
     document.getElementById("accDropdown").classList.toggle("show");
 }
-  
+ 
+
+
 // Close the dropdown if the user cursor moves outside of it
 window.onclick = function(event) {
     if (!event.target.matches('.account-btn')) {
@@ -17,6 +19,8 @@ window.onclick = function(event) {
         }
     }
 }
+
+
 
 // Add a realtime listener to check if user is logged in or not
 firebase.auth().onAuthStateChanged(function(user) {
@@ -52,6 +56,8 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
+
+
 // Creating user in function
 function createUser() {
     // TODO: Validate for REAL email
@@ -70,6 +76,7 @@ function createUser() {
 }
 
 
+
 // Signing user in function
 function login() {
     // Obtains and initializes var with user email and pass
@@ -85,10 +92,14 @@ function login() {
     });    
 }
 
+
+
 // Sign out function
 function logout() {
     firebase.auth().signOut();
 }
+
+
 
 // Send user verification by email to ensure that the email account belongs to the user
 function sendUserVerification() {
@@ -100,3 +111,5 @@ function sendUserVerification() {
         window.alert("Error: " + error.message);// An error happened.
     });
 }
+
+

@@ -31,24 +31,18 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-  // var accntButton = header.querySelector('#profile-btn');
-  // accntButton.addEventListener('click', function(event) {
-  //   me.router.navigate('/profile');
+
+//   var accntButton = header.querySelector('#profile-btn');
+//   accntButton.addEventListener('click', function(event) {
+//     me.router.navigate('/profile');
+//   });
 
 
   header.removeAttribute('hidden');
   this.replaceElement(document.querySelector('header'), header);
 }
 
-// STEVEN ---------------------
-// Bookstore.prototype.viewProfile = function(doc) {
-//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
 
-//   profilePage.removeAttribute('hidden');
-//   this.replaceElement(document.querySelector('main'), profilePage);
-
-//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
-// }
 
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (doc) {
@@ -97,6 +91,20 @@ Bookstore.prototype.viewHome = function (doc) {
     bs.router.navigate('/book/' + bookDetails.id);
   });
 }
+
+// STEVEN ---------------------
+// Bookstore.prototype.viewProfile = function(doc) {
+//     var profilePage = document.querySelector('#profile-page').cloneNode(true);
+  
+//     profilePage.removeAttribute('hidden');
+//     this.replaceElement(document.querySelector('main'), profilePage);
+//     if (document.readyState == 'loading') {
+//         document.addEventListener('DOMContentLoaded', ready)
+//     } else {
+//         ready()
+//     }
+//   }
+
 
 /* SHOPPING CART SCRIPTS */
 Bookstore.prototype.viewCart = function (doc) {
