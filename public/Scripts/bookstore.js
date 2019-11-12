@@ -86,8 +86,8 @@ Bookstore.prototype.initRouter = function () {
   this.router
     .on({
       '/cart': function () {
-        let cartDocRef = that.db.collection("users").doc("nrodr047").collection("cart")
-        let allItems = cartDocRef.get()
+        let cartDocRef = that.db.collection("users").doc("nrodr047").collection("cart");
+        let allItemsCart = cartDocRef.get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               console.log(doc.id, '=>', doc.data());
@@ -97,6 +97,7 @@ Bookstore.prototype.initRouter = function () {
           .catch(err => {
             console.log('Error getting documents', err);
           });
+
       }
     }).resolve();
     
