@@ -69,7 +69,7 @@ Bookstore.prototype.viewHome = function (doc) {
     // TODO make routing work for pertaining books!
     var bookRowContents = `
                 <div class="cart-item cart-column">
-                  <i class="book-details-link" id="ZyeZCXscDEzIKRG7gqUJ">
+                  <i class="book-details-link" id=${doc.id}>
                   <img class="item-image" src="${doc.get("Cover")}" width="100" height="200">
                   </i>
                 </div>
