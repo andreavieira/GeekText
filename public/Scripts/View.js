@@ -214,6 +214,27 @@ Bookstore.prototype.viewCart = function (doc) {
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
 
+  // //Modal
+    var modal = bookDetails.querySelector("#myModal");
+    var img = bookDetails.querySelector("#myImg");
+    var modalImg = bookDetails.querySelector("#img01");
+    var captionText = bookDetails.querySelector("#caption");
+    img.onclick = function(){
+      modal.style.display = "block";
+      modalImg.src = this.src;
+      captionText.innerHTML = this.alt;
+    }
+
+    var span = bookDetails.getElementsByClassName("close")[0];
+
+    span.onclick = function () {
+      modal.style.display = "none";
+
+    }
+
+    var bookCover = bookDetails.querySelector(".book-cover");
+    bookCover.src = "http://localhost:5000/" + doc.get("Cover");
+
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
 
