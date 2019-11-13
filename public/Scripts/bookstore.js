@@ -36,18 +36,24 @@ Bookstore.prototype.initRouter = function () {
     booksDocRef.orderBy("AuthorLn");
   }
 
+  function sortByGenre() {
+    booksDocRef.orderBy("Genre");
+  }
+
   this.router
     .on({
       '/': function () { // navigation string '/' leads to viewHome()
         // sortByRating(booksDocRef)
-        sortByAuthor()
-
+        // sortByGenre()
+        // booksDocRef.orderByChild('AuthorLn')
+        let bDetails = [];
         let allItems = booksDocRef.get()
           .then(snapshot => {
             snapshot.forEach(doc => {
-              console.log(doc.id, '=>', doc.data());
-              that.viewHome(doc);
+              bDetails.push(doc.data());
             });
+            console.log(bDetails);
+            that.viewHome(bDetails);
           })
           .catch(err => {
             console.log('Error getting documents', err);
@@ -56,25 +62,24 @@ Bookstore.prototype.initRouter = function () {
     }).resolve();
 
   this.router
+  .on({
+      "/profile": function(params){
+        let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
+        let getDoc = detailsRef.get()
+        .then(doc => {
+           if (!doc.exists) {
+             console.log('No such document!');
+           } else {
+             that.viewBookDetails(doc);
+           }
+         })
+         .catch(err => {
+           console.log('Error getting document', err);
+         });
 
-  // .on({
-  //     "/profile": function(params){
-  //       let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
-  //       let getDoc = detailsRef.get()
-  //       .then(doc => {
-  //          if (!doc.exists) {
-  //            console.log('No such document!');
-  //          } else {
-  //            that.viewBookDetails(doc);
-  //          }
-  //        })
-  //        .catch(err => {
-  //          console.log('Error getting document', err);
-  //        });
 
-
-  //     }
-  // }).resolve();
+      }
+  }).resolve();
 
 
   this.router
@@ -98,8 +103,8 @@ Bookstore.prototype.initRouter = function () {
   this.router
     .on({
       '/cart': function () {
-        let cartDocRef = that.db.collection("users").doc("nrodr047").collection("cart")
-        let allItems = cartDocRef.get()
+        let cartDocRef = that.db.collection("users").doc("nrodr047").collection("cart");
+        let allItemsCart = cartDocRef.get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               console.log(doc.id, '=>', doc.data());
@@ -109,6 +114,7 @@ Bookstore.prototype.initRouter = function () {
           .catch(err => {
             console.log('Error getting documents', err);
           });
+
       }
     }).resolve();
     

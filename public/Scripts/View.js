@@ -51,50 +51,57 @@ Bookstore.prototype.viewHeader = function () {
 // }
 
 /* HOME SCRIPTS */
-Bookstore.prototype.viewHome = function (doc) {
+Bookstore.prototype.viewHome = function (bDetails) {
   var homePage = document.querySelector('#home-page').cloneNode(true);
-
+  //console.log(bDetails[0]);
 
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
+
 
   function renderRating(bookRating) {
     return bookRating
     // Will turn double rating in DB to star representation
   }
-  
-  function renderCart() {
+
+  var bs = this;
+
+  function renderBookRow(doc) {
     var bookRow = document.createElement('div');
     bookRow.classList.add('cart-row')
     // TODO make routing work for pertaining books!
     var bookRowContents = `
                 <div class="cart-item cart-column">
-                  <i class="book-details-link" id="ZyeZCXscDEzIKRG7gqUJ">
-                  <img class="item-image" src="${doc.get("Cover")}" width="100" height="200">
+                  <i class="book-details-link" id="${doc.Id}">
+                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
                   </i>
                 </div>
                 <div class="cart-description cart-column">
-                  <span id="description">${"<i> " + doc.get("BookTitle") + "</i> By: " + doc.get("AuthorFn") + " " + doc.get("AuthorLn")}</span>
+                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
                 </div>
                 <span class="cart-price cart-column">
-                  <span id ="item-price">$${doc.get("Price")}</span>
+                  <span id ="item-price">$${doc.Price}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <span>${renderRating(doc.get("Rating"))}</span>
+                  <span>${renderRating(doc.Rating)}</span>
                 </div>
               </div>
               </div>
             </div>`
     bookRow.innerHTML = bookRowContents
+
+    var bookDetails = bookRow.querySelector('.book-details-link');
+    bookDetails.addEventListener('click', function () {
+      console.log("message")
+      bs.router.navigate('/book/' + bookDetails.id);
+    });
+
     var bookItems = document.getElementsByClassName('cart-items')[0];
     bookItems.append(bookRow);
   }
-  renderCart();
 
-  let bs = this;
-  var bookDetails = homePage.querySelector('.book-details-link');
-  bookDetails.addEventListener('click', function () {
-    bs.router.navigate('/book/' + bookDetails.id);
+  bDetails.forEach(book => {
+    renderBookRow(book);
   });
 }
 
@@ -132,18 +139,18 @@ Bookstore.prototype.viewCart = function (doc) {
   function removeCartItem(event) {
     var buttonClicked = event.target
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
-    
+
     updateCartTotal()
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
   // @param {*} event used when quantity value is changed 
   function quantityChanged(event) {
-    var input = event.target                        
+    var input = event.target
     if (isNaN(input.value) || input.value <= 0) {
-      input.value = 1                             
+      input.value = 1
     }
-    updateCartTotal()                               
+    updateCartTotal()
   }
 
   function renderCart() {
@@ -180,7 +187,7 @@ Bookstore.prototype.viewCart = function (doc) {
 
     cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
-}
+  }
 
 
   renderCart();
