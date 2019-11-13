@@ -133,7 +133,7 @@ hr {
 }
 
 .account-btn {
-    width: 100px;
+    width: 20px;
     height: 20px;
     border-radius: 50%;
     display: flex;
@@ -143,6 +143,7 @@ hr {
     border: none;
     transition: 0.4s;
     cursor: pointer;
+    
 }
 
 .account-dropdown-content {
@@ -157,7 +158,7 @@ hr {
     top: 10px;
     right: 5px;
 }
-
+  
 .account-dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -242,7 +243,6 @@ hr {
     width: 100px;
 }
 
-
 .main-footer {
     text-align: center;
     background-color:rgb(168, 168, 168);
@@ -310,7 +310,6 @@ hr {
 
 .btn-danger {
     display: block;
-    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(230, 100, 100);
@@ -321,11 +320,12 @@ hr {
 }
 
 .btn-danger:hover {
-    background-color: rgb(153, 0, 0);
+    background-color: rgb(43, 107, 54);
 }
 
 .btn-save{
     display: block;
+    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(80, 150, 85);
@@ -335,22 +335,7 @@ hr {
     border: none;
 }
 .btn-save:hover{
-    background-color: rgb(43, 107, 54);
-}
-
-.btn-add {
-    display: block;
-    font-size: 0.7em;
-    color: white;
-    background-color: rgb(74, 115, 202);
-    border-radius: .2em;
-    padding: 10px;
-    font-weight: bold;
-    border: none;
-}
-
-.btn-add:hover {
-    background-color: rgb(38, 41, 199);
+    background-color: rgb(54, 138, 68);
 }
 
 .cart-quantity-input{
