@@ -144,6 +144,8 @@ hr {
     color: white;
     border: none;
     transition: 0.4s;
+    cursor: pointer;
+    
 }
 
 
@@ -160,7 +162,7 @@ hr {
     right: 15px;
     border-radius: 5px;
 }
-
+  
 .account-dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -273,7 +275,6 @@ hr {
     width: 100px;
 }
 
-
 .main-footer {
     text-align: center;
     background-color:rgb(168, 168, 168);
@@ -341,7 +342,6 @@ hr {
 
 .btn-danger {
     display: block;
-    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(230, 100, 100);
@@ -352,11 +352,12 @@ hr {
 }
 
 .btn-danger:hover {
-    background-color: rgb(153, 0, 0);
+    background-color: rgb(43, 107, 54);
 }
 
 .btn-save{
     display: block;
+    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(80, 150, 85);
@@ -366,22 +367,7 @@ hr {
     border: none;
 }
 .btn-save:hover{
-    background-color: rgb(43, 107, 54);
-}
-
-.btn-add {
-    display: block;
-    font-size: 0.7em;
-    color: white;
-    background-color: rgb(74, 115, 202);
-    border-radius: .2em;
-    padding: 10px;
-    font-weight: bold;
-    border: none;
-}
-
-.btn-add:hover {
-    background-color: rgb(38, 41, 199);
+    background-color: rgb(54, 138, 68);
 }
 
 .cart-quantity-input{
@@ -528,4 +514,80 @@ hr {
 .rate > input:checked ~ label:hover ~ label,
 .rate > label:hover ~ input:checked ~ label {
     color: #c59b08;
+}
+
+/*--DANIELA--Book Details Modal*/
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+
+/* Add Animation */
+.modal-content, #caption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
 }

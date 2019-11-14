@@ -26,17 +26,34 @@ function Bookstore() {
 Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
+  let booksDocRef = firebase.firestore().collection("bookdetails")
+
+  function sortByRating() {
+    booksDocRef.orderBy("Rating");
+  }
+
+  function sortByAuthor() {
+    booksDocRef.orderBy("AuthorLn");
+  }
+
+  function sortByGenre() {
+    booksDocRef.orderBy("Genre");
+  }
 
   this.router
     .on({
       '/': function () { // navigation string '/' leads to viewHome()
-        let booksDocRef = firebase.firestore().collection("bookdetails")
+        // sortByRating(booksDocRef)
+        // sortByGenre()
+        // booksDocRef.orderByChild('AuthorLn')
+        let bDetails = [];
         let allItems = booksDocRef.get()
           .then(snapshot => {
             snapshot.forEach(doc => {
-              console.log(doc.id, '=>', doc.data());
-              that.viewHome(doc);
+              bDetails.push(doc.data());
             });
+            console.log(bDetails);
+            that.viewHome(bDetails);
           })
           .catch(err => {
             console.log('Error getting documents', err);
