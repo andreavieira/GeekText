@@ -38,17 +38,17 @@ firebase.auth().onAuthStateChanged(function(user) {
             var email_verified = user.emailVerified;
             
             if(email_verified) {
-                document.getElementById("welcome-user").innerHTML = "Welcome: " + email_id + "\n";
+                document.getElementById("welcome-user").innerHTML = "Welcome: \n" + email_id + "\n";
                 document.getElementById("verify-btn").style.display = "none";
             } else {
-                document.getElementById("welcome-user").innerHTML = "Welcome: " + email_id +
+                document.getElementById("welcome-user").innerHTML = "Welcome: \n" + email_id +
                                                                 "\n" + "User NOT Verified"; 
                 document.getElementById("verify-btn").style.display = "block";
             }
         }
 
     } else {
-        //No user is logged in
+        // No user is logged in
 
         // Show the not-logged in view and hide the logged in view
         document.getElementById("loggedin-div").style.display = "none";
@@ -113,3 +113,41 @@ function sendUserVerification() {
 }
 
 
+
+// Send an email to reset password 
+function resetPassword(){
+
+    var auth = firebase.auth();
+    var emailAddress = "user@example.com";
+
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+        window.alert("Reset email sent.");
+    }).catch(function(error) {
+        window.alert("Error: " + error.message);
+    });
+
+}
+
+
+// Used on the profile page to update user information
+function updateUserProfile() {
+    // stores the current user instance in var user
+    var user = firebase.auth().currentUser;
+
+    user.updateProfile({
+        displayName: "Jane Q. User",
+        photoURL: "https://example.com/jane-q-user/profile.jpg"
+
+        // console.log("Sign-in provider: " + profile.providerId);
+        // console.log("  Provider-specific UID: " + profile.uid);
+        // console.log("  Name: " + profile.displayName);
+        // console.log("  Email: " + profile.email);
+        // console.log("  Photo URL: " + profile.photoURL);
+
+
+    }).then(function() {
+        window.alert("Update was successful");  // Update successful.
+    }).catch(function(error) {
+        window.alert("Error with update: " + error.message);    // An error happened.
+});
+}

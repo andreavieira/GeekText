@@ -32,10 +32,10 @@ Bookstore.prototype.viewHeader = function () {
     me.router.navigate('/');
   });
 
-//   var accntButton = header.querySelector('#profile-btn');
-//   accntButton.addEventListener('click', function(event) {
-//     me.router.navigate('/profile');
-//   });
+  var accntButton = header.querySelector('#profile-btn');
+  accntButton.addEventListener('click', function(event) {
+    me.router.navigate('/profile');
+  });
 
 
   header.removeAttribute('hidden');
@@ -93,17 +93,21 @@ Bookstore.prototype.viewHome = function (doc) {
 }
 
 // STEVEN ---------------------
-// Bookstore.prototype.viewProfile = function(doc) {
-//     var profilePage = document.querySelector('#profile-page').cloneNode(true);
-  
-//     profilePage.removeAttribute('hidden');
-//     this.replaceElement(document.querySelector('main'), profilePage);
-//     if (document.readyState == 'loading') {
-//         document.addEventListener('DOMContentLoaded', ready)
-//     } else {
-//         ready()
-//     }
-//   }
+Bookstore.prototype.viewProfile = function(doc) {
+    var profilePage = document.querySelector('#profile-page').cloneNode(true);
+    
+    
+    // if (document.readyState == 'loading') {
+    //     document.addEventListener('DOMContentLoaded', ready)
+    // } else {
+    //     ready()
+    // }
+
+
+    profilePage.removeAttribute('hidden');
+    this.replaceElement(document.querySelector('main'), profilePage);
+}
+
 
 
 /* SHOPPING CART SCRIPTS */

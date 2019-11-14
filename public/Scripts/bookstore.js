@@ -45,30 +45,20 @@ Bookstore.prototype.initRouter = function () {
     }).resolve();
 
   this.router
-    // .on({
-    //     "/profile": function(params) {
+    .on({
+        "/profile": function(params) {
 
-            // let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
-            // let getDoc = detailsRef.get()
-            // .then(doc => {
-            // if (!doc.exists) {
-            //     console.log('No such document!');
-            // } else {
-            //     that.viewBookDetails(doc);
-            // }
-            // })
-            // .catch(err => {
-            // console.log('Error getting document', err);
-            // });
-            
-        //   }
-        // }).resolve();
+
+            that.viewProfile();
+        }
+    }).resolve();
 
 
   this.router
     .on({
       "/book/:id": function (params) {
         let detailsRef = that.db.collection("bookdetails").doc(params.id);
+        
         let getDoc = detailsRef.get()
           .then(doc => {
             if (!doc.exists) {
@@ -80,6 +70,8 @@ Bookstore.prototype.initRouter = function () {
           .catch(err => {
             console.log('Error getting document', err);
           });
+
+
       }
     }).resolve();
 
@@ -100,6 +92,7 @@ Bookstore.prototype.initRouter = function () {
 
       }
     }).resolve();
+
     
   //FIRESTORE LOAD COLLECTIONS
   return this.router;
