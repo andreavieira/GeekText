@@ -102,7 +102,6 @@ Bookstore.prototype.viewHome = function (doc) {
 
 //TO DO
 //Options if no items in cart or saved
-//Add to cart button
 //Save for later button event listener
 //access documents for saved list
 //fix references for book details
@@ -150,7 +149,7 @@ Bookstore.prototype.viewCart = function (doc) {
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
           })
-    //updateCartTotal();
+    updateCartTotal();
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
@@ -163,6 +162,35 @@ Bookstore.prototype.viewCart = function (doc) {
     updateCartTotal()                               
   }
 
+  function addToCart(event){
+    var buttonClicked = event.target
+    var ID = document.getElementById("save-data-id").textContent;
+    var docTitle = document.getElementById("save-book-title").textContent;
+    var docAuthor = document.getElementById("save-author-name").textContent;
+    console.log(docAuthor)
+    var docPrice = document.getElementById("save-price").textContent;
+    console.log(docPrice)
+    var docImage = document.getElementById("save-image").src;
+    console.log(docImage)
+
+    buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+
+    let cartDocRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart")
+    let addDoc = cartDocRef.add({
+      title: docTitle,
+      authorName: docAuthor,
+      price: docPrice,
+      image: docImage
+    }).then(ID => {
+      console.log('Added document with ID: ', ID.id);
+    });
+    
+    
+
+
+  //updateCartTotal();
+  }
+
   function renderCart() {
     var cartRow = document.createElement('div');
     cartRow.classList.add('cart-row')
@@ -172,10 +200,13 @@ Bookstore.prototype.viewCart = function (doc) {
                   <img class="item-image" src="${doc.get("image")}" width="100" height="200">
                 </div>
                 <div class="cart-description cart-column">
-                  <span id="description">${"<i> " + doc.get("title") + "</i> By: " + doc.get("authorName") + " "}</span>
+                  <div id="description">
+                  <span id="book-title"><i>${doc.get("title")}</i></span> By:
+                  <span id="author-name">${doc.get("authorName") + " "}</span>
+                  </div>
                 </div>
                 <span class="cart-price cart-column">
-                  <span id ="item-price">${doc.get("price")}</span>
+                  <span id ="save-item-price">${doc.get("price")}</span>
                 </span>
                 <div class="cart-quantity cart-column">
                   <input class="cart-quantity-input" id="quant"
@@ -195,7 +226,6 @@ Bookstore.prototype.viewCart = function (doc) {
     cartRow.innerHTML = cartRowContents
     var cartItems = document.getElementsByClassName('cart-items')[0];
     cartItems.append(cartRow);
-
     cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
 }
@@ -203,21 +233,21 @@ Bookstore.prototype.viewCart = function (doc) {
 
 
 function renderSave(doc) {
-  var cartRow = document.createElement('div');
-  cartRow.classList.add('save-row')
-  var cartRowContents = `
+  var saveRow = document.createElement('div');
+  saveRow.classList.add('save-row')
+  var saveRowContents = `
               <div class="cart-item cart-column">
-              <br>
-              <span id="default" hidden><i>You currently do not have items saved for later.</i></span>
-              </br>
-              <div id ="data-id" hidden>${doc.id}</div>
-                <img class="item-image" src="${doc.get("image")}" width="100" height="200">
+              <div id ="save-data-id" hidden>${doc.id}</div>
+                <img class="item-image" id="save-image" src="${doc.get("image")}" width="100" height="200">
               </div>
               <div class="cart-description cart-column">
-                <span id="description">${"<i> " + doc.get("title") + "</i> By: " + doc.get("authorName") + " "}</span>
+                <span>
+                <span id="save-book-title"><i>${doc.get("title")}</i></span> By:
+                <span id="save-author-name">${doc.get("authorName") + " "}</span>
+                </span>
               </div>
               <span class="cart-price cart-column">
-                <span id ="item-price">${doc.get("price")}</span>
+                <span id ="save-price">${doc.get("price")}</span>
               </span>
               <div class="cart-quantity cart-column">
                 <input class="cart-quantity-input" id="quant"
@@ -234,21 +264,21 @@ function renderSave(doc) {
             </div>
             </div>
           </div>`
-  cartRow.innerHTML = cartRowContents
-  var cartItems = document.getElementsByClassName('saved-items')[0];
-  cartItems.append(cartRow);
+  saveRow.innerHTML = saveRowContents
+  var saveItems = document.getElementsByClassName('saved-items')[0];
+  saveItems.append(saveRow);
 
-  cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
-  cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
+  saveRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
+  saveRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
+  saveRow.getElementsByClassName('btn-add')[0].addEventListener('click', addToCart);
 }
 
 
-  // if (saveListRef != null){            //if the path has documents
     if (doc.id != "save"){          //if the document is not a saved item
       renderCart();                 //render cart
     }
     if(doc.id == "save"){
-      let docRef = firebase.firestore().collection("users").doc("nrodr047").collection("save")
+      let docRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart").doc("save").collection("savedItems")
       let allItems = docRef.get()
         .then(snapshot => {
           snapshot.forEach(doc => {
