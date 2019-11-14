@@ -3,7 +3,9 @@ toggle between hiding and showing the dropdown content */
 function accountDrop() {
     document.getElementById("accDropdown").classList.toggle("show");
 }
-  
+ 
+
+
 // Close the dropdown if the user cursor moves outside of it
 window.onclick = function(event) {
     if (!event.target.matches('.account-btn')) {
@@ -18,6 +20,8 @@ window.onclick = function(event) {
     }
 }
 
+
+
 // Add a realtime listener to check if user is logged in or not
 firebase.auth().onAuthStateChanged(function(user) {
     if (user){
@@ -29,15 +33,22 @@ firebase.auth().onAuthStateChanged(function(user) {
 
         var user = firebase.auth().currentUser;
 
-        if(user != null){
+        if(user != null) {
             var email_id = user.email;
             var email_verified = user.emailVerified;
-            document.getElementById("welcome-user").innerHTML = "Welcome: " + email_id +
-                                                                "User Verification: " + email_verified; 
+            
+            if(email_verified) {
+                document.getElementById("welcome-user").innerHTML = "Welcome: \n" + email_id + "\n";
+                document.getElementById("verify-btn").style.display = "none";
+            } else {
+                document.getElementById("welcome-user").innerHTML = "Welcome: \n" + email_id +
+                                                                "\n" + "User NOT Verified"; 
+                document.getElementById("verify-btn").style.display = "block";
+            }
         }
 
     } else {
-        //No user is logged in
+        // No user is logged in
 
         // Show the not-logged in view and hide the logged in view
         document.getElementById("loggedin-div").style.display = "none";
@@ -45,24 +56,9 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
-// Signing user in function
-function login() {
-    // Obtains and initializes var with user email and pass
-    var userEmail = document.getElementById("userEmailin").value;
-    var userPass = document.getElementById("userPassword").value;
-
-    // Sign into firebase with email and pass. Stores to a promise for error catching
-    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-
-        // Handle errors here
-        var errorCode = error.code;
-        var errorMessage = error.message;
-    });    
-}
 
 
 // Creating user in function
-//NAT CAN U SEE THIS
 function createUser() {
     // TODO: Validate for REAL email
 
@@ -81,7 +77,77 @@ function createUser() {
 
 
 
+// Signing user in function
+function login() {
+    // Obtains and initializes var with user email and pass
+    var userEmail = document.getElementById("userEmailin").value;
+    var userPass = document.getElementById("userPassword").value;
+
+    // Sign into firebase with email and pass. Stores to a promise for error catching
+    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+
+        // Handle errors here
+        var errorCode = error.code;
+        var errorMessage = error.message;
+    });    
+}
+
+
+
 // Sign out function
 function logout() {
     firebase.auth().signOut();
+}
+
+
+
+// Send user verification by email to ensure that the email account belongs to the user
+function sendUserVerification() {
+    var user = firebase.auth().currentUser;
+
+    user.sendEmailVerification().then(function() {
+        window.alert("Verification sent");   // Email sent.
+    }).catch(function(error) {
+        window.alert("Error: " + error.message);// An error happened.
+    });
+}
+
+
+
+// Send an email to reset password 
+function resetPassword(){
+
+    var auth = firebase.auth();
+    var emailAddress = "user@example.com";
+
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+        window.alert("Reset email sent.");
+    }).catch(function(error) {
+        window.alert("Error: " + error.message);
+    });
+
+}
+
+
+// Used on the profile page to update user information
+function updateUserProfile() {
+    // stores the current user instance in var user
+    var user = firebase.auth().currentUser;
+
+    user.updateProfile({
+        displayName: "Jane Q. User",
+        photoURL: "https://example.com/jane-q-user/profile.jpg"
+
+        // console.log("Sign-in provider: " + profile.providerId);
+        // console.log("  Provider-specific UID: " + profile.uid);
+        // console.log("  Name: " + profile.displayName);
+        // console.log("  Email: " + profile.email);
+        // console.log("  Photo URL: " + profile.photoURL);
+
+
+    }).then(function() {
+        window.alert("Update was successful");  // Update successful.
+    }).catch(function(error) {
+        window.alert("Error with update: " + error.message);    // An error happened.
+});
 }
