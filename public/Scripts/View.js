@@ -86,7 +86,7 @@ Bookstore.prototype.viewHome = function (bDetails) {
 
     var bookDetails = bookRow.querySelector('.book-details-link');
     bookDetails.addEventListener('click', function () {
-      console.log("message")
+      //console.log("message")
       bs.router.navigate('/book/' + bookDetails.id);
     });
 
@@ -161,7 +161,7 @@ Bookstore.prototype.viewCart = function (doc) {
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
-  // @param {*} event used when quantity value is changed 
+  // @param {*} event used when quantity value is changed
   function quantityChanged(event) {
     var input = event.target
     if (isNaN(input.value) || input.value <= 0) {
@@ -230,27 +230,9 @@ Bookstore.prototype.viewCart = function (doc) {
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
-
-  // //Modal
-    var modal = bookDetails.querySelector("#myModal");
-    var img = bookDetails.querySelector("#myImg");
-    var modalImg = bookDetails.querySelector("#img01");
-    var captionText = bookDetails.querySelector("#caption");
-    img.onclick = function(){
-      modal.style.display = "block";
-      modalImg.src = this.src;
-      captionText.innerHTML = this.alt;
-    }
-
-    var span = bookDetails.getElementsByClassName("close")[0];
-
-    span.onclick = function () {
-      modal.style.display = "none";
-
-    }
-
-    var bookCover = bookDetails.querySelector(".book-cover");
-    bookCover.src = "http://localhost:5000/" + doc.get("Cover");
+  
+  var bookCover = bookDetails.querySelector(".book-cover");
+  bookCover.src = "http://localhost:5000/" + doc.get("Cover");
 
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
@@ -278,12 +260,93 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
+  // //Modal
+    var modal = bookDetails.querySelector("#myModal");
+    var img = bookDetails.querySelector(".book-cover");
+    var modalImg = bookDetails.querySelector("#img01");
+    //var captionText = bookDetails.querySelector("#caption");
+    img.onclick = function(){
+      modal.style.display = "block";
+      modalImg.src = bookCover.src;
+
+    }
+
+    var span = bookDetails.getElementsByClassName("close")[0];
+
+    span.onclick = function () {
+      modal.style.display = "none";
+
+    }
+
+
+  let bReviews = [];
+  let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
+  reviewRef.get().then(snapshot => {
+    if(!snapshot.exists){
+
+    }
+    snapshot.forEach(review => {
+      bReviews.push(review.data());
+    });
+    this.renderReviews(bReviews, bookDetails);
+  });
+
+  let reviewText = bookDetails.querySelector("#review-text");
+  let submitBtn = bookDetails.querySelector("#submit-btn");
+  let starRating = bookDetails.querySelector('.rate');
+  let me = this;
+  let exists = true;
+  submitBtn.onclick = function() {
+    //send review to database
+    if(starRating.getAttribute("rating") == -1) {
+      alert("Please add a star rating to your review");
+    } else {
+
+      // let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
+      //   rating: 0,
+      //   review: reviewText.value
+      // });
+      console.log("review added");
+      console.log({
+        rating: starRating.rating,
+        reviewText: reviewText.value
+      });
+
+      reviewText.setAttribute("disabled", true);
+      submitBtn.setAttribute("disabled", true);
+    }
+  };
+
+
 
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
 }
 
+Bookstore.prototype.renderReviews = function (bReviews, details_El) {
+  let review_Container = document.createElement("div");
+  bReviews.forEach(review => {
+    let review_El = details_El.querySelector(".filled-review").cloneNode(true);
+    console.log(review);
+    review_El.id = review.id;
+    review_El.querySelector(".rated").setAttribute("rating", review.rating);
+    review_El.querySelectorAll("input").forEach(radio => {
+        if(radio.getAttribute("value") <= review_El.querySelector(".rated").getAttribute("rating")){
+          radio.setAttribute("checked", "checked");
+        }
+      });
 
+
+
+
+    review_El.querySelector(".filled-review-text").innerHTML = review.review;
+    review_El.removeAttribute("hidden");
+    review_Container.appendChild(review_El);
+  });
+  details_El.querySelector(".filled-review-container").removeAttribute("hidden");
+  details_El.querySelector(".filled-review-container").innerHTML = '';
+  details_El.querySelector(".filled-review-container").appendChild(review_Container);
+}
 //TODO CLEANUP
 Bookstore.prototype.renderTemplate = function (id, data) {
   var template = this.templates[id];

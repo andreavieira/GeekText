@@ -53,7 +53,7 @@ Bookstore.prototype.initRouter = function () {
             snapshot.forEach(doc => {
               bDetails.push(doc.data());
             });
-            console.log(bDetails);
+            //console.log(bDetails);
             that.viewHome(bDetails);
           })
           .catch(err => {
@@ -63,6 +63,7 @@ Bookstore.prototype.initRouter = function () {
     }).resolve();
 
   this.router
+<<<<<<< HEAD
     .on({
         "/profile": function(params) {
             // Get data
@@ -73,14 +74,54 @@ Bookstore.prototype.initRouter = function () {
             
             that.viewProfile();
         }
+=======
+  .on({
+      "/book/:id": function(params){
+        let detailsRef = that.db.collection("bookdetails").doc(params.id);
+        let getDoc = detailsRef.get()
+        .then(doc => {
+           if (!doc.exists) {
+             console.log('No such document!');
+           } else {
+
+             that.viewBookDetails(doc);
+           }
+         })
+         .catch(err => {
+           console.log('Error getting document', err);
+         });
+       }
+>>>>>>> 20299adca53590d08e2845427940ac9770e947ac
     }).resolve();
+
+  // .on({
+  //     "/profile": function(params){
+  //       let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
+  //       let getDoc = detailsRef.get()
+  //       .then(doc => {
+  //          if (!doc.exists) {
+  //            console.log('No such document!');
+  //          } else {
+  //            that.viewBookDetails(doc);
+  //          }
+  //        })
+  //        .catch(err => {
+  //          console.log('Error getting document', err);
+  //        });
+    // .on({
+    //     "/profile": function(params) {
+    //
+    //
+    //         that.viewProfile();
+    //     }
+    // }).resolve();
 
 
   this.router
     .on({
       "/book/:id": function (params) {
         let detailsRef = that.db.collection("bookdetails").doc(params.id);
-        
+
         let getDoc = detailsRef.get()
           .then(doc => {
             if (!doc.exists) {
@@ -115,7 +156,7 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
-    
+
   //FIRESTORE LOAD COLLECTIONS
   return this.router;
 }
@@ -126,7 +167,7 @@ Bookstore.prototype.getCleanPath = function (dirtyPath) {
   } else {
     return dirtyPath;
   }
-};
+}
 
 window.onload = function () {
   window.app = new Bookstore();
