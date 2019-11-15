@@ -27,14 +27,12 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
-  // Default sort type 
-  var sortType = "BookTitle"
 
   this.router
     .on({
       '/': function () { // Navigation string '/' leads to viewHome()
         let bDetails = [];
-        let allItems = booksDocRef.orderBy(sortType).get()
+        let allItems = booksDocRef.orderBy("BookTitle").get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               bDetails.push(doc.data());
@@ -44,24 +42,123 @@ Bookstore.prototype.initRouter = function () {
           .catch(err => {
             console.log('Error getting documents', err);
           });
+      }
+    }).resolve();
 
-          function determineSort(sort) {
-            sortType = sort;
-            console.log(sortType);
-          }
-          document.getElementById("sortByBestSellers").addEventListener("click", determineSort("NumSales"));
+    this.router
+    .on({
+      '/sortByRating': function () { // Home sorted by Rating
+        console.log("Sorting by rating")
+        let bDetails = [];
+        let allItems = booksDocRef.orderBy("Rating", "desc").get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+    this.router
+    .on({
+      '/sortByGenre': function () { // Home sorted by Rating
+        console.log("Sorting by genre")
+        let bDetails = [];
+        let allItems = booksDocRef.orderBy("Genre").get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+    this.router
+    .on({
+      '/sortByBestSellers': function () { // Home sorted by Rating
+        console.log("Sorting by best sellers")
+        let bDetails = [];
+        let allItems = booksDocRef.orderBy("NumSales", "desc").get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+    this.router
+    .on({
+      '/sortByAuthor': function () { // Home sorted by Rating
+        console.log("Sorting by author")
+        let bDetails = [];
+        let allItems = booksDocRef.orderBy("AuthorLn").get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+    this.router
+    .on({
+      '/sortByPrice': function () { // Home sorted by Rating
+        console.log("Sorting by price")
+        let bDetails = [];
+        let allItems = booksDocRef.orderBy("Price").get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+    this.router
+    .on({
+      '/sortByRelease': function () { // Home sorted by Rating
+        console.log("Sorting by rating")
+        let bDetails = [];
+        let allItems = booksDocRef.orderBy("ReleaseDate").get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
       }
     }).resolve();
 
   this.router
     .on({
         "/profile": function(params) {
-
-
             that.viewProfile();
         }
     }).resolve();
-
 
   this.router
     .on({
@@ -79,8 +176,6 @@ Bookstore.prototype.initRouter = function () {
           .catch(err => {
             console.log('Error getting document', err);
           });
-
-
       }
     }).resolve();
 
@@ -98,7 +193,6 @@ Bookstore.prototype.initRouter = function () {
           .catch(err => {
             console.log('Error getting documents', err);
           });
-
       }
     }).resolve();
 
