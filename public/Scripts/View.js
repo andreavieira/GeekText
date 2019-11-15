@@ -214,8 +214,9 @@ Bookstore.prototype.viewCart = function (doc) {
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
 
-  // //Modal
+  //Modal: used to enlarge book cover image when clicked
     var modal = bookDetails.querySelector("#myModal");
+    //Gets image to insert inside of the Modal
     var img = bookDetails.querySelector("#myImg");
     var modalImg = bookDetails.querySelector("#img01");
     var captionText = bookDetails.querySelector("#caption");
@@ -224,14 +225,14 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       modalImg.src = this.src;
       captionText.innerHTML = this.alt;
     }
-
+    //Gets element which closes the Modal
     var span = bookDetails.getElementsByClassName("close")[0];
-
+    //On click [x], close the modal
     span.onclick = function () {
       modal.style.display = "none";
-
     }
 
+    //Book Cover
     var bookCover = bookDetails.querySelector(".book-cover");
     bookCover.src = "http://localhost:5000/" + doc.get("Cover");
 
