@@ -27,6 +27,7 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
+  let userInfoRef = firebase.firestore().collection("accounts")
 
   function sortByRating() {
     booksDocRef.orderBy("Rating");
@@ -64,8 +65,12 @@ Bookstore.prototype.initRouter = function () {
   this.router
     .on({
         "/profile": function(params) {
+            // Get data
+            userInfoRef.get().then(snapshot => {
+                console.log(snapshot.docs)
+            })
 
-
+            
             that.viewProfile();
         }
     }).resolve();
