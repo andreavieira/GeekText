@@ -27,6 +27,7 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
+  let userInfoRef = firebase.firestore().collection("accounts")
 
   function sortByRating() {
     booksDocRef.orderBy("Rating");
@@ -62,6 +63,18 @@ Bookstore.prototype.initRouter = function () {
     }).resolve();
 
   this.router
+<<<<<<< HEAD
+    .on({
+        "/profile": function(params) {
+            // Get data
+            userInfoRef.get().then(snapshot => {
+                console.log(snapshot.docs)
+            })
+
+            
+            that.viewProfile();
+        }
+=======
   .on({
       "/book/:id": function(params){
         let detailsRef = that.db.collection("bookdetails").doc(params.id);
@@ -78,6 +91,7 @@ Bookstore.prototype.initRouter = function () {
            console.log('Error getting document', err);
          });
        }
+>>>>>>> 20299adca53590d08e2845427940ac9770e947ac
     }).resolve();
 
   // .on({
