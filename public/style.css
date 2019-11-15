@@ -562,7 +562,8 @@ hr {
     top:-9999px;
 }
 
-.rated:not(:checked) > label {
+/* .rated:not(:checked) > label { */
+.rated > label {
     float:right;
     width:1em;
     overflow:hidden;
@@ -572,7 +573,7 @@ hr {
     color:#ccc;
 }
 
-.rated:not(:checked) > label::before {
+.rated > label::before {
     content: '★ ';
 }
 

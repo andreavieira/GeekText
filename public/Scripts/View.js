@@ -225,7 +225,7 @@ Bookstore.prototype.viewCart = function (doc) {
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
-  
+
   var bookCover = bookDetails.querySelector(".book-cover");
   bookCover.src = "http://localhost:5000/" + doc.get("Cover");
 
@@ -293,14 +293,24 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   let exists = true;
   submitBtn.onclick = function() {
     //send review to database
-    if(starRating.getAttribute("rating") == -1) {
+    //update rating
+    let list = starRating.querySelectorAll("input");
+    console.log(list);
+    for(let i = 0; i < 5; i++){
+
+      if(list[i].checked){
+        starRating.rating = 5 - i;
+        break;
+      }
+    }
+
+    if(starRating.rating == -1) {
       alert("Please add a star rating to your review");
     } else {
-
-      // let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
-      //   rating: 0,
-      //   review: reviewText.value
-      // });
+      let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
+        Rating: starRating.rating,
+        Text: reviewText.value
+      });
       console.log("review added");
       console.log({
         rating: starRating.rating,
@@ -320,23 +330,28 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
 Bookstore.prototype.renderReviews = function (bReviews, details_El) {
   let review_Container = document.createElement("div");
+  let reviewID = 0;
   bReviews.forEach(review => {
     let review_El = details_El.querySelector(".filled-review").cloneNode(true);
-    console.log(review);
-    review_El.id = review.id;
-    review_El.querySelector(".rated").setAttribute("rating", review.rating);
+    review_El.querySelector(".rated").setAttribute("rating", review.Rating);
+    let index = 5;
+    review_El.querySelectorAll(".rated label").forEach(rating => {
+      rating.previousElementSibling.name = "rated-" + reviewID + "" + index;
+      rating.setAttribute("for", rating.previousElementSibling.name);
+      index--;
+    });
+
     review_El.querySelectorAll("input").forEach(radio => {
-        if(radio.getAttribute("value") <= review_El.querySelector(".rated").getAttribute("rating")){
+        if(radio.getAttribute("value") == review_El.querySelector(".rated").getAttribute("rating")){
           radio.setAttribute("checked", "checked");
         }
       });
 
-
-
-
-    review_El.querySelector(".filled-review-text").innerHTML = review.review;
+    review_El.querySelector(".filled-review-text").innerHTML = review.Text;
     review_El.removeAttribute("hidden");
     review_Container.appendChild(review_El);
+
+    reviewID++;
   });
   details_El.querySelector(".filled-review-container").removeAttribute("hidden");
   details_El.querySelector(".filled-review-container").innerHTML = '';
