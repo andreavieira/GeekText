@@ -151,7 +151,7 @@ hr {
 =======
 >>>>>>> upstream/master
 =======
-    
+
 >>>>>>> upstream/master
 }
 
@@ -169,7 +169,7 @@ hr {
     right: 15px;
     border-radius: 5px;
 }
-  
+
 .account-dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -551,7 +551,6 @@ hr {
     color: #c59b08;
 }
 
-<<<<<<< HEAD
 .rated {
     float: left;
     height: 46px;
@@ -586,13 +585,6 @@ hr {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
-=======
-/*--DANIELA--Book Details Modal*/
-#myImg {
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
->>>>>>> upstream/master
 }
 
 #myImg:hover {opacity: 0.7;}

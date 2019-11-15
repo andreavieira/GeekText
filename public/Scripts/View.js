@@ -58,13 +58,9 @@ Bookstore.prototype.viewHome = function (bDetails) {
     // Will turn double rating in DB to star representation
   }
 
-<<<<<<< HEAD
-  function renderCart() {
-=======
   var bs = this;
 
   function renderBookRow(doc) {
->>>>>>> upstream/master
     var bookRow = document.createElement('div');
     bookRow.classList.add('cart-row')
     // TODO make routing work for pertaining books!
@@ -90,7 +86,7 @@ Bookstore.prototype.viewHome = function (bDetails) {
 
     var bookDetails = bookRow.querySelector('.book-details-link');
     bookDetails.addEventListener('click', function () {
-      console.log("message")
+      //console.log("message")
       bs.router.navigate('/book/' + bookDetails.id);
     });
 
@@ -106,8 +102,8 @@ Bookstore.prototype.viewHome = function (bDetails) {
 // STEVEN ---------------------
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
-    
-    
+
+
     // if (document.readyState == 'loading') {
     //     document.addEventListener('DOMContentLoaded', ready)
     // } else {
@@ -230,26 +226,8 @@ Bookstore.prototype.viewCart = function (doc) {
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
 
-  // //Modal
-    var modal = bookDetails.querySelector("#myModal");
-    var img = bookDetails.querySelector("#myImg");
-    var modalImg = bookDetails.querySelector("#img01");
-    var captionText = bookDetails.querySelector("#caption");
-    img.onclick = function(){
-      modal.style.display = "block";
-      modalImg.src = this.src;
-      captionText.innerHTML = this.alt;
-    }
-
-    var span = bookDetails.getElementsByClassName("close")[0];
-
-    span.onclick = function () {
-      modal.style.display = "none";
-
-    }
-
-    var bookCover = bookDetails.querySelector(".book-cover");
-    bookCover.src = "http://localhost:5000/" + doc.get("Cover");
+  var bookCover = bookDetails.querySelector(".book-cover");
+  bookCover.src = "http://localhost:5000/" + doc.get("Cover");
 
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
@@ -277,6 +255,23 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
+  // //Modal
+    var modal = bookDetails.querySelector("#myModal");
+    var img = bookDetails.querySelector(".book-cover");
+    var modalImg = bookDetails.querySelector("#img01");
+    //var captionText = bookDetails.querySelector("#caption");
+    img.onclick = function(){
+      modal.style.display = "block";
+      modalImg.src = bookCover.src;
+
+    }
+
+    var span = bookDetails.getElementsByClassName("close")[0];
+
+    span.onclick = function () {
+      modal.style.display = "none";
+
+    }
 
 
   let bReviews = [];
@@ -293,17 +288,28 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   let reviewText = bookDetails.querySelector("#review-text");
   let submitBtn = bookDetails.querySelector("#submit-btn");
+  let starRating = bookDetails.querySelector('.rate');
   let me = this;
   let exists = true;
   submitBtn.onclick = function() {
     //send review to database
-    let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
-      rating: 0,
-      review: reviewText.value
-    });
-    console.log("works but no added review");
-    reviewText.setAttribute("disabled", true);
-    submitBtn.setAttribute("disabled", true);
+    if(starRating.getAttribute("rating") == -1) {
+      alert("Please add a star rating to your review");
+    } else {
+
+      // let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
+      //   rating: 0,
+      //   review: reviewText.value
+      // });
+      console.log("review added");
+      console.log({
+        rating: starRating.rating,
+        reviewText: reviewText.value
+      });
+
+      reviewText.setAttribute("disabled", true);
+      submitBtn.setAttribute("disabled", true);
+    }
   };
 
 
