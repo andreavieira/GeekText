@@ -225,7 +225,7 @@ Bookstore.prototype.viewCart = function (doc) {
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
-
+  
   var bookCover = bookDetails.querySelector(".book-cover");
   bookCover.src = "http://localhost:5000/" + doc.get("Cover");
 
