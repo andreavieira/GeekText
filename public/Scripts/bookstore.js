@@ -33,7 +33,7 @@ Bookstore.prototype.initRouter = function () {
         let allItems = booksDocRef.get()
           .then(snapshot => {
             snapshot.forEach(doc => {
-              console.log(doc.id, '=>', doc.data());
+              //console.log(doc.id, '=>', doc.data());
               that.viewHome(doc);
             });
           })
@@ -44,7 +44,6 @@ Bookstore.prototype.initRouter = function () {
     }).resolve();
 
   this.router
-<<<<<<< HEAD
   .on({
       "/book/:id": function(params){
         let detailsRef = that.db.collection("bookdetails").doc(params.id);
@@ -60,8 +59,8 @@ Bookstore.prototype.initRouter = function () {
          .catch(err => {
            console.log('Error getting document', err);
          });
-=======
->>>>>>> upstream/master
+       }
+    }).resolve();
 
   // .on({
   //     "/profile": function(params){
@@ -118,7 +117,7 @@ Bookstore.prototype.initRouter = function () {
 
       }
     }).resolve();
-    
+
   //FIRESTORE LOAD COLLECTIONS
   return this.router;
 }
@@ -129,7 +128,7 @@ Bookstore.prototype.getCleanPath = function (dirtyPath) {
   } else {
     return dirtyPath;
   }
-};
+}
 
 window.onload = function () {
   window.app = new Bookstore();

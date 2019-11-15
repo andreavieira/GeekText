@@ -62,7 +62,7 @@ Bookstore.prototype.viewHome = function (doc) {
     return bookRating
     // Will turn double rating in DB to star representation
   }
-  
+
   function renderCart() {
     var bookRow = document.createElement('div');
     bookRow.classList.add('cart-row')
@@ -156,11 +156,11 @@ Bookstore.prototype.viewCart = function (doc) {
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
   // @param {*} event used when quantity value is changed
   function quantityChanged(event) {
-    var input = event.target                        
+    var input = event.target
     if (isNaN(input.value) || input.value <= 0) {
-      input.value = 1                             
+      input.value = 1
     }
-    updateCartTotal()                               
+    updateCartTotal()
   }
 
   function renderCart() {
@@ -315,11 +315,30 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   let bReviews = [];
   let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
   reviewRef.get().then(snapshot => {
+    if(!snapshot.exists){
+
+    }
     snapshot.forEach(review => {
       bReviews.push(review.data());
     });
     this.renderReviews(bReviews, bookDetails);
   });
+
+  let reviewText = bookDetails.querySelector("#review-text");
+  let submitBtn = bookDetails.querySelector("#submit-btn");
+  let me = this;
+  let exists = true;
+  submitBtn.onclick = function() {
+    //send review to database
+    let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
+      rating: 0,
+      review: reviewText.value
+    });
+    console.log("works but no added review");
+    reviewText.setAttribute("disabled", true);
+    submitBtn.setAttribute("disabled", true);
+  };
+
 
 
   bookDetails.removeAttribute('hidden');
@@ -329,17 +348,26 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 Bookstore.prototype.renderReviews = function (bReviews, details_El) {
   let review_Container = document.createElement("div");
   bReviews.forEach(review => {
-    let review_El = details_El.querySelector(".filled-review-container").cloneNode(true);
-    review_El.querySelector(".filled-rating").rating = review.Rating;
-    review_El.querySelector(".filled-review-text").innerHTML = review.Text;
+    let review_El = details_El.querySelector(".filled-review").cloneNode(true);
+    console.log(review);
+    review_El.id = review.id;
+    review_El.querySelector(".rated").setAttribute("rating", review.rating);
+    review_El.querySelectorAll("input").forEach(radio => {
+        if(radio.getAttribute("value") <= review_El.querySelector(".rated").getAttribute("rating")){
+          radio.setAttribute("checked", "checked");
+        }
+      });
 
+
+
+
+    review_El.querySelector(".filled-review-text").innerHTML = review.review;
     review_El.removeAttribute("hidden");
     review_Container.appendChild(review_El);
   });
   details_El.querySelector(".filled-review-container").removeAttribute("hidden");
   details_El.querySelector(".filled-review-container").innerHTML = '';
   details_El.querySelector(".filled-review-container").appendChild(review_Container);
-
 }
 //TODO CLEANUP
 Bookstore.prototype.renderTemplate = function (id, data) {
