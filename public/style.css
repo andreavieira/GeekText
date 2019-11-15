@@ -145,7 +145,14 @@ hr {
     border: none;
     transition: 0.4s;
     cursor: pointer;
-    
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> upstream/master
+=======
+
+>>>>>>> upstream/master
 }
 
 
@@ -162,7 +169,7 @@ hr {
     right: 15px;
     border-radius: 5px;
 }
-  
+
 .account-dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -312,7 +319,7 @@ hr {
     margin-top: 5px;
 }
 
-.cart-row{ 
+.cart-row{
     display: flex;
 }
 
@@ -434,13 +441,13 @@ hr {
     border: none;
     cursor: pointer;
 }
-  
+
 .dropdown {
     float: right;
     position: relative;
     display: inline-block;
 }
-  
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -449,7 +456,7 @@ hr {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-  
+
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -473,7 +480,35 @@ hr {
     display:block;
 }
 
-/* Ratings CSS */
+/* Review Section CSS
+
+  review-section-container
+    -filled-review-container
+      -filled-review (repeated)
+    -empty-review
+*/
+.review-section-container {
+  margin:auto;
+}
+
+.filled-review-container {
+  display:flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.filled-review {
+  display:flex;
+  flex-direction: row;
+  border: 2px solid black;
+  border-radius:5px;
+  /* position:absolute; */
+}
+.filled-review-text {
+  text-align: center;
+}
+
+
 .rate {
     float: left;
     height: 46px;
@@ -495,17 +530,17 @@ hr {
     color:#ccc;
 }
 
-.rate:not(:checked) > label:before {
+.rate:not(:checked) > label::before {
     content: '★ ';
 }
 
 .rate > input:checked ~ label {
-    color: #ffc700;    
+    color: #ffc700;
 }
 
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
+    color: #deb217;
 }
 
 .rate > input:checked + label:hover,
@@ -516,17 +551,59 @@ hr {
     color: #c59b08;
 }
 
-/*--DANIELA--Book Details Modal*/
+.rated {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+
+.rated:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+
+.rated:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+
+.rated:not(:checked) > label::before {
+    content: '★ ';
+}
+
+.rated > input:checked ~ label {
+    color: #ffc700;
+}
+
+
 #myImg {
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 #myImg:hover {opacity: 0.7;}
 
 /* The Modal (background) */
 .modal {
+<<<<<<< HEAD
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+=======
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -538,19 +615,43 @@ hr {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+>>>>>>> upstream/master
 }
 
 /* Modal Content (image) */
 .modal-content {
+<<<<<<< HEAD
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+=======
     margin: auto;
     display: block;
     width: 80%;
     max-width: 700px;
+>>>>>>> upstream/master
 }
 
 
 /* Add Animation */
 .modal-content, #caption {
+<<<<<<< HEAD
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)}
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+=======
     -webkit-animation-name: zoom;
     -webkit-animation-duration: 0.6s;
     animation-name: zoom;
@@ -565,10 +666,20 @@ hr {
 @keyframes zoom {
     from {transform:scale(0)}
     to {transform:scale(1)}
+>>>>>>> upstream/master
 }
 
 /* The Close Button */
 .close {
+<<<<<<< HEAD
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+=======
     position: absolute;
     top: 15px;
     right: 35px;
@@ -576,18 +687,32 @@ hr {
     font-size: 40px;
     font-weight: bold;
     transition: 0.3s;
+>>>>>>> upstream/master
 }
 
 .close:hover,
 .close:focus {
+<<<<<<< HEAD
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+=======
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
+>>>>>>> upstream/master
 }
 
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
+<<<<<<< HEAD
+  .modal-content {
+    width: 100%;
+  }
+}
+=======
     .modal-content {
         width: 100%;
     }
 }
+>>>>>>> upstream/master

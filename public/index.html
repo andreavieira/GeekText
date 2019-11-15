@@ -94,7 +94,7 @@
             <span class="cart-quantity cart-header
                 cart-column">RATING</span>
           </div>
-          
+
           <div class ="cart-items">
             <div class ="cart-row">
               <!-- Here is the home sort container in view.js file -->
@@ -119,7 +119,7 @@
                     <span class="cart-quantity cart-header
                     cart-column">QUANTITY</span>
                   </div>
-                
+
                 <ul style="list-style-type: none" id="cart-list">
                 <div class ="cart-items">
                     <div class ="cart-row">
@@ -154,8 +154,8 @@
   <!--Book Details/Reviews Container-->
   <div hidden class="template" id="book-details">
     <section class="content-section container">
-        <!--<img src=book-cover width="500" height="600">-->
-        <img id="myImg" src="http://localhost:5000/images/catcher.jpg" alt="Book Cover" style="width:100%;max-width:300px">
+
+
 
         <!-- Book Cover Enlarging Modal -->
         <div id="myModal" class="modal">
@@ -163,7 +163,7 @@
             <img class="modal-content" id="img01">
         </div>
 
-        <p class="book-cover"> </p>
+        <img class="book-cover" alt="Book Cover" style="width:100%;max-width:300px">
         <p class="book-title"> </p>
         <p class="author-fn"> </p>
         <p class="book-description"> </p>
@@ -178,6 +178,45 @@
 
         <!--<a href="url">Similar Books</a>-->
         <!--Link to Andrea's sorting page-->
+    </section>
+    <section class="review-section-container">
+      <div hidden class="filled-review-container" id="-1">
+        <div hidden class="filled-review">
+          <div class="rated" rating="-1">
+            <input disabled type="radio" id="star5" name="rate" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input disabled type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input disabled type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input disabled type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input disabled type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+          </div>
+          <p class="filled-review-text">Filled Review Box</p>
+        </div>
+      </div>
+      <div class="empty-review-container">
+        <div class="empty-rating"></div>
+        <div class="user-review">
+          <div class="rate" rating="-1">
+            <input type="radio" id="star5" name="rate" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+          </div>
+          <textarea id="review-text"></textarea><br>
+          <button id="submit-btn" value="Submit">Submit</button>
+        </div>
+      </div>
+      </div>
     </section>
   </div>
 
@@ -205,7 +244,7 @@
         </div>
         <br>
         <br>
-        
+
         <div id="payment-info">
             <h1>Payment Information</h1>
             <b>Credit Card: </b>
