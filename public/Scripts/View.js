@@ -235,6 +235,9 @@ Bookstore.prototype.viewCart = function (doc) {
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
 
+  var bookCover = bookDetails.querySelector(".book-cover");
+  bookCover.src = "http://localhost:5000/" + doc.get("Cover");
+
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
 
