@@ -27,37 +27,29 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
-
-  function sortByRating() {
-    booksDocRef.orderBy("Rating");
-  }
-
-  function sortByAuthor() {
-    booksDocRef.orderBy("AuthorLn");
-  }
-
-  function sortByGenre() {
-    booksDocRef.orderBy("Genre");
-  }
+  // Default sort type 
+  var sortType = "BookTitle"
 
   this.router
     .on({
-      '/': function () { // navigation string '/' leads to viewHome()
-        // sortByRating(booksDocRef)
-        // sortByGenre()
-        // booksDocRef.orderByChild('AuthorLn')
+      '/': function () { // Navigation string '/' leads to viewHome()
         let bDetails = [];
-        let allItems = booksDocRef.get()
+        let allItems = booksDocRef.orderBy(sortType).get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               bDetails.push(doc.data());
             });
-            console.log(bDetails);
             that.viewHome(bDetails);
           })
           .catch(err => {
             console.log('Error getting documents', err);
           });
+
+          function determineSort(sort) {
+            sortType = sort;
+            console.log(sortType);
+          }
+          document.getElementById("sortByBestSellers").addEventListener("click", determineSort("NumSales"));
       }
     }).resolve();
 
