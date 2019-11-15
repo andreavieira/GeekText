@@ -31,30 +31,37 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-
-  var accntButton = header.querySelector('#profile-btn');
-  accntButton.addEventListener('click', function(event) {
-    me.router.navigate('/profile');
-  });
+  // var accntButton = header.querySelector('#profile-btn');
+  // accntButton.addEventListener('click', function(event) {
+  //   me.router.navigate('/profile');
 
 
   header.removeAttribute('hidden');
   this.replaceElement(document.querySelector('header'), header);
 }
 
+// STEVEN ---------------------
+// Bookstore.prototype.viewProfile = function(doc) {
+//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
 
+//   profilePage.removeAttribute('hidden');
+//   this.replaceElement(document.querySelector('main'), profilePage);
+
+//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
+// }
 
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (bDetails) {
   var homePage = document.querySelector('#home-page').cloneNode(true);
-  //console.log(bDetails[0]);
 
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
 
+  document.getElementById("home-books").innerHTML = "";
+  var bookItems = document.getElementById("home-books");
 
   function renderRating(bookRating) {
-    return bookRating
+    return bookRating;
     // Will turn double rating in DB to star representation
   }
 
@@ -62,7 +69,7 @@ Bookstore.prototype.viewHome = function (bDetails) {
 
   function renderBookRow(doc) {
     var bookRow = document.createElement('div');
-    bookRow.classList.add('cart-row')
+    bookRow.classList.add('cart-row');
     // TODO make routing work for pertaining books!
     var bookRowContents = `
                 <div class="cart-item cart-column">
@@ -86,36 +93,38 @@ Bookstore.prototype.viewHome = function (bDetails) {
 
     var bookDetails = bookRow.querySelector('.book-details-link');
     bookDetails.addEventListener('click', function () {
-      //console.log("message")
       bs.router.navigate('/book/' + bookDetails.id);
     });
 
-    var bookItems = document.getElementsByClassName('cart-items')[0];
     bookItems.append(bookRow);
   }
 
   bDetails.forEach(book => {
     renderBookRow(book);
   });
+
+  document.getElementById("sortByGenre").addEventListener("click", function() {
+    bs.router.navigate('/sortByGenre');
+  });
+  document.getElementById("sortByBestSellers").addEventListener("click", function() {
+    bs.router.navigate('/sortByBestSellers');
+  });
+  document.getElementById("sortByRating").addEventListener("click", function() {
+    bs.router.navigate('/sortByRating');
+  });
+  document.getElementById("sortByBookTitle").addEventListener("click", function() {
+    bs.router.navigate('/');
+  });
+  document.getElementById("sortByAuthor").addEventListener("click", function() {
+    bs.router.navigate('/sortByAuthor');
+  });
+  document.getElementById("sortByPrice").addEventListener("click", function() {
+    bs.router.navigate('/sortByPrice');
+  });
+  // document.getElementById("sortByRelease").addEventListener("click", function() {
+  //   bs.router.navigate('/sortByRelease');
+  // });
 }
-
-// STEVEN ---------------------
-Bookstore.prototype.viewProfile = function(doc) {
-    var profilePage = document.querySelector('#profile-page').cloneNode(true);
-
-
-    // if (document.readyState == 'loading') {
-    //     document.addEventListener('DOMContentLoaded', ready)
-    // } else {
-    //     ready()
-    // }
-
-
-    profilePage.removeAttribute('hidden');
-    this.replaceElement(document.querySelector('main'), profilePage);
-}
-
-
 
 /* SHOPPING CART SCRIPTS */
 Bookstore.prototype.viewCart = function (doc) {
@@ -238,6 +247,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDesc = bookDetails.querySelector(".book-description");
   bookDesc.innerHTML = "<strong> Description: </strong> " + doc.get("BookDesc");
 
+  var bookGenre = bookDetails.querySelector(".book-genre");
+  bookGenre.innerHTML = "<strong> Genre: </strong> " + doc.get("Genre");
+
   var authorBio = bookDetails.querySelector(".author-bio");
   authorBio.innerHTML = "<strong> Biography: </strong> " + doc.get("AuthorBio");
 
@@ -255,7 +267,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
-  // //Modal
+  //Modal
     var modal = bookDetails.querySelector("#myModal");
     var img = bookDetails.querySelector(".book-cover");
     var modalImg = bookDetails.querySelector("#img01");
@@ -263,22 +275,18 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     img.onclick = function(){
       modal.style.display = "block";
       modalImg.src = bookCover.src;
-
     }
 
     var span = bookDetails.getElementsByClassName("close")[0];
 
     span.onclick = function () {
       modal.style.display = "none";
-
     }
-
 
   let bReviews = [];
   let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
   reviewRef.get().then(snapshot => {
     if(!snapshot.exists){
-
     }
     snapshot.forEach(review => {
       bReviews.push(review.data());

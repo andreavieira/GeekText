@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shopping Cart</title>
+  <title>GeekText</title>
   <meta tag="description" content="Shop for books.">
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -75,9 +75,13 @@
           <div class="dropdown">
             <button class="dropbtn">Sort By:</button>
             <div id="sortDropdown" class="dropdown-content">
-              <a onclick="sortByBestseller()">Best Sellers</a>
-              <a onclick="sortByRating()">Top Rated</a>
-              <a onclick="sortByGenre()">Genre</a>
+              <a id="sortByGenre">Genre</a>
+              <a id="sortByBestSellers">Best Sellers</a>
+              <a id="sortByRating">Top Rated</a>
+              <a id="sortByBookTitle">Book Title</a>
+              <a id="sortByAuthor">Author</a>
+              <a id="sortByPrice">Price</a>
+              <a id="sortByRelease">Release</a>
             </div>
           </div>
           <h1>BROWSE ALL BOOKS</h1>
@@ -94,8 +98,8 @@
             <span class="cart-quantity cart-header
                 cart-column">RATING</span>
           </div>
-
-          <div class ="cart-items">
+          
+          <div id="home-books" class="cart-items">
             <div class ="cart-row">
               <!-- Here is the home sort container in view.js file -->
             </div>
@@ -167,6 +171,7 @@
         <p class="book-title"> </p>
         <p class="author-fn"> </p>
         <p class="book-description"> </p>
+        <p class="book-genre"> </p>
         <p class="author-bio"> </p>
         <p class="publish-date"> </p>
         <p class="publisher"> </p>
