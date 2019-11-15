@@ -238,6 +238,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDesc = bookDetails.querySelector(".book-description");
   bookDesc.innerHTML = "<strong> Description: </strong> " + doc.get("BookDesc");
 
+  var bookGenre = bookDetails.querySelector(".book-genre");
+  bookGenre.innerHTML = "<strong> Genre: </strong> " + doc.get("Genre");
+
   var authorBio = bookDetails.querySelector(".author-bio");
   authorBio.innerHTML = "<strong> Biography: </strong> " + doc.get("AuthorBio");
 
