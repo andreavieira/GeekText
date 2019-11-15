@@ -633,10 +633,11 @@ hr {
     font-weight: bold;
     transition: 0.3s;
 
+
 }
 
-.close:hover,
-.close:focus {
+
+.close:hover, .close:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;

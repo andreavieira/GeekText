@@ -102,8 +102,13 @@ Bookstore.prototype.viewHome = function (bDetails) {
 // STEVEN ---------------------
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
+    
+    const userInfo = document.querySelector('.profile-info');
 
-
+    const setupUser = (data) => {
+        userInfo(snapshot.docs);
+    }
+    
     // if (document.readyState == 'loading') {
     //     document.addEventListener('DOMContentLoaded', ready)
     // } else {
