@@ -27,6 +27,7 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
+  let userInfoRef = firebase.firestore().collection("accounts")
 
   this.router
     .on({
@@ -135,48 +136,51 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
-    this.router
-    .on({
-      '/sortByRelease': function () { // Home sorted by Rating
-        console.log("Sorting by rating")
-        let bDetails = [];
-        let allItems = booksDocRef.orderBy("ReleaseDate").get()
-          .then(snapshot => {
-            snapshot.forEach(doc => {
-              bDetails.push(doc.data());
-            });
-            that.viewHome(bDetails);
-          })
-          .catch(err => {
-            console.log('Error getting documents', err);
-          });
-      }
-    }).resolve();
+    // this.router
+    // .on({
+    //   '/sortByRelease': function () { // Home sorted by Rating
+    //     console.log("Sorting by rating")
+    //     let bDetails = [];
+    //     let allItems = booksDocRef.orderBy("ReleaseDate").get()
+    //       .then(snapshot => {
+    //         snapshot.forEach(doc => {
+    //           bDetails.push(doc.data());
+    //         });
+    //         that.viewHome(bDetails);
+    //       })
+    //       .catch(err => {
+    //         console.log('Error getting documents', err);
+    //       });
+    //   }
+    // }).resolve();
 
-  this.router
-    .on({
+    this.router
+      .on({
         "/profile": function(params) {
+            // Get data
+            userInfoRef.get().then(snapshot => {
+                console.log(snapshot.docs)
+            })
             that.viewProfile();
         }
-    }).resolve();
+      }).resolve();
 
-  this.router
+  this.router      
     .on({
-      "/book/:id": function (params) {
+      "/book/:id": function(params){
         let detailsRef = that.db.collection("bookdetails").doc(params.id);
-        
         let getDoc = detailsRef.get()
-          .then(doc => {
-            if (!doc.exists) {
-              console.log('No such document!');
-            } else {
-              that.viewBookDetails(doc);
-            }
-          })
-          .catch(err => {
-            console.log('Error getting document', err);
-          });
-      }
+        .then(doc => {
+           if (!doc.exists) {
+             console.log('No such document!');
+           } else {
+             that.viewBookDetails(doc);
+           }
+         })
+         .catch(err => {
+           console.log('Error getting document', err);
+         });
+       }
     }).resolve();
 
   this.router
@@ -196,7 +200,7 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
-    
+
   //FIRESTORE LOAD COLLECTIONS
   return this.router;
 }
@@ -207,7 +211,7 @@ Bookstore.prototype.getCleanPath = function (dirtyPath) {
   } else {
     return dirtyPath;
   }
-};
+}
 
 window.onload = function () {
   window.app = new Bookstore();
