@@ -122,6 +122,7 @@ hr {
 .account-box {
     display: inline-block;
     position: relative;
+    top: 50%;
     padding: 10px;
     background: rgb(102, 100, 100);
     height: 40px;
@@ -133,7 +134,8 @@ hr {
 }
 
 .account-btn {
-    width: 100px;
+    float: right;
+    width: 20px;
     height: 20px;
     border-radius: 50%;
     display: flex;
@@ -144,24 +146,30 @@ hr {
     transition: 0.4s;
     cursor: pointer;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> upstream/master
+=======
+    
+>>>>>>> upstream/master
 }
+
 
 .account-dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 120px;
+    min-width: 200px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     text-align: center;
-    top: 10px;
-    right: 5px;
+    top: 20px;
+    right: 15px;
+    border-radius: 5px;
 }
-
+  
 .account-dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -206,6 +214,34 @@ hr {
 }
 /* End of account button CSS */
 
+
+
+/* Start of edit profile container */
+.profileDiv {
+    min-height: 900px;
+}
+
+.content-section-container {
+    margin-top: 20%;
+    min-width: 30%;
+    margin-left: 30%;
+    margin-right: 30%;
+    border: darkgray solid 4px;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.content-section-container b {
+    padding-left: 20px;
+}
+
+.content-section-container input {
+    align-items: center;
+}
+/* End of edit profile container */
+
+
+
 .shop-box {
     display: inline-block;
     top: 50%;
@@ -245,7 +281,6 @@ hr {
     height: 150px;
     width: 100px;
 }
-
 
 .main-footer {
     text-align: center;
@@ -314,7 +349,6 @@ hr {
 
 .btn-danger {
     display: block;
-    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(230, 100, 100);
@@ -325,11 +359,12 @@ hr {
 }
 
 .btn-danger:hover {
-    background-color: rgb(153, 0, 0);
+    background-color: rgb(43, 107, 54);
 }
 
 .btn-save{
     display: block;
+    margin-top: 2px;
     font-size: 0.7em;
     color: white;
     background-color: rgb(80, 150, 85);
@@ -339,22 +374,7 @@ hr {
     border: none;
 }
 .btn-save:hover{
-    background-color: rgb(43, 107, 54);
-}
-
-.btn-add {
-    display: block;
-    font-size: 0.7em;
-    color: white;
-    background-color: rgb(74, 115, 202);
-    border-radius: .2em;
-    padding: 10px;
-    font-weight: bold;
-    border: none;
-}
-
-.btn-add:hover {
-    background-color: rgb(38, 41, 199);
+    background-color: rgb(54, 138, 68);
 }
 
 .cart-quantity-input{
@@ -531,6 +551,7 @@ hr {
     color: #c59b08;
 }
 
+<<<<<<< HEAD
 .rated {
     float: left;
     height: 46px;
@@ -565,12 +586,20 @@ hr {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
+=======
+/*--DANIELA--Book Details Modal*/
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+>>>>>>> upstream/master
 }
 
 #myImg:hover {opacity: 0.7;}
 
 /* The Modal (background) */
 .modal {
+<<<<<<< HEAD
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -582,19 +611,40 @@ hr {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+=======
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+>>>>>>> upstream/master
 }
 
 /* Modal Content (image) */
 .modal-content {
+<<<<<<< HEAD
   margin: auto;
   display: block;
   width: 80%;
   max-width: 700px;
+=======
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+>>>>>>> upstream/master
 }
 
 
 /* Add Animation */
 .modal-content, #caption {
+<<<<<<< HEAD
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.6s;
   animation-name: zoom;
@@ -609,10 +659,27 @@ hr {
 @keyframes zoom {
   from {transform:scale(0)}
   to {transform:scale(1)}
+=======
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+>>>>>>> upstream/master
 }
 
 /* The Close Button */
 .close {
+<<<<<<< HEAD
   position: absolute;
   top: 15px;
   right: 35px;
@@ -620,18 +687,40 @@ hr {
   font-size: 40px;
   font-weight: bold;
   transition: 0.3s;
+=======
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+>>>>>>> upstream/master
 }
 
 .close:hover,
 .close:focus {
+<<<<<<< HEAD
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
+=======
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+>>>>>>> upstream/master
 }
 
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
+<<<<<<< HEAD
   .modal-content {
     width: 100%;
   }
 }
+=======
+    .modal-content {
+        width: 100%;
+    }
+}
+>>>>>>> upstream/master

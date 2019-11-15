@@ -26,16 +26,39 @@ function Bookstore() {
 Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
+  let booksDocRef = firebase.firestore().collection("bookdetails")
+
+  function sortByRating() {
+    booksDocRef.orderBy("Rating");
+  }
+
+  function sortByAuthor() {
+    booksDocRef.orderBy("AuthorLn");
+  }
+
+  function sortByGenre() {
+    booksDocRef.orderBy("Genre");
+  }
+
   this.router
     .on({
       '/': function () { // navigation string '/' leads to viewHome()
-        let booksDocRef = firebase.firestore().collection("bookdetails")
+        // sortByRating(booksDocRef)
+        // sortByGenre()
+        // booksDocRef.orderByChild('AuthorLn')
+        let bDetails = [];
         let allItems = booksDocRef.get()
           .then(snapshot => {
             snapshot.forEach(doc => {
+<<<<<<< HEAD
               //console.log(doc.id, '=>', doc.data());
               that.viewHome(doc);
+=======
+              bDetails.push(doc.data());
+>>>>>>> upstream/master
             });
+            console.log(bDetails);
+            that.viewHome(bDetails);
           })
           .catch(err => {
             console.log('Error getting documents', err);
@@ -44,6 +67,7 @@ Bookstore.prototype.initRouter = function () {
     }).resolve();
 
   this.router
+<<<<<<< HEAD
   .on({
       "/book/:id": function(params){
         let detailsRef = that.db.collection("bookdetails").doc(params.id);
@@ -76,16 +100,22 @@ Bookstore.prototype.initRouter = function () {
   //        .catch(err => {
   //          console.log('Error getting document', err);
   //        });
+=======
+    .on({
+        "/profile": function(params) {
+>>>>>>> upstream/master
 
 
-  //     }
-  // }).resolve();
+            that.viewProfile();
+        }
+    }).resolve();
 
 
   this.router
     .on({
       "/book/:id": function (params) {
         let detailsRef = that.db.collection("bookdetails").doc(params.id);
+        
         let getDoc = detailsRef.get()
           .then(doc => {
             if (!doc.exists) {
@@ -97,6 +127,8 @@ Bookstore.prototype.initRouter = function () {
           .catch(err => {
             console.log('Error getting document', err);
           });
+
+
       }
     }).resolve();
 
@@ -118,6 +150,10 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> upstream/master
   //FIRESTORE LOAD COLLECTIONS
   return this.router;
 }
