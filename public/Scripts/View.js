@@ -47,15 +47,6 @@ Bookstore.prototype.viewHeader = function () {
   this.replaceElement(document.querySelector('header'), header);
 }
 
-// STEVEN ---------------------
-// Bookstore.prototype.viewProfile = function(doc) {
-//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
-
-//   profilePage.removeAttribute('hidden');
-//   this.replaceElement(document.querySelector('main'), profilePage);
-
-//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
-// }
 
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (bDetails) {
