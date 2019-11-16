@@ -27,7 +27,7 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
-  let userInfoRef = firebase.firestore().collection("accounts")
+  let userInfoRef = firebase.firestore().collection("users")
 
   function sortByRating() {
     booksDocRef.orderBy("Rating");
@@ -62,8 +62,23 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
+
   this.router
-<<<<<<< HEAD
+    .on({
+        "/createAcc": function(params) {
+            // Get data
+
+            // userInfoRef.get().then(snapshot => {
+            //     console.log(snapshot.docs)
+            // })
+
+            
+            that.viewCreateAcc();
+        }
+    }).resolve();
+
+
+  this.router
     .on({
         "/profile": function(params) {
             // Get data
@@ -74,47 +89,7 @@ Bookstore.prototype.initRouter = function () {
             
             that.viewProfile();
         }
-=======
-  .on({
-      "/book/:id": function(params){
-        let detailsRef = that.db.collection("bookdetails").doc(params.id);
-        let getDoc = detailsRef.get()
-        .then(doc => {
-           if (!doc.exists) {
-             console.log('No such document!');
-           } else {
-
-             that.viewBookDetails(doc);
-           }
-         })
-         .catch(err => {
-           console.log('Error getting document', err);
-         });
-       }
->>>>>>> 20299adca53590d08e2845427940ac9770e947ac
     }).resolve();
-
-  // .on({
-  //     "/profile": function(params){
-  //       let detailsRef = firebase.firestore().collection("bookdetails").doc(params.id);
-  //       let getDoc = detailsRef.get()
-  //       .then(doc => {
-  //          if (!doc.exists) {
-  //            console.log('No such document!');
-  //          } else {
-  //            that.viewBookDetails(doc);
-  //          }
-  //        })
-  //        .catch(err => {
-  //          console.log('Error getting document', err);
-  //        });
-    // .on({
-    //     "/profile": function(params) {
-    //
-    //
-    //         that.viewProfile();
-    //     }
-    // }).resolve();
 
 
   this.router

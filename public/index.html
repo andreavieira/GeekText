@@ -50,7 +50,7 @@
                     <input id="userPassword" type="password" placeholder="Password"/>
                     <a onclick="resetPassword()">Forgot password?</a>
                     <a onclick="login()">Log In</a>
-                    <a onclick="createUser()">Sign Up</a>
+                    <a id="signup-btn">Create Account</a>
                 </div>
                 <div id="loggedin-div">
                     <p id="welcome-user"></p>
@@ -220,26 +220,74 @@
     </section>
   </div>
 
+  <div hidden class="createAccDiv" id="createAcc-page">
+      <section class="create-content-section-container">
+        <div id="create-personal-information">
+            <h1>Personal Information</h1>
+            <b>First Name: </b>
+            <input type="text" id="createfName" placeholder="First Name"/>
+            <br>
+            <b>Last Name: </b>
+            <input type="text" id="createlName" placeholder="Last Name"/>
+            <br>
+            <b>Email: </b>
+            <input type="email" id="createEmail" placeholder="Email"/>
+            <br>
+            <b>Password: </b>
+            <input type="password" id="createPassword" placeholder="Password"/>
+            <br>
+            <b>Street Address: </b>
+            <input type="text" id="createStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
+            <br>
+            <b>City: </b>
+            <input type="text" id="createCity" placeholder="Ex: Miami"/>
+            <br>
+            <b>State: </b>
+            <input type="text" id="createState" placeholder="Ex: FL"/>
+            <br>
+            <b>Zip code: </b>
+            <input type="number" id="createZipCode" placeholder="Ex: 33123"/>
+            <br>
+            <b>Country: </b>
+            <input type="text" id="createCountry" placeholder="Ex: USA"/>
+            <br>
+        </div>
+        <br>
+        <button class="create-acc-btn" onclick="createUser()">Create Account</button>
+      </section>
+  </div>
 
   <!--Profile Page Container-->
   <div hidden class="profileDiv" id="profile-page">
-    <section class="content-section-container">
+    <section class="profile-content-section-container">
         <div id="personal-information">
             <h1>Personal Information</h1>
             <b>First Name: </b>
-            <input id="changefName" placeholder="First Name"/>
+            <input type="text" id="changefName" placeholder="First Name"/>
             <br>
             <b>Last Name: </b>
-            <input id="changelName" placeholder="Last Name"/>
+            <input type="text" id="changelName" placeholder="Last Name"/>
             <br>
             <b>Email: </b>
-            <input id="changeEmail" placeholder="Email"/>
+            <input type="email" id="changeEmail" placeholder="Email"/>
             <br>
             <b>Password: </b>
-            <input id="changePassword" placeholder="Password"/>
+            <input type="password" id="changePassword" placeholder="Password"/>
             <br>
-            <b>Home Address: </b>
-            <input id="changeAddress" placeholder="Address"/>
+            <b>Street Address: </b>
+            <input type="text" id="changeStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
+            <br>
+            <b>City: </b>
+            <input type="text" id="changeCityAddress" placeholder="Ex: Miami"/>
+            <br>
+            <b>State: </b>
+            <input type="text" id="changeStateAddress" placeholder="Ex: FL"/>
+            <br>
+            <b>Zip code: </b>
+            <input type="number" id="changeZipCode" placeholder="Ex: 33123"/>
+            <br>
+            <b>Country: </b>
+            <input type="number" id="changeCountry" placeholder="Ex: USA"/>
             <br>
         </div>
         <br>
@@ -247,8 +295,14 @@
 
         <div id="payment-info">
             <h1>Payment Information</h1>
-            <b>Credit Card: </b>
-            <input id="changeCreditCard" placeholder="Credit card information"/>
+            <b>Credit Card Number: </b>
+            <input type="number" id="changeCreditCardNumber" placeholder="Credit card number"/>
+            <br>
+            <b>Expiration Date: </b>
+            <input type="number" id="changeCreditCardExpDate" placeholder="Expiration Date"/>
+            <br>
+            <b>CVV: </b>
+            <input type="number" id="changeCreditCardCVV" placeholder="CVV"/>
             <br>
 
         </div>

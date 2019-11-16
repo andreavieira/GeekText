@@ -37,6 +37,10 @@ Bookstore.prototype.viewHeader = function () {
     me.router.navigate('/profile');
   });
 
+  var signupButton = header.querySelector('#signup-btn');
+  signupButton.addEventListener('click', function(event) {
+    me.router.navigate('/createAcc');
+  });
 
   header.removeAttribute('hidden');
   this.replaceElement(document.querySelector('header'), header);
@@ -100,6 +104,24 @@ Bookstore.prototype.viewHome = function (bDetails) {
 }
 
 // STEVEN ---------------------
+Bookstore.prototype.viewCreateAcc = function(doc) {
+    var createAccPage = document.querySelector('#createAcc-page').cloneNode(true);
+    let me = this;
+    createAccPage.querySelector(".create-acc-btn").addEventListener('click',function() {
+        me.router.navigate("/")
+    });
+    // this.router.navigate("/");
+    // const userInfo = document.querySelector('.profile-info');
+
+    // const setupUser = (data) => {
+    //     userInfo(snapshot.docs);
+    // }
+
+    createAccPage.removeAttribute('hidden');
+    this.replaceElement(document.querySelector('main'), createAccPage);
+}
+
+
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
     
