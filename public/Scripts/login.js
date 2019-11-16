@@ -1,3 +1,4 @@
+
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function accountDrop() {
@@ -31,7 +32,16 @@ firebase.auth().onAuthStateChanged(function(user) {
         document.getElementById("loggedin-div").style.display = "block";
         document.getElementById("not-loggedin-div").style.display = "none";
 
-        var user = firebase.auth().currentUser;
+        // var user = firebase.auth().currentUser;
+        // db.get().then(function (db) {
+        //     // Catch errors if it exists
+        //     promise.catch(function (error) {
+        //         // Return error
+        //     });
+        //     promise.then(function () {
+        //         // Continue with success
+        //     })
+        // })
 
         if(user != null) {
             var email_id = user.email;
@@ -45,6 +55,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                                                                 "\n" + "User NOT Verified"; 
                 document.getElementById("verify-btn").style.display = "block";
             }
+
         }
 
     } else {
@@ -62,17 +73,50 @@ firebase.auth().onAuthStateChanged(function(user) {
 function createUser() {
     // TODO: Validate for REAL email
 
+    var auth = firebase.auth();
+
     // Obtains and initializes var with user email and pass
-    var userEmail = document.getElementById("userEmailin").value;
-    var userPass = document.getElementById("userPassword").value;
+    var cUserfName = document.getElementById("createfName").value;
+    var cUserlName = document.getElementById("createlName").value;
+    var cUserEmail = document.getElementById("createEmail").value;
+    var cUserPassword = document.getElementById("createPassword").value;
+    var cUserStreetAddress = document.getElementById("createStreetAddress").value;
+    var cUserCity = document.getElementById("createCity").value;
+    var cUserState = document.getElementById("createState").value;
+    var cUserZipCode = document.getElementById("createZipCode").value;
+    var cUserCountry = document.getElementById("createCountry").value;
+
 
     // Sign into firebase with email and pass. Stores to a promise for error catching
-    firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-
+    var promise = firebase.auth().createUserWithEmailAndPassword(cUserEmail, cUserPassword);
+    
+    // Handle any errors that occur
+    promise.catch(function(error) {
         // Handle errors here
         var errorCode = error.code;
-        var errorMessage = error.message;
-    });    
+        console.log("Error: " + errorCode)
+        if (errorCode == 'auth/weak-password') return // password to weak. Minimal 6 characters
+        if (errorCode == 'auth/email-already-in-use') return // Return a email already in use error  
+    });
+
+    // If there are no errors, creates the account and stores all information to firestore
+    promise.then(function() {
+        var userUid = auth.currentUser.uid
+        var db = firebase.firestore();
+
+        db.collection('users').doc(userUid).set({
+            fName: cUserfName,
+            lName: cUserlName,
+            email: cUserEmail,
+            emailVerified: false,
+            password: cUserPassword,
+            streetAddress: cUserStreetAddress,
+            city: cUserCity,
+            state: cUserState,
+            zipCode: cUserZipCode,
+            country: cUserCountry
+        })
+    })
 }
 
 
@@ -85,7 +129,6 @@ function login() {
 
     // Sign into firebase with email and pass. Stores to a promise for error catching
     firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-
         // Handle errors here
         var errorCode = error.code;
         var errorMessage = error.message;

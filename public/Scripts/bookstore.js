@@ -24,7 +24,7 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
-  let userInfoRef = firebase.firestore().collection("accounts")
+  let userInfoRef = firebase.firestore().collection("users")
 
   this.router
     .on({
@@ -97,6 +97,7 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
+  this.router
     this.router
     .on({
       '/sortByAuthor': function () { // Home sorted by Rating
@@ -150,6 +151,19 @@ Bookstore.prototype.initRouter = function () {
     //       });
     //   }
     // }).resolve();
+
+    
+    this.router
+    .on({
+        "/createAcc": function(params) {
+            // Get data
+
+            // userInfoRef.get().then(snapshot => {
+            //     console.log(snapshot.docs)
+            // })
+            that.viewCreateAcc();
+        }
+    }).resolve();
 
     this.router
       .on({
