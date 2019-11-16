@@ -70,7 +70,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 
 // Creating user in function
-function createUser(bs) {
+function createUser() {
     // TODO: Validate for REAL email
 
     var auth = firebase.auth();
