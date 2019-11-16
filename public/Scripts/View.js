@@ -27,13 +27,16 @@ Bookstore.prototype.viewHeader = function () {
   cartButton.addEventListener('click', function (event) {
     me.router.navigate('/cart');
   });
+  
   var homeButton = header.querySelector('#home-btn');
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-  // var accntButton = header.querySelector('#profile-btn');
-  // accntButton.addEventListener('click', function(event) {
-  //   me.router.navigate('/profile');
+
+  var accntButton = header.querySelector('#profile-btn');
+  accntButton.addEventListener('click', function(event) {
+    me.router.navigate('/profile');
+  });
 
   var signupButton = header.querySelector('#signup-btn');
   signupButton.addEventListener('click', function(event) {
@@ -44,15 +47,6 @@ Bookstore.prototype.viewHeader = function () {
   this.replaceElement(document.querySelector('header'), header);
 }
 
-// STEVEN ---------------------
-// Bookstore.prototype.viewProfile = function(doc) {
-//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
-
-//   profilePage.removeAttribute('hidden');
-//   this.replaceElement(document.querySelector('main'), profilePage);
-
-//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
-// }
 
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (bDetails) {
@@ -106,6 +100,28 @@ Bookstore.prototype.viewHome = function (bDetails) {
   bDetails.forEach(book => {
     renderBookRow(book);
   });
+
+    document.getElementById("sortByGenre").addEventListener("click", function() {
+        bs.router.navigate('/sortByGenre');
+    });
+    document.getElementById("sortByBestSellers").addEventListener("click", function() {
+        bs.router.navigate('/sortByBestSellers');
+    });
+    document.getElementById("sortByRating").addEventListener("click", function() {
+        bs.router.navigate('/sortByRating');
+    });
+    document.getElementById("sortByBookTitle").addEventListener("click", function() {
+        bs.router.navigate('/');
+    });
+    document.getElementById("sortByAuthor").addEventListener("click", function() {
+        bs.router.navigate('/sortByAuthor');
+    });
+    document.getElementById("sortByPrice").addEventListener("click", function() {
+        bs.router.navigate('/sortByPrice');
+    });
+    // document.getElementById("sortByRelease").addEventListener("click", function() {
+    //   bs.router.navigate('/sortByRelease');
+    // });
 }
 
 // STEVEN ---------------------
@@ -141,29 +157,10 @@ Bookstore.prototype.viewProfile = function(doc) {
     // } else {
     //     ready()
     // }
-
-  document.getElementById("sortByGenre").addEventListener("click", function() {
-    bs.router.navigate('/sortByGenre');
-  });
-  document.getElementById("sortByBestSellers").addEventListener("click", function() {
-    bs.router.navigate('/sortByBestSellers');
-  });
-  document.getElementById("sortByRating").addEventListener("click", function() {
-    bs.router.navigate('/sortByRating');
-  });
-  document.getElementById("sortByBookTitle").addEventListener("click", function() {
-    bs.router.navigate('/');
-  });
-  document.getElementById("sortByAuthor").addEventListener("click", function() {
-    bs.router.navigate('/sortByAuthor');
-  });
-  document.getElementById("sortByPrice").addEventListener("click", function() {
-    bs.router.navigate('/sortByPrice');
-  });
-  // document.getElementById("sortByRelease").addEventListener("click", function() {
-  //   bs.router.navigate('/sortByRelease');
-  // });
+    profilePage.removeAttribute('hidden');
+    this.replaceElement(document.querySelector('main'), profilePage);
 }
+
 
 /* SHOPPING CART SCRIPTS */
 Bookstore.prototype.viewCart = function (doc) {
