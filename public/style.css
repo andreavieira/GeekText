@@ -212,17 +212,20 @@ hr {
 .profileDiv,
 .createAccDiv{
     min-height: 900px;
+    padding-top: 0px;"
+    margin-top: 15%;
 }
 
 .profile-content-section-container,
  .create-content-section-container {
-    margin-top: 20%;
+    margin-top: 10%;
     min-width: 30%;
     margin-left: 30%;
     margin-right: 30%;
     border: darkgray solid 4px;
     border-radius: 10px;
     padding: 10px;
+
 }
 
 .profile-content-section-container b, 
