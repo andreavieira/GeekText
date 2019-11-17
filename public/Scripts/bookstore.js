@@ -181,9 +181,22 @@ Bookstore.prototype.initRouter = function () {
       "/book/:id": function(params){
         let allBooks = that.db.collection("bookdetails");
         let detailsRef = allBooks.doc(params.id);
-        //let currentBookAuthor = detailsRef.get("AuthorLn");
+
+        var currentBookAuthor = "";
+        let getCurrentAuthor = detailsRef.get()
+        .then(doc => {
+          if (!doc.exists) {
+            console.log('No such document!');
+          } else {
+            currentBookAuthor = doc.get("AuthorLn")
+          }
+        })
+        
+        // TODO: Should be able to use this as replacement for third argument in allBooks.where
+        console.log(currentBookAuthor)
+
         let booksByAuthor = [];
-        let allItems = allBooks.orderBy("AuthorLn").get()
+        let allItems = allBooks.where("AuthorLn", "==", "Coelho").get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               booksByAuthor.push(doc.data());

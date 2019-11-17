@@ -271,6 +271,9 @@ Bookstore.prototype.viewCart = function (doc) {
 Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
 
+  bookDetails.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), bookDetails);
+
   var bookCover = bookDetails.querySelector(".book-cover");
   bookCover.src = "http://localhost:5000/" + doc.get("Cover");
 
@@ -303,8 +306,8 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
+  
   //Modal
-
   var modal = bookDetails.querySelector("#myModal");
   var img = bookDetails.querySelector(".book-cover");
   var modalImg = bookDetails.querySelector("#img01");
@@ -320,16 +323,18 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
     modal.style.display = "none";
   }
 
+  // Books being passed are:
+  console.log(booksByAuthor)
+
   // Books by the same author
+  var bookItems = document.getElementById("books-by-author");
+  
   function renderBookRow(doc) {
-    var bookRow = bookDetails.createElement('div');
+    var bookRow = document.createElement('div');
     bookRow.classList.add('cart-row');
-    // TODO make routing work for pertaining books!
     var bookRowContents = `
                 <div class="cart-item cart-column">
-                  <i class="book-details-link" id="${doc.Id}">
                   <img class="item-image" src="${doc.Cover}" width="100" height="200">
-                  </i>
                 </div>
                 <div class="cart-description cart-column">
                   <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
@@ -338,17 +343,12 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
                   <span id ="item-price">$${doc.Price}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <span>${renderRating(doc.Rating)}</span>
+                  <span>${doc.Rating}</span>
                 </div>
               </div>
               </div>
             </div>`
     bookRow.innerHTML = bookRowContents
-
-    var bookDetails = bookRow.querySelector('.book-details-link');
-    bookDetails.addEventListener('click', function () {
-      bs.router.navigate('/book/' + bookDetails.id);
-    });
 
     bookItems.append(bookRow);
   }
@@ -356,6 +356,8 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   booksByAuthor.forEach(book => {
     renderBookRow(book);
   });
+
+  // End books by same author
 
   let bReviews = [];
   let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
@@ -403,9 +405,6 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
       submitBtn.setAttribute("disabled", true);
     }
   };
-
-  bookDetails.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('main'), bookDetails);
 }
 
 Bookstore.prototype.renderReviews = function (bReviews, details_El) {
