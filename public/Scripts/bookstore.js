@@ -179,13 +179,23 @@ Bookstore.prototype.initRouter = function () {
   this.router      
     .on({
       "/book/:id": function(params){
-        let detailsRef = that.db.collection("bookdetails").doc(params.id);
+        let allBooks = that.db.collection("bookdetails");
+        let detailsRef = allBooks.doc(params.id);
+        //let currentBookAuthor = detailsRef.get("AuthorLn");
+        let booksByAuthor = [];
+        let allItems = allBooks.orderBy("AuthorLn").get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              booksByAuthor.push(doc.data());
+            });
+          })
+
         let getDoc = detailsRef.get()
         .then(doc => {
            if (!doc.exists) {
              console.log('No such document!');
            } else {
-             that.viewBookDetails(doc);
+             that.viewBookDetails(doc, booksByAuthor);
            }
          })
          .catch(err => {
