@@ -212,19 +212,19 @@ hr {
 .profileDiv,
 .createAccDiv{
     min-height: 900px;
-    padding-top: 0px;"
-    margin-top: 15%;
 }
 
 .profile-content-section-container,
  .create-content-section-container {
-    margin-top: 10%;
-    min-width: 30%;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-top: 80px;
+    min-width: 550px;
+    max-width: 750px;
+    margin-left: 20%;
+    margin-right: 20%;
     border: darkgray solid 4px;
     border-radius: 10px;
     padding: 10px;
+    min-height: 710px;
 
 }
 
@@ -232,34 +232,71 @@ hr {
 .create-content-section-container b {
     padding-left: 20px;
     font-size: 18px;
+    display: inline-block;
+    width: 200px;
+
 }
 
 .profile-content-section-container input,
 .create-content-section-container input{
+    display: inline-block;
     margin: 3px;
     padding: 7px;
     text-align: left;
     font-size: 16px;
+    width: 50%;
+    min-width: 200px;
+    max-width: 400px;
 }
 
-.profile-content-section-container button,
 .create-content-section-container button {
-    background: #5d8ffc;
+    background: rgb(141, 137, 137);
 	color: #fff;
-	border: 1px solid #5d8ffc;
     border-radius: 5px;
     font-size: 16px;
 	padding: 15px;
 	display: block;
 	width: 100%;
-	transition: 0.3s;
+    transition: 0.3s;
 }
 
-.profile-content-section-container button:hover,
 .create-content-section-container button:hover {
-    background: #fff;
-	color: #5d8ffc;
-	border: 1px solid #5d8ffc;
+    background: rgb(95, 95, 95);
+	color: rgb(255, 255, 255);
+	cursor: pointer;
+}
+
+.profile-content-section-container button {
+    display: block;
+    float: right;
+    padding: 5px;
+    border-radius: 1px;
+    background: rgb(141, 137, 137);
+    color: rgb(255, 255, 255);
+    
+
+}
+
+.profile-content-section-container button:hover {
+    background: rgb(95, 95, 95);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.profile-save-btn button{
+    background: rgb(141, 137, 137);
+	color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+	padding: 15px;
+	display: block;
+	width: 100%;
+    transition: 0.3s;
+}
+
+.profile-save-btn button:hover {
+    background: rgb(95, 95, 95);
+	color: rgb(255, 255, 255);
 	cursor: pointer;
 }
 /* End of edit profile container */
