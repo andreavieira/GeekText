@@ -216,8 +216,6 @@ hr {
 
 .profile-content-section-container,
  .create-content-section-container {
-    position: relative;
-    align-self: center;
     margin-top: 80px;
     min-width: 550px;
     max-width: 750px;
@@ -569,6 +567,8 @@ hr {
 }
 .filled-review-text {
   text-align: center;
+    font-family: 'Play', sans-serif;
+    font-size: 16px;
 }
 
 
@@ -719,7 +719,11 @@ hr {
 @media only screen and (max-width: 700px){
 
     .modal-content {
-        width: 100%;
+        width: 65%;
     }
 }
-
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

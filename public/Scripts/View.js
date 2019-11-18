@@ -268,8 +268,11 @@ Bookstore.prototype.viewCart = function (doc) {
 }
 
 /** BOOK DETAILS SCRIPTS **/
-Bookstore.prototype.viewBookDetails = function (doc) {
+Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
+
+  bookDetails.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), bookDetails);
 
   var bookCover = bookDetails.querySelector(".book-cover");
   bookCover.src = "http://localhost:5000/" + doc.get("Cover");
@@ -303,21 +306,58 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
+  
   //Modal
-    var modal = bookDetails.querySelector("#myModal");
-    var img = bookDetails.querySelector(".book-cover");
-    var modalImg = bookDetails.querySelector("#img01");
-    //var captionText = bookDetails.querySelector("#caption");
-    img.onclick = function(){
-      modal.style.display = "block";
-      modalImg.src = bookCover.src;
-    }
+  var modal = bookDetails.querySelector("#myModal");
+  var img = bookDetails.querySelector(".book-cover");
+  var modalImg = bookDetails.querySelector("#img01");
+  //var captionText = bookDetails.querySelector("#caption");
+  img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = bookCover.src;
+  }
 
-    var span = bookDetails.getElementsByClassName("close")[0];
+  var span = bookDetails.getElementsByClassName("close")[0];
 
-    span.onclick = function () {
-      modal.style.display = "none";
-    }
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  // Books being passed are:
+  console.log(booksByAuthor)
+
+  // Books by the same author
+  var bookItems = document.getElementById("books-by-author");
+  
+  function renderBookRow(doc) {
+    var bookRow = document.createElement('div');
+    bookRow.classList.add('cart-row');
+    var bookRowContents = `
+                <div class="cart-item cart-column">
+                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
+                </div>
+                <div class="cart-description cart-column">
+                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
+                </div>
+                <span class="cart-price cart-column">
+                  <span id ="item-price">$${doc.Price}</span>
+                </span>
+                <div class="cart-quantity cart-column">
+                  <span>${doc.Rating}</span>
+                </div>
+              </div>
+              </div>
+            </div>`
+    bookRow.innerHTML = bookRowContents
+
+    bookItems.append(bookRow);
+  }
+
+  booksByAuthor.forEach(book => {
+    renderBookRow(book);
+  });
+
+  // End books by same author
 
   let bReviews = [];
   let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
@@ -365,11 +405,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       submitBtn.setAttribute("disabled", true);
     }
   };
-
-
-
-  bookDetails.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('main'), bookDetails);
 }
 
 Bookstore.prototype.renderReviews = function (bReviews, details_El) {
