@@ -145,7 +145,6 @@ hr {
     border: none;
     transition: 0.4s;
     cursor: pointer;
-    
 }
 
 
@@ -162,7 +161,7 @@ hr {
     right: 15px;
     border-radius: 5px;
 }
-  
+
 .account-dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -210,26 +209,95 @@ hr {
 
 
 /* Start of edit profile container */
-.profileDiv {
+.profileDiv,
+.createAccDiv{
     min-height: 900px;
 }
 
-.content-section-container {
-    margin-top: 20%;
-    min-width: 30%;
-    margin-left: 30%;
-    margin-right: 30%;
+.profile-content-section-container,
+ .create-content-section-container {
+    margin-top: 80px;
+    min-width: 550px;
+    max-width: 750px;
+    margin-left: 20%;
+    margin-right: 20%;
     border: darkgray solid 4px;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 10px;
+    min-height: 710px;
+
 }
 
-.content-section-container b {
+.profile-content-section-container b, 
+.create-content-section-container b {
     padding-left: 20px;
+    font-size: 18px;
+    display: inline-block;
+    width: 200px;
+
 }
 
-.content-section-container input {
-    align-items: center;
+.profile-content-section-container input,
+.create-content-section-container input{
+    display: inline-block;
+    margin: 3px;
+    padding: 7px;
+    text-align: left;
+    font-size: 16px;
+    width: 50%;
+    min-width: 200px;
+    max-width: 400px;
+}
+
+.create-content-section-container button {
+    background: rgb(141, 137, 137);
+	color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+	padding: 15px;
+	display: block;
+	width: 100%;
+    transition: 0.3s;
+}
+
+.create-content-section-container button:hover {
+    background: rgb(95, 95, 95);
+	color: rgb(255, 255, 255);
+	cursor: pointer;
+}
+
+.profile-content-section-container button {
+    display: block;
+    float: right;
+    padding: 5px;
+    border-radius: 1px;
+    background: rgb(141, 137, 137);
+    color: rgb(255, 255, 255);
+    
+
+}
+
+.profile-content-section-container button:hover {
+    background: rgb(95, 95, 95);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.profile-save-btn button{
+    background: rgb(141, 137, 137);
+	color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+	padding: 15px;
+	display: block;
+	width: 100%;
+    transition: 0.3s;
+}
+
+.profile-save-btn button:hover {
+    background: rgb(95, 95, 95);
+	color: rgb(255, 255, 255);
+	cursor: pointer;
 }
 /* End of edit profile container */
 
@@ -312,7 +380,7 @@ hr {
     margin-top: 5px;
 }
 
-.cart-row{ 
+.cart-row{
     display: flex;
 }
 
@@ -434,13 +502,13 @@ hr {
     border: none;
     cursor: pointer;
 }
-  
+
 .dropdown {
     float: right;
     position: relative;
     display: inline-block;
 }
-  
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -449,7 +517,7 @@ hr {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-  
+
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -473,7 +541,37 @@ hr {
     display:block;
 }
 
-/* Ratings CSS */
+/* Review Section CSS
+
+  review-section-container
+    -filled-review-container
+      -filled-review (repeated)
+    -empty-review
+*/
+.review-section-container {
+  margin:auto;
+}
+
+.filled-review-container {
+  display:flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.filled-review {
+  display:flex;
+  flex-direction: row;
+  border: 2px solid black;
+  border-radius:5px;
+  /* position:absolute; */
+}
+.filled-review-text {
+  text-align: center;
+    font-family: 'Play', sans-serif;
+    font-size: 16px;
+}
+
+
 .rate {
     float: left;
     height: 46px;
@@ -495,17 +593,17 @@ hr {
     color:#ccc;
 }
 
-.rate:not(:checked) > label:before {
+.rate:not(:checked) > label::before {
     content: '★ ';
 }
 
 .rate > input:checked ~ label {
-    color: #ffc700;    
+    color: #ffc700;
 }
 
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
+    color: #deb217;
 }
 
 .rate > input:checked + label:hover,
@@ -516,36 +614,66 @@ hr {
     color: #c59b08;
 }
 
-/*--DANIELA--Book Details Modal*/
+.rated {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+
+.rated:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+
+/* .rated:not(:checked) > label { */
+.rated > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+
+.rated > label::before {
+    content: '★ ';
+}
+
+.rated > input:checked ~ label {
+    color: #ffc700;
+}
+
+
 #myImg {
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 #myImg:hover {opacity: 0.7;}
 
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
 
 /* Modal Content (image) */
 .modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
 }
 
 
@@ -576,10 +704,12 @@ hr {
     font-size: 40px;
     font-weight: bold;
     transition: 0.3s;
+
+
 }
 
-.close:hover,
-.close:focus {
+
+.close:hover, .close:focus {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
@@ -587,7 +717,13 @@ hr {
 
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
+
     .modal-content {
-        width: 100%;
+        width: 65%;
     }
+}
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

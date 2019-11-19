@@ -46,11 +46,11 @@
             </a>
             <div id="accDropdown" class="account-dropdown-content">
                 <div id="not-loggedin-div">
-                    <input id="userEmailin" type="email" placeholder="Email"/>
-                    <input id="userPassword" type="password" placeholder="Password"/>
+                    <input style="font-size: 16px;"id="userEmailin" type="email" placeholder="Email"/>
+                    <input style="font-size: 16px;" id="userPassword" type="password" placeholder="Password"/>
                     <a onclick="resetPassword()">Forgot password?</a>
                     <a onclick="login()">Log In</a>
-                    <a onclick="createUser()">Sign Up</a>
+                    <a id="signup-btn">Create Account</a>
                 </div>
                 <div id="loggedin-div">
                     <p id="welcome-user"></p>
@@ -75,9 +75,13 @@
           <div class="dropdown">
             <button class="dropbtn">Sort By:</button>
             <div id="sortDropdown" class="dropdown-content">
-              <a onclick="sortByBestseller()">Best Sellers</a>
-              <a onclick="sortByRating()">Top Rated</a>
-              <a onclick="sortByGenre()">Genre</a>
+              <a id="sortByGenre">Genre</a>
+              <a id="sortByBestSellers">Best Sellers</a>
+              <a id="sortByRating">Top Rated</a>
+              <a id="sortByBookTitle">Book Title</a>
+              <a id="sortByAuthor">Author</a>
+              <a id="sortByPrice">Price</a>
+              <a id="sortByRelease">Release</a>
             </div>
           </div>
           <h1>BROWSE ALL BOOKS</h1>
@@ -95,7 +99,7 @@
                 cart-column">RATING</span>
           </div>
           
-          <div class ="cart-items">
+          <div id="home-books" class="cart-items">
             <div class ="cart-row">
               <!-- Here is the home sort container in view.js file -->
             </div>
@@ -119,7 +123,7 @@
                     <span class="cart-quantity cart-header
                     cart-column">QUANTITY</span>
                   </div>
-                
+
                 <ul style="list-style-type: none" id="cart-list">
                 <div class ="cart-items">
                     <div class ="cart-row">
@@ -128,7 +132,7 @@
                   </div>
                     <div class="cart-total">
                       <strong class="cart-total-title">TOTAL:</strong>
-                      <span class="cart-total-price"></span>
+                      <span class="cart-total-price">$32.97</span>
                     </div>
                     <button class="btn btn-primary btn-purchase"
                       role="button">PURCHASE </button>
@@ -153,9 +157,8 @@
 
   <!--Book Details/Reviews Container-->
   <div hidden class="template" id="book-details">
-    <section class="content-section container">
-        <!--<img src=book-cover width="500" height="600">-->
-        <img id="myImg" src="http://localhost:5000/images/catcher.jpg" alt="Book Cover" style="width:100%;max-width:300px">
+    <section class="content-section container" style="width: 732px;padding-bottom: 0px;">
+      <h1>BOOK DETAILS</h1>
 
         <!-- Book Cover Enlarging Modal -->
         <div id="myModal" class="modal">
@@ -163,10 +166,11 @@
             <img class="modal-content" id="img01">
         </div>
 
-        <p class="book-cover"> </p>
+        <img class="book-cover" alt="Book Cover" style="width:100%;max-width:300px;padding-bottom: 25px;">
         <p class="book-title"> </p>
         <p class="author-fn"> </p>
         <p class="book-description"> </p>
+        <p class="book-genre"> </p>
         <p class="author-bio"> </p>
         <p class="publish-date"> </p>
         <p class="publisher"> </p>
@@ -174,47 +178,188 @@
         <p class="rating"> </p>
         <p class="num-sales"> </p>
         <button class="btn btn-purchase"
-                role="button">ADD TO CART </button>
+                role="button">Add to Cart</button>
 
-        <!--<a href="url">Similar Books</a>-->
-        <!--Link to Andrea's sorting page-->
+        <!--Similar Books-->
+        <div style="padding-top:20px 0;padding-bottom: 20px">
+        <h1>BROWSE SIMILAR BOOKS</h1>
+        <div>
+          <div class="cart-row">
+            <span class="cart-item cart-header
+                cart-column">COVER</span>
+            <span class="cart-description cart-header
+                cart-column">TITLE</span>
+            <span class="cart-price cart-header
+                cart-column">PRICE</span>
+            <span class="cart-quantity cart-header
+                cart-column">RATING</span>
+        </div>
+
+        <div id="books-by-author" class="cart-items">
+            <div class ="cart-row">
+              <!-- Here are similar books -->
+            </div>
+        </div>
+      </div>
+
+    <!--Reviews-->
+    <div style="margin-top:50px 0;">
+    <h1>READ REVIEWS</h1>
+    <section class="review-section-container" style="width: 732px;">
+      <div hidden class="filled-review-container" id="-1">
+        <div hidden class="filled-review">
+          <div class="rated" rating="-1">
+            <input disabled type="radio" name="rated" value="5" />
+            <label title="text">5 stars</label>
+            <input disabled type="radio" name="rated" value="4" />
+            <label title="text">4 stars</label>
+            <input disabled type="radio" name="rated" value="3" />
+            <label title="text">3 stars</label>
+            <input disabled type="radio" name="rated" value="2" />
+            <label title="text">2 stars</label>
+            <input disabled type="radio" name="rated" value="1" />
+            <label fitle="text">1 star</label>
+          </div>
+          <p class="filled-review-text">Filled Review Box</p>
+        </div>
+      </div>
+      <div class="empty-review-container">
+        <div class="user-review">
+          <div class="rate" rating="-1">
+            <input type="radio" id="ratedstar5" name="rate" value="5" />
+            <label for="ratedstar5" title="text">5 stars</label>
+            <input type="radio" id="ratedstar4" name="rate" value="4" />
+            <label for="ratedstar4" title="text">4 stars</label>
+            <input type="radio" id="ratedstar3" name="rate" value="3" />
+            <label for="ratedstar3" title="text">3 stars</label>
+            <input type="radio" id="ratedstar2" name="rate" value="2" />
+            <label for="ratedstar2" title="text">2 stars</label>
+            <input type="radio" id="ratedstar1" name="rate" value="1" />
+            <label for="ratedstar1" title="text">1 star</label>
+
+            <!-- <label><input type="radio" id="star5" name="rate" value="5" /></label>
+            <label><input type="radio" id="star4" name="rate" value="4" /></label>
+            <label><input type="radio" id="star3" name="rate" value="3" /></label>
+            <label><input type="radio" id="star2" name="rate" value="2" /></label>
+            <label><input type="radio" id="star1" name="rate" value="1" /></label> -->
+          </div>
+          <textarea id="review-text" style="width: 732px;  font-size: 16px;"></textarea><br>
+          <button class="btn btn-purchase" id="submit-btn" value="Submit">Submit Review</button>
+        </div>
+      </div>
+      </div>
     </section>
   </div>
 
+  <div hidden class="createAccDiv" id="createAcc-page" style="padding-top: 0px;">
+      <section class="create-content-section-container" style="padding-right: 16px; padding-top: 0px;" >
+        <div id="create-personal-information">
+            <h1>Personal Information</h1>
+            <b>First Name: </b>
+            <input type="text" id="createfName" placeholder="First Name"/>
+            <br>
+            <b>Last Name: </b>
+            <input type="text" id="createlName" placeholder="Last Name"/>
+            <br>
+            <b>Email: </b>
+            <input type="email" id="createEmail" placeholder="Email"/>
+            <br>
+            <b>Password: </b>
+            <input type="password" id="createPassword" placeholder="Password"/>
+            <br>
+            <b>Street Address: </b>
+            <input type="text" id="createStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
+            <br>
+            <b>City: </b>
+            <input type="text" id="createCity" placeholder="Ex: Miami"/>
+            <br>
+            <b>State: </b>
+            <input type="text" id="createState" placeholder="Ex: FL"/>
+            <br>
+            <b>Zip code: </b>
+            <input type="number" id="createZipCode" placeholder="Ex: 33123"/>
+            <br>
+            <b>Country: </b>
+            <input type="text" id="createCountry" placeholder="Ex: USA"/>
+            <br>
+        </div>
+        <br>
+        <button class="create-acc-btn" onclick="createUser()">Create Account</button>
+      </section>
+  </div>
 
   <!--Profile Page Container-->
   <div hidden class="profileDiv" id="profile-page">
-    <section class="content-section-container">
+    <section class="profile-content-section-container">
         <div id="personal-information">
             <h1>Personal Information</h1>
             <b>First Name: </b>
-            <input id="changefName" placeholder="First Name"/>
+            <input type="text" id="changefName" placeholder="First Name"/>
+            <button>
+                <img src="/images/edit.png" width="25" height="25">
+            </button>
             <br>
             <b>Last Name: </b>
-            <input id="changelName" placeholder="Last Name"/>
+            <input type="text" id="changelName" placeholder="Last Name"/>
+            <button>
+                <img src="/images/edit.png" width="25" height="25">
+            </button>
             <br>
             <b>Email: </b>
-            <input id="changeEmail" placeholder="Email"/>
+            <input type="email" id="changeEmail" placeholder="Email"/>
+            <button>
+                <img src="/images/edit.png" width="25" height="25">
+            </button>
             <br>
             <b>Password: </b>
-            <input id="changePassword" placeholder="Password"/>
+            <input type="password" id="changePassword" placeholder="Password"/>
+            <button>
+                <img src="/images/edit.png" width="25" height="25">
+            </button>
             <br>
-            <b>Home Address: </b>
-            <input id="changeAddress" placeholder="Address"/>
+            <b>Street Address: </b>
+            <input type="text" id="changeStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
+            <button>
+                <img src="/images/edit.png" width="25" height="25">
+            </button>
+            <br>
+            <b>City: </b>
+            <input type="text" id="changeCityAddress" placeholder="Ex: Miami"/>
+            <br>
+            <b>State: </b>
+            <input type="text" id="changeStateAddress" placeholder="Ex: FL"/>
+            <br>
+            <b>Zip code: </b>
+            <input type="number" id="changeZipCode" placeholder="Ex: 33123"/>
+            <br>
+            <b>Country: </b>
+            <input type="number" id="changeCountry" placeholder="Ex: USA"/>
             <br>
         </div>
         <br>
         <br>
-        
+
         <div id="payment-info">
             <h1>Payment Information</h1>
-            <b>Credit Card: </b>
-            <input id="changeCreditCard" placeholder="Credit card information"/>
+            <b>Credit Card Number: </b>
+            <input type="number" id="changeCreditCardNumber" placeholder="Credit card number"/>
+            <button>
+                <img src="/images/edit.png" width="25" height="25">
+            </button>
+            <br>
+            <b>Expiration Date: </b>
+            <input type="number" id="changeCreditCardExpDate" placeholder="Expiration Date"/>
+            <br>
+            <b>CVV: </b>
+            <input type="number" id="changeCreditCardCVV" placeholder="CVV"/>
             <br>
 
         </div>
         <br>
-        <button>SAVE</button>
+        <div class="profile-save-btn">
+            <button >SAVE</button>
+        </div>
+        
 
     </section>
   </div>

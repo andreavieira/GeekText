@@ -27,6 +27,7 @@ Bookstore.prototype.viewHeader = function () {
   cartButton.addEventListener('click', function (event) {
     me.router.navigate('/cart');
   });
+  
   var homeButton = header.querySelector('#home-btn');
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
@@ -35,6 +36,10 @@ Bookstore.prototype.viewHeader = function () {
   // accntButton.addEventListener('click', function(event) {
   //   me.router.navigate('/profile');
 
+  var signupButton = header.querySelector('#signup-btn');
+  signupButton.addEventListener('click', function(event) {
+    me.router.navigate('/createAcc');
+  });
 
   header.removeAttribute('hidden');
   this.replaceElement(document.querySelector('header'), header);
@@ -47,25 +52,35 @@ Bookstore.prototype.viewHeader = function () {
 //   profilePage.removeAttribute('hidden');
 //   this.replaceElement(document.querySelector('main'), profilePage);
 
+
 //   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
 // }
+
 
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (doc) {
   var homePage = document.querySelector('#home-page').cloneNode(true);
 
 
+=======
+
+
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
 
+
+  document.getElementById("home-books").innerHTML = "";
+  var bookItems = document.getElementById("home-books");
+
+
   function renderRating(bookRating) {
-    return bookRating
+    return bookRating;
     // Will turn double rating in DB to star representation
   }
   
   function renderCart() {
     var bookRow = document.createElement('div');
-    bookRow.classList.add('cart-row')
+    bookRow.classList.add('cart-row');
     // TODO make routing work for pertaining books!
     var bookRowContents = `
                 <div class="cart-item cart-column">
@@ -86,7 +101,15 @@ Bookstore.prototype.viewHome = function (doc) {
               </div>
             </div>`
     bookRow.innerHTML = bookRowContents
+
     var bookItems = document.getElementsByClassName('cart-items')[0];
+
+
+    var bookDetails = bookRow.querySelector('.book-details-link');
+    bookDetails.addEventListener('click', function () {
+      bs.router.navigate('/book/' + bookDetails.id);
+    });
+
     bookItems.append(bookRow);
   }
   renderCart();
@@ -96,15 +119,68 @@ Bookstore.prototype.viewHome = function (doc) {
   bookDetails.addEventListener('click', function () {
     bs.router.navigate('/book/' + bookDetails.id);
   });
+
+    document.getElementById("sortByGenre").addEventListener("click", function() {
+        bs.router.navigate('/sortByGenre');
+    });
+    document.getElementById("sortByBestSellers").addEventListener("click", function() {
+        bs.router.navigate('/sortByBestSellers');
+    });
+    document.getElementById("sortByRating").addEventListener("click", function() {
+        bs.router.navigate('/sortByRating');
+    });
+    document.getElementById("sortByBookTitle").addEventListener("click", function() {
+        bs.router.navigate('/');
+    });
+    document.getElementById("sortByAuthor").addEventListener("click", function() {
+        bs.router.navigate('/sortByAuthor');
+    });
+    document.getElementById("sortByPrice").addEventListener("click", function() {
+        bs.router.navigate('/sortByPrice');
+    });
+    // document.getElementById("sortByRelease").addEventListener("click", function() {
+    //   bs.router.navigate('/sortByRelease');
+    // });
 }
 
-/* SHOPPING CART SCRIPTS */
 
-//TO DO
-//Options if no items in cart or saved
-//Save for later button event listener
-//access documents for saved list
-//fix references for book details
+// STEVEN ---------------------
+Bookstore.prototype.viewCreateAcc = function(doc) {
+    var createAccPage = document.querySelector('#createAcc-page').cloneNode(true);
+    let me = this;
+    createAccPage.querySelector(".create-acc-btn").addEventListener('click',function() {
+        me.router.navigate("/")
+    });
+    // this.router.navigate("/");
+    // const userInfo = document.querySelector('.profile-info');
+
+    // const setupUser = (data) => {
+    //     userInfo(snapshot.docs);
+    // }
+
+    createAccPage.removeAttribute('hidden');
+    this.replaceElement(document.querySelector('main'), createAccPage);
+}
+
+
+Bookstore.prototype.viewProfile = function(doc) {
+    var profilePage = document.querySelector('#profile-page').cloneNode(true);
+    
+    const userInfo = document.querySelector('.profile-info');
+
+    const setupUser = (data) => {
+        userInfo(snapshot.docs);
+    }
+    
+    // if (document.readyState == 'loading') {
+    //     document.addEventListener('DOMContentLoaded', ready)
+    // } else {
+    //     ready()
+    // }
+    profilePage.removeAttribute('hidden');
+    this.replaceElement(document.querySelector('main'), profilePage);
+}
+
 
 Bookstore.prototype.viewCart = function (doc) {
   var cartPage = document.querySelector('#shopping-cart').cloneNode(true);
@@ -153,7 +229,7 @@ Bookstore.prototype.viewCart = function (doc) {
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
-  // @param {*} event used when quantity value is changed 
+  // @param {*} event used when quantity value is changed
   function quantityChanged(event) {
     var input = event.target                        
     if (isNaN(input.value) || input.value <= 0) {
@@ -161,6 +237,7 @@ Bookstore.prototype.viewCart = function (doc) {
     }
     updateCartTotal()                               
   }
+
 
   function addToCart(event){
     var buttonClicked = event.target
@@ -186,7 +263,7 @@ Bookstore.prototype.viewCart = function (doc) {
     });
   //updateCartTotal();
   }
-
+  
   function renderCart() {
     var cartRow = document.createElement('div');
     cartRow.classList.add('cart-row')
@@ -196,13 +273,10 @@ Bookstore.prototype.viewCart = function (doc) {
                   <img class="item-image" src="${doc.get("image")}" width="100" height="200">
                 </div>
                 <div class="cart-description cart-column">
-                  <div id="description">
-                  <span id="book-title"><i>${doc.get("title")}</i></span> By:
-                  <span id="author-name">${doc.get("authorName") + " "}</span>
-                  </div>
+                  <span id="description">${"<i> " + doc.get("title") + "</i> By: " + doc.get("authorName") + " "}</span>
                 </div>
                 <span class="cart-price cart-column">
-                  <span id ="save-item-price">${doc.get("price")}</span>
+                  <span id ="item-price">${doc.get("price")}</span>
                 </span>
                 <div class="cart-quantity cart-column">
                   <input class="cart-quantity-input" id="quant"
@@ -222,8 +296,10 @@ Bookstore.prototype.viewCart = function (doc) {
     cartRow.innerHTML = cartRowContents
     var cartItems = document.getElementsByClassName('cart-items')[0];
     cartItems.append(cartRow);
+
     cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
+
 }
 
 
@@ -284,6 +360,7 @@ function renderSave(doc) {
             })
       renderSave();
     }
+  }
 
   // Function calculates cart total based on quantity and price
   function updateCartTotal(event) {
@@ -307,8 +384,15 @@ function renderSave(doc) {
 }
 
 /** BOOK DETAILS SCRIPTS **/
-Bookstore.prototype.viewBookDetails = function (doc) {
+Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
+
+
+  bookDetails.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), bookDetails);
+
+  var bookCover = bookDetails.querySelector(".book-cover");
+  bookCover.src = "http://localhost:5000/" + doc.get("Cover");
 
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
@@ -318,6 +402,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var bookDesc = bookDetails.querySelector(".book-description");
   bookDesc.innerHTML = "<strong> Description: </strong> " + doc.get("BookDesc");
+
+  var bookGenre = bookDetails.querySelector(".book-genre");
+  bookGenre.innerHTML = "<strong> Genre: </strong> " + doc.get("Genre");
 
   var authorBio = bookDetails.querySelector(".author-bio");
   authorBio.innerHTML = "<strong> Biography: </strong> " + doc.get("AuthorBio");
@@ -336,12 +423,136 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
+  
+  //Modal
+  var modal = bookDetails.querySelector("#myModal");
+  var img = bookDetails.querySelector(".book-cover");
+  var modalImg = bookDetails.querySelector("#img01");
+  //var captionText = bookDetails.querySelector("#caption");
+  img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = bookCover.src;
+  }
 
-  bookDetails.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('main'), bookDetails);
+  var span = bookDetails.getElementsByClassName("close")[0];
+
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  // Books being passed are:
+  console.log(booksByAuthor)
+
+  // Books by the same author
+  var bookItems = document.getElementById("books-by-author");
+  
+  function renderBookRow(doc) {
+    var bookRow = document.createElement('div');
+    bookRow.classList.add('cart-row');
+    var bookRowContents = `
+                <div class="cart-item cart-column">
+                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
+                </div>
+                <div class="cart-description cart-column">
+                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
+                </div>
+                <span class="cart-price cart-column">
+                  <span id ="item-price">$${doc.Price}</span>
+                </span>
+                <div class="cart-quantity cart-column">
+                  <span>${doc.Rating}</span>
+                </div>
+              </div>
+              </div>
+            </div>`
+    bookRow.innerHTML = bookRowContents
+
+    bookItems.append(bookRow);
+  }
+
+  booksByAuthor.forEach(book => {
+    renderBookRow(book);
+  });
+
+  // End books by same author
+
+  let bReviews = [];
+  let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
+  reviewRef.get().then(snapshot => {
+    if(!snapshot.exists){
+    }
+    snapshot.forEach(review => {
+      bReviews.push(review.data());
+    });
+    this.renderReviews(bReviews, bookDetails);
+  });
+
+  let reviewText = bookDetails.querySelector("#review-text");
+  let submitBtn = bookDetails.querySelector("#submit-btn");
+  let starRating = bookDetails.querySelector('.rate');
+  let me = this;
+  let exists = true;
+  submitBtn.onclick = function() {
+    //send review to database
+    //update rating
+    let list = starRating.querySelectorAll("input");
+    console.log(list);
+    for(let i = 0; i < 5; i++){
+
+      if(list[i].checked){
+        starRating.rating = 5 - i;
+        break;
+      }
+    }
+
+    if(starRating.rating == -1) {
+      alert("Please add a star rating to your review");
+    } else {
+      let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
+        Rating: starRating.rating,
+        Text: reviewText.value
+      });
+      console.log("review added");
+      console.log({
+        rating: starRating.rating,
+        reviewText: reviewText.value
+      });
+
+      reviewText.setAttribute("disabled", true);
+      submitBtn.setAttribute("disabled", true);
+    }
+  };
 }
 
+Bookstore.prototype.renderReviews = function (bReviews, details_El) {
+  let review_Container = document.createElement("div");
+  let reviewID = 0;
+  bReviews.forEach(review => {
+    let review_El = details_El.querySelector(".filled-review").cloneNode(true);
+    review_El.querySelector(".rated").setAttribute("rating", review.Rating);
+    let index = 5;
+    review_El.querySelectorAll(".rated label").forEach(rating => {
+      rating.previousElementSibling.name = "rated-" + reviewID + "" + index;
+      rating.setAttribute("for", rating.previousElementSibling.name);
+      index--;
+    });
 
+    review_El.querySelectorAll("input").forEach(radio => {
+        if(radio.getAttribute("value") == review_El.querySelector(".rated").getAttribute("rating")){
+          radio.setAttribute("checked", "checked");
+        }
+      });
+
+    review_El.querySelector(".filled-review-text").innerHTML = review.Text;
+    review_El.removeAttribute("hidden");
+    review_Container.appendChild(review_El);
+
+    reviewID++;
+  });
+  details_El.querySelector(".filled-review-container").removeAttribute("hidden");
+  details_El.querySelector(".filled-review-container").innerHTML = '';
+  details_El.querySelector(".filled-review-container").appendChild(review_Container);
+}
 //TODO CLEANUP
 Bookstore.prototype.renderTemplate = function (id, data) {
   var template = this.templates[id];
