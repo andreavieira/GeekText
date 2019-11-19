@@ -60,10 +60,10 @@ Bookstore.prototype.viewHome = function (bDetails) {
   document.getElementById("home-books").innerHTML = "";
   var bookItems = document.getElementById("home-books");
 
-  function renderRating(bookRating) {
-    return bookRating;
-    // Will turn double rating in DB to star representation
-  }
+  // function renderRating(bookRating) {
+  //   return bookRating;
+  //   // Will turn double rating in DB to star representation
+  // }
 
   var bs = this;
 
@@ -84,7 +84,7 @@ Bookstore.prototype.viewHome = function (bDetails) {
                   <span id ="item-price">$${doc.Price}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <span>${renderRating(doc.Rating)}</span>
+                  <span>${doc.Rating}</span>
                 </div>
               </div>
               </div>
