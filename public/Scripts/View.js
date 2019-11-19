@@ -27,6 +27,7 @@ Bookstore.prototype.viewHeader = function () {
   cartButton.addEventListener('click', function (event) {
     me.router.navigate('/cart');
   });
+
   var homeButton = header.querySelector('#home-btn');
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
@@ -35,6 +36,10 @@ Bookstore.prototype.viewHeader = function () {
   // accntButton.addEventListener('click', function(event) {
   //   me.router.navigate('/profile');
 
+  var signupButton = header.querySelector('#signup-btn');
+  signupButton.addEventListener('click', function(event) {
+    me.router.navigate('/createAcc');
+  });
 
   header.removeAttribute('hidden');
   this.replaceElement(document.querySelector('header'), header);
@@ -47,8 +52,10 @@ Bookstore.prototype.viewHeader = function () {
 //   profilePage.removeAttribute('hidden');
 //   this.replaceElement(document.querySelector('main'), profilePage);
 
+
 //   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
 // }
+
 
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (bDetails) {
@@ -56,6 +63,7 @@ Bookstore.prototype.viewHome = function (bDetails) {
 
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
+
 
   document.getElementById("home-books").innerHTML = "";
   var bookItems = document.getElementById("home-books");
@@ -91,6 +99,9 @@ Bookstore.prototype.viewHome = function (bDetails) {
             </div>`
     bookRow.innerHTML = bookRowContents
 
+    var bookItems = document.getElementsByClassName('cart-items')[0];
+
+
     var bookDetails = bookRow.querySelector('.book-details-link');
     bookDetails.addEventListener('click', function () {
       bs.router.navigate('/book/' + bookDetails.id);
@@ -99,34 +110,78 @@ Bookstore.prototype.viewHome = function (bDetails) {
     bookItems.append(bookRow);
   }
 
-  bDetails.forEach(book => {
+  bDetails.forEach(book =>{
     renderBookRow(book);
   });
 
-  document.getElementById("sortByGenre").addEventListener("click", function() {
-    bs.router.navigate('/sortByGenre');
+  //let bs = this;
+  var bookDetails = homePage.querySelector('.book-details-link');
+  bookDetails.addEventListener('click', function () {
+    bs.router.navigate('/book/' + bookDetails.id);
   });
-  document.getElementById("sortByBestSellers").addEventListener("click", function() {
-    bs.router.navigate('/sortByBestSellers');
-  });
-  document.getElementById("sortByRating").addEventListener("click", function() {
-    bs.router.navigate('/sortByRating');
-  });
-  document.getElementById("sortByBookTitle").addEventListener("click", function() {
-    bs.router.navigate('/');
-  });
-  document.getElementById("sortByAuthor").addEventListener("click", function() {
-    bs.router.navigate('/sortByAuthor');
-  });
-  document.getElementById("sortByPrice").addEventListener("click", function() {
-    bs.router.navigate('/sortByPrice');
-  });
-  // document.getElementById("sortByRelease").addEventListener("click", function() {
-  //   bs.router.navigate('/sortByRelease');
-  // });
+
+    document.getElementById("sortByGenre").addEventListener("click", function() {
+        bs.router.navigate('/sortByGenre');
+    });
+    document.getElementById("sortByBestSellers").addEventListener("click", function() {
+        bs.router.navigate('/sortByBestSellers');
+    });
+    document.getElementById("sortByRating").addEventListener("click", function() {
+        bs.router.navigate('/sortByRating');
+    });
+    document.getElementById("sortByBookTitle").addEventListener("click", function() {
+        bs.router.navigate('/');
+    });
+    document.getElementById("sortByAuthor").addEventListener("click", function() {
+        bs.router.navigate('/sortByAuthor');
+    });
+    document.getElementById("sortByPrice").addEventListener("click", function() {
+        bs.router.navigate('/sortByPrice');
+    });
+    // document.getElementById("sortByRelease").addEventListener("click", function() {
+    //   bs.router.navigate('/sortByRelease');
+    // });
 }
 
-/* SHOPPING CART SCRIPTS */
+
+// STEVEN ---------------------
+Bookstore.prototype.viewCreateAcc = function(doc) {
+    var createAccPage = document.querySelector('#createAcc-page').cloneNode(true);
+    let me = this;
+    createAccPage.querySelector(".create-acc-btn").addEventListener('click',function() {
+        me.router.navigate("/")
+    });
+    // this.router.navigate("/");
+    // const userInfo = document.querySelector('.profile-info');
+
+    // const setupUser = (data) => {
+    //     userInfo(snapshot.docs);
+    // }
+
+    createAccPage.removeAttribute('hidden');
+    this.replaceElement(document.querySelector('main'), createAccPage);
+}
+
+
+Bookstore.prototype.viewProfile = function(doc) {
+    var profilePage = document.querySelector('#profile-page').cloneNode(true);
+
+    const userInfo = document.querySelector('.profile-info');
+
+    const setupUser = (data) => {
+        userInfo(snapshot.docs);
+    }
+
+    // if (document.readyState == 'loading') {
+    //     document.addEventListener('DOMContentLoaded', ready)
+    // } else {
+    //     ready()
+    // }
+    profilePage.removeAttribute('hidden');
+    this.replaceElement(document.querySelector('main'), profilePage);
+}
+
+
 Bookstore.prototype.viewCart = function (doc) {
   var cartPage = document.querySelector('#shopping-cart').cloneNode(true);
 
@@ -159,9 +214,18 @@ Bookstore.prototype.viewCart = function (doc) {
   // @param {*} event even when remove button is clicked
   function removeCartItem(event) {
     var buttonClicked = event.target
+    var ID = document.getElementById("data-id").textContent
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
 
-    updateCartTotal()
+    let cartDocRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart")
+    let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+          var deleteDoc =  cartDocRef.doc(ID).delete();
+            });
+          })
+    updateCartTotal();
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
@@ -174,11 +238,38 @@ Bookstore.prototype.viewCart = function (doc) {
     updateCartTotal()
   }
 
+
+  function addToCart(event){
+    var buttonClicked = event.target
+    var ID = document.getElementById("save-data-id").textContent;
+    var docTitle = document.getElementById("save-book-title").textContent;
+    var docAuthor = document.getElementById("save-author-name").textContent;
+    console.log(docAuthor)
+    var docPrice = document.getElementById("save-price").textContent;
+    console.log(docPrice)
+    var docImage = document.getElementById("save-image").src;
+    console.log(docImage)
+
+    buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+
+    let cartDocRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart")
+    let addDoc = cartDocRef.add({
+      title: docTitle,
+      authorName: docAuthor,
+      price: docPrice,
+      image: docImage
+    }).then(ID => {
+      console.log('Added document with ID: ', ID.id);
+    });
+  //updateCartTotal();
+  }
+
   function renderCart() {
     var cartRow = document.createElement('div');
     cartRow.classList.add('cart-row')
     var cartRowContents = `
                 <div class="cart-item cart-column">
+                <div id ="data-id" hidden>${doc.id}</div>
                   <img class="item-image" src="${doc.get("image")}" width="100" height="200">
                 </div>
                 <div class="cart-description cart-column">
@@ -188,14 +279,14 @@ Bookstore.prototype.viewCart = function (doc) {
                   <span id ="item-price">${doc.get("price")}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <input class="cart-quantity-input"
-                  type="number" value="1">
+                  <input class="cart-quantity-input" id="quant"
+                  type="number" value="1"></input>
                   <ul style="list-style-type:none;">
                   <li>
-                  <button class="btn btn-danger cart-quantity-button"
-                  type="button">REMOVE</button>
                   <button class="btn btn-save cart-quantity-button"
                   type="button">SAVE FOR LATER</button>
+                  <button class="btn btn-danger cart-quantity-button"
+                  type="button">REMOVE</button>
                   </li>
                   </ul>
                 </div>
@@ -208,23 +299,83 @@ Bookstore.prototype.viewCart = function (doc) {
 
     cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
-  }
+
+}
 
 
-  renderCart();
+
+function renderSave(doc) {
+  var saveRow = document.createElement('div');
+  saveRow.classList.add('save-row')
+  var saveRowContents = `
+              <div class="cart-item cart-column">
+              <div id ="save-data-id" hidden>${doc.id}</div>
+                <img class="item-image" id="save-image" src="${doc.get("image")}" width="100" height="200">
+              </div>
+              <div class="cart-description cart-column">
+                <span>
+                <span id="save-book-title"><i>${doc.get("title")}</i></span> By:
+                <span id="save-author-name">${doc.get("authorName") + " "}</span>
+                </span>
+              </div>
+              <span class="cart-price cart-column">
+                <span id ="save-price">${doc.get("price")}</span>
+              </span>
+              <div class="cart-quantity cart-column">
+                <input class="cart-quantity-input" id="quant"
+                type="number" value="1"></input>
+                <ul style="list-style-type:none;">
+                <li>
+                <button class="btn btn-add cart-quantity-button"
+                type="button">ADD TO CART</button>
+                <button class="btn btn-danger cart-quantity-button"
+                type="button">REMOVE</button>
+                </li>
+                </ul>
+              </div>
+            </div>
+            </div>
+          </div>`
+  saveRow.innerHTML = saveRowContents
+  var saveItems = document.getElementsByClassName('saved-items')[0];
+  saveItems.append(saveRow);
+
+  saveRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
+  saveRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
+  saveRow.getElementsByClassName('btn-add')[0].addEventListener('click', addToCart);
+}
+
+
+    if (doc.id != "save"){          //if the document is not a saved item
+      renderCart();                 //render cart
+    }
+    if(doc.id == "save"){
+      let docRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart").doc("save").collection("savedItems")
+      let allItems = docRef.get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            console.log(doc.id, '=>', doc.data());
+            renderSave(doc);
+              });
+            })
+      renderSave();
+    }
 
   // Function calculates cart total based on quantity and price
-  function updateCartTotal() {
+  function updateCartTotal(event) {
+
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
     var total = 0
     for (var i = 0; i < cartRows.length; i++) {
-      var cartRow = cartRows[i]
-      var priceElement = cartRow.getElementsByClassName('cart-price')[0]
-      var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-      var price = parseFloat(priceElement.innerText.replace('$', ''))
-      var quantity = quantityElement.value
-      total = total + (price * quantity)
+      var cartRow = cartRows[i];
+      var priceElement = document.getElementById('item-price').innerHTML;
+      var price = parseFloat(priceElement.replace('$',''));
+      console.log(price)
+      var quantityElement = document.getElementById('quant').value;
+      console.log(quantityElement);
+      var quantity = quantityElement;
+      total = total + (price * quantity);
     }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
@@ -232,8 +383,12 @@ Bookstore.prototype.viewCart = function (doc) {
 }
 
 /** BOOK DETAILS SCRIPTS **/
-Bookstore.prototype.viewBookDetails = function (doc) {
+Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
+
+
+  bookDetails.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), bookDetails);
 
   var bookCover = bookDetails.querySelector(".book-cover");
   bookCover.src = "http://localhost:5000/" + doc.get("Cover");
@@ -267,21 +422,58 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
+
   //Modal
-    var modal = bookDetails.querySelector("#myModal");
-    var img = bookDetails.querySelector(".book-cover");
-    var modalImg = bookDetails.querySelector("#img01");
-    //var captionText = bookDetails.querySelector("#caption");
-    img.onclick = function(){
-      modal.style.display = "block";
-      modalImg.src = bookCover.src;
-    }
+  var modal = bookDetails.querySelector("#myModal");
+  var img = bookDetails.querySelector(".book-cover");
+  var modalImg = bookDetails.querySelector("#img01");
+  //var captionText = bookDetails.querySelector("#caption");
+  img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = bookCover.src;
+  }
 
-    var span = bookDetails.getElementsByClassName("close")[0];
+  var span = bookDetails.getElementsByClassName("close")[0];
 
-    span.onclick = function () {
-      modal.style.display = "none";
-    }
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
+  // Books being passed are:
+  console.log(booksByAuthor)
+
+  // Books by the same author
+  var bookItems = document.getElementById("books-by-author");
+
+  function renderBookRow(doc) {
+    var bookRow = document.createElement('div');
+    bookRow.classList.add('cart-row');
+    var bookRowContents = `
+                <div class="cart-item cart-column">
+                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
+                </div>
+                <div class="cart-description cart-column">
+                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
+                </div>
+                <span class="cart-price cart-column">
+                  <span id ="item-price">$${doc.Price}</span>
+                </span>
+                <div class="cart-quantity cart-column">
+                  <span>${doc.Rating}</span>
+                </div>
+              </div>
+              </div>
+            </div>`
+    bookRow.innerHTML = bookRowContents
+
+    bookItems.append(bookRow);
+  }
+
+  booksByAuthor.forEach(book => {
+    renderBookRow(book);
+  });
+
+  // End books by same author
 
   let bReviews = [];
   let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
@@ -329,11 +521,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       submitBtn.setAttribute("disabled", true);
     }
   };
-
-
-
-  bookDetails.removeAttribute('hidden');
-  this.replaceElement(document.querySelector('main'), bookDetails);
 }
 
 Bookstore.prototype.renderReviews = function (bReviews, details_El) {
