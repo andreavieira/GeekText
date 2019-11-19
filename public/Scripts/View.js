@@ -213,7 +213,11 @@ Bookstore.prototype.viewCart = function (doc) {
     var ID = document.getElementById("data-id").textContent
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
 
-    let cartDocRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart")
+    var user = firebase.auth().currentUser;
+    let db = firebase.firestore();
+
+    var userUid = user.uid  
+    let cartDocRef = db.collection('users').doc(userUid).collection("cart");
     let allItems = cartDocRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
@@ -248,7 +252,12 @@ Bookstore.prototype.viewCart = function (doc) {
 
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
 
-    let cartDocRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart")
+    var user = firebase.auth().currentUser;
+    let db = firebase.firestore();
+
+    var userUid = user.uid;
+    let cartDocRef = db.collection('users').doc(userUid).collection("cart");
+
     let addDoc = cartDocRef.add({
       title: docTitle,
       authorName: docAuthor,
@@ -260,9 +269,14 @@ Bookstore.prototype.viewCart = function (doc) {
   //updateCartTotal();
   }
   
-  function renderCart() {
+  //renders all the items in the shopping cart section
+  //@param is the documents in the cart
+  function renderCart(doc) {
+    //creates a new row
     var cartRow = document.createElement('div');
+    //adds new row to existing cart-row
     cartRow.classList.add('cart-row')
+    //contents to be retrieved from document and into the HTML
     var cartRowContents = `
                 <div class="cart-item cart-column">
                 <div id ="data-id" hidden>${doc.id}</div>
@@ -289,17 +303,23 @@ Bookstore.prototype.viewCart = function (doc) {
               </div>
               </div>
             </div>`
+    //replaces items in the new cartrow object
     cartRow.innerHTML = cartRowContents
+    //creates an array of cart-items
     var cartItems = document.getElementsByClassName('cart-items')[0];
+    //Appends the cartRow object to the cartItems array
     cartItems.append(cartRow);
 
+    //eventlistener for removing and item
     cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
+    //evenlistener for changing the quanitity of an item
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
 
 }
 
 
-
+//renders all the saved for later items
+//@param is the documents from the saved collection
 function renderSave(doc) {
   var saveRow = document.createElement('div');
   saveRow.classList.add('save-row')
@@ -332,7 +352,7 @@ function renderSave(doc) {
             </div>
             </div>
           </div>`
-  saveRow.innerHTML = saveRowContents
+  saveRow.innerHTML = saveRowContents;
   var saveItems = document.getElementsByClassName('saved-items')[0];
   saveItems.append(saveRow);
 
@@ -342,19 +362,36 @@ function renderSave(doc) {
 }
 
 
-    if (doc.id != "save"){          //if the document is not a saved item
-      renderCart();                 //render cart
+
+// MAIN FUNCTIONS SHOPPING CART***
+
+    var user = firebase.auth().currentUser;
+    let db = firebase.firestore();
+
+    var userUid = user.uid     
+    let cartRef = db.collection('users').doc(userUid).collection("cart");
+    let saveRef = db.collection('users').doc(userUid).collection("save");
+    //if there are items in the cart
+    //get all cart documents and render
+    if (cartRef != null){
+      let cartItems = cartRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+          renderCart(doc);
+        });
+      });
     }
-    if(doc.id == "save"){
-      let docRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart").doc("save").collection("savedItems")
-      let allItems = docRef.get()
+    //if there are items saved for later
+    //get all saved items and render
+    if (saveRef != null){
+      let saveItems = saveRef.get()
         .then(snapshot => {
           snapshot.forEach(doc => {
             console.log(doc.id, '=>', doc.data());
             renderSave(doc);
-              });
-            })
-      renderSave();
+          });
+        });
     }
 
   // Function calculates cart total based on quantity and price
