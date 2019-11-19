@@ -32,11 +32,9 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-
-  var accntButton = header.querySelector('#profile-btn');
-  accntButton.addEventListener('click', function(event) {
-    me.router.navigate('/profile');
-  });
+  // var accntButton = header.querySelector('#profile-btn');
+  // accntButton.addEventListener('click', function(event) {
+  //   me.router.navigate('/profile');
 
   var signupButton = header.querySelector('#signup-btn');
   signupButton.addEventListener('click', function(event) {
@@ -47,47 +45,61 @@ Bookstore.prototype.viewHeader = function () {
   this.replaceElement(document.querySelector('header'), header);
 }
 
+// STEVEN ---------------------
+// Bookstore.prototype.viewProfile = function(doc) {
+//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
+
+//   profilePage.removeAttribute('hidden');
+//   this.replaceElement(document.querySelector('main'), profilePage);
+
+
+//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
+// }
+
 
 /* HOME SCRIPTS */
-Bookstore.prototype.viewHome = function (bDetails) {
+Bookstore.prototype.viewHome = function (doc) {
   var homePage = document.querySelector('#home-page').cloneNode(true);
 
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
 
+
   document.getElementById("home-books").innerHTML = "";
   var bookItems = document.getElementById("home-books");
+
 
   function renderRating(bookRating) {
     return bookRating;
     // Will turn double rating in DB to star representation
   }
-
-  var bs = this;
-
-  function renderBookRow(doc) {
+  
+  function renderCart() {
     var bookRow = document.createElement('div');
     bookRow.classList.add('cart-row');
     // TODO make routing work for pertaining books!
     var bookRowContents = `
                 <div class="cart-item cart-column">
-                  <i class="book-details-link" id="${doc.Id}">
-                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
+                  <i class="book-details-link" id="ZyeZCXscDEzIKRG7gqUJ">
+                  <img class="item-image" src="${doc.get("Cover")}" width="100" height="200">
                   </i>
                 </div>
                 <div class="cart-description cart-column">
-                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
+                  <span id="description">${"<i> " + doc.get("BookTitle") + "</i> By: " + doc.get("AuthorFn") + " " + doc.get("AuthorLn")}</span>
                 </div>
                 <span class="cart-price cart-column">
-                  <span id ="item-price">$${doc.Price}</span>
+                  <span id ="item-price">$${doc.get("Price")}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <span>${renderRating(doc.Rating)}</span>
+                  <span>${renderRating(doc.get("Rating"))}</span>
                 </div>
               </div>
               </div>
             </div>`
     bookRow.innerHTML = bookRowContents
+
+    var bookItems = document.getElementsByClassName('cart-items')[0];
+
 
     var bookDetails = bookRow.querySelector('.book-details-link');
     bookDetails.addEventListener('click', function () {
@@ -96,9 +108,12 @@ Bookstore.prototype.viewHome = function (bDetails) {
 
     bookItems.append(bookRow);
   }
+  renderCart();
 
-  bDetails.forEach(book => {
-    renderBookRow(book);
+  let bs = this;
+  var bookDetails = homePage.querySelector('.book-details-link');
+  bookDetails.addEventListener('click', function () {
+    bs.router.navigate('/book/' + bookDetails.id);
   });
 
     document.getElementById("sortByGenre").addEventListener("click", function() {
@@ -123,6 +138,7 @@ Bookstore.prototype.viewHome = function (bDetails) {
     //   bs.router.navigate('/sortByRelease');
     // });
 }
+
 
 // STEVEN ---------------------
 Bookstore.prototype.viewCreateAcc = function(doc) {
@@ -162,7 +178,6 @@ Bookstore.prototype.viewProfile = function(doc) {
 }
 
 
-/* SHOPPING CART SCRIPTS */
 Bookstore.prototype.viewCart = function (doc) {
   var cartPage = document.querySelector('#shopping-cart').cloneNode(true);
 
@@ -195,26 +210,62 @@ Bookstore.prototype.viewCart = function (doc) {
   // @param {*} event even when remove button is clicked
   function removeCartItem(event) {
     var buttonClicked = event.target
+    var ID = document.getElementById("data-id").textContent
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
 
-    updateCartTotal()
+    let cartDocRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart")
+    let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.id, '=>', doc.data());
+          var deleteDoc =  cartDocRef.doc(ID).delete();
+            });
+          })
+    updateCartTotal();
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
   // @param {*} event used when quantity value is changed
   function quantityChanged(event) {
-    var input = event.target
+    var input = event.target                        
     if (isNaN(input.value) || input.value <= 0) {
-      input.value = 1
+      input.value = 1                             
     }
-    updateCartTotal()
+    updateCartTotal()                               
   }
 
+
+  function addToCart(event){
+    var buttonClicked = event.target
+    var ID = document.getElementById("save-data-id").textContent;
+    var docTitle = document.getElementById("save-book-title").textContent;
+    var docAuthor = document.getElementById("save-author-name").textContent;
+    console.log(docAuthor)
+    var docPrice = document.getElementById("save-price").textContent;
+    console.log(docPrice)
+    var docImage = document.getElementById("save-image").src;
+    console.log(docImage)
+
+    buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+
+    let cartDocRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart")
+    let addDoc = cartDocRef.add({
+      title: docTitle,
+      authorName: docAuthor,
+      price: docPrice,
+      image: docImage
+    }).then(ID => {
+      console.log('Added document with ID: ', ID.id);
+    });
+  //updateCartTotal();
+  }
+  
   function renderCart() {
     var cartRow = document.createElement('div');
     cartRow.classList.add('cart-row')
     var cartRowContents = `
                 <div class="cart-item cart-column">
+                <div id ="data-id" hidden>${doc.id}</div>
                   <img class="item-image" src="${doc.get("image")}" width="100" height="200">
                 </div>
                 <div class="cart-description cart-column">
@@ -224,14 +275,14 @@ Bookstore.prototype.viewCart = function (doc) {
                   <span id ="item-price">${doc.get("price")}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <input class="cart-quantity-input"
-                  type="number" value="1">
+                  <input class="cart-quantity-input" id="quant"
+                  type="number" value="1"></input>
                   <ul style="list-style-type:none;">
                   <li>
-                  <button class="btn btn-danger cart-quantity-button"
-                  type="button">REMOVE</button>
                   <button class="btn btn-save cart-quantity-button"
                   type="button">SAVE FOR LATER</button>
+                  <button class="btn btn-danger cart-quantity-button"
+                  type="button">REMOVE</button>
                   </li>
                   </ul>
                 </div>
@@ -244,23 +295,83 @@ Bookstore.prototype.viewCart = function (doc) {
 
     cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
-  }
+
+}
 
 
-  renderCart();
+
+function renderSave(doc) {
+  var saveRow = document.createElement('div');
+  saveRow.classList.add('save-row')
+  var saveRowContents = `
+              <div class="cart-item cart-column">
+              <div id ="save-data-id" hidden>${doc.id}</div>
+                <img class="item-image" id="save-image" src="${doc.get("image")}" width="100" height="200">
+              </div>
+              <div class="cart-description cart-column">
+                <span>
+                <span id="save-book-title"><i>${doc.get("title")}</i></span> By:
+                <span id="save-author-name">${doc.get("authorName") + " "}</span>
+                </span>
+              </div>
+              <span class="cart-price cart-column">
+                <span id ="save-price">${doc.get("price")}</span>
+              </span>
+              <div class="cart-quantity cart-column">
+                <input class="cart-quantity-input" id="quant"
+                type="number" value="1"></input>
+                <ul style="list-style-type:none;">
+                <li>
+                <button class="btn btn-add cart-quantity-button"
+                type="button">ADD TO CART</button>
+                <button class="btn btn-danger cart-quantity-button"
+                type="button">REMOVE</button>
+                </li>
+                </ul>
+              </div>
+            </div>
+            </div>
+          </div>`
+  saveRow.innerHTML = saveRowContents
+  var saveItems = document.getElementsByClassName('saved-items')[0];
+  saveItems.append(saveRow);
+
+  saveRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem);
+  saveRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
+  saveRow.getElementsByClassName('btn-add')[0].addEventListener('click', addToCart);
+}
+
+
+    if (doc.id != "save"){          //if the document is not a saved item
+      renderCart();                 //render cart
+    }
+    if(doc.id == "save"){
+      let docRef = firebase.firestore().collection("users").doc("nrodr047").collection("cart").doc("save").collection("savedItems")
+      let allItems = docRef.get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            console.log(doc.id, '=>', doc.data());
+            renderSave(doc);
+              });
+            })
+      renderSave();
+    }
 
   // Function calculates cart total based on quantity and price
-  function updateCartTotal() {
+  function updateCartTotal(event) {
+
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
     var total = 0
     for (var i = 0; i < cartRows.length; i++) {
-      var cartRow = cartRows[i]
-      var priceElement = cartRow.getElementsByClassName('cart-price')[0]
-      var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
-      var price = parseFloat(priceElement.innerText.replace('$', ''))
-      var quantity = quantityElement.value
-      total = total + (price * quantity)
+      var cartRow = cartRows[i];
+      var priceElement = document.getElementById('item-price').innerHTML;
+      var price = parseFloat(priceElement.replace('$',''));
+      console.log(price)
+      var quantityElement = document.getElementById('quant').value;
+      console.log(quantityElement);
+      var quantity = quantityElement;
+      total = total + (price * quantity);
     }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
@@ -270,6 +381,7 @@ Bookstore.prototype.viewCart = function (doc) {
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
+
 
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
