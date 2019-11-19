@@ -6,16 +6,6 @@
 
 'use strict'
 
-Bookstore.prototype.initTemplates = function () {
-  this.templates = {};
-
-  var that = this;
-  document.querySelectorAll('.template').forEach(function (el) {
-    that.templates[el.getAttribute('id')] = el;
-  });
-
-};
-
 /* HEADER SCRIPTS */
 Bookstore.prototype.viewHeader = function () {
   //grab clone of template header
@@ -385,6 +375,7 @@ function renderSave(doc) {
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
+  var currentUser = firebase.auth().currentUser;
 
 
   bookDetails.removeAttribute('hidden');
@@ -440,7 +431,7 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   }
 
   // Books being passed are:
-  console.log(booksByAuthor)
+  //console.log(booksByAuthor)
 
   // Books by the same author
   var bookItems = document.getElementById("books-by-author");
@@ -552,28 +543,7 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El) {
   details_El.querySelector(".filled-review-container").innerHTML = '';
   details_El.querySelector(".filled-review-container").appendChild(review_Container);
 }
-//TODO CLEANUP
-Bookstore.prototype.renderTemplate = function (id, data) {
-  var template = this.templates[id];
-  var el = template.cloneNode(true);
-  el.removeAttribute('hidden');
-  this.render(el, data);
-  return el;
-}
 
-Bookstore.prototype.render = function (el, data) {
-  if (!data) {
-    return;
-  }
-
-}
-
-Bookstore.prototype.getDeepItem = function (obj, path) {
-  path.split('/').forEach(function (chunck) {
-    obj = obj[chunk];
-  });
-  return obj;
-};
 
 
 //USED FOR RENDERING;

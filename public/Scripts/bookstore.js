@@ -1,7 +1,6 @@
 function Bookstore() {
 
     var me = this;
-    me.initTemplates();
     me.viewHeader();
     me.initRouter();
     me.db = firebase.firestore();
@@ -152,7 +151,7 @@ Bookstore.prototype.initRouter = function () {
     //   }
     // }).resolve();
 
-    
+
     this.router
     .on({
         "/createAcc": function(params) {
@@ -176,7 +175,7 @@ Bookstore.prototype.initRouter = function () {
         }
       }).resolve();
 
-  this.router      
+  this.router
     .on({
       "/book/:id": function(params){
         let allBooks = that.db.collection("bookdetails");
@@ -191,7 +190,7 @@ Bookstore.prototype.initRouter = function () {
             currentBookAuthor = doc.get("AuthorLn")
           }
         })
-        
+
         // TODO: Should be able to use this as replacement for third argument in allBooks.where
         console.log(currentBookAuthor)
 
