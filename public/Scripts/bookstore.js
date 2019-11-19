@@ -168,6 +168,10 @@ Bookstore.prototype.initRouter = function () {
     this.router
       .on({
         "/profile": function(params) {
+            let allUsers = that.db.collection("users");
+            let usersRef = allUsers.doc(params.id);
+
+            
             // Get data
             userInfoRef.get().then(snapshot => {
                 console.log(snapshot.docs)

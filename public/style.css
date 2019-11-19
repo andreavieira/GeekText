@@ -224,8 +224,10 @@ hr {
     border: darkgray solid 4px;
     border-radius: 10px;
     padding: 10px;
-    min-height: 710px;
+}
 
+.profile-content-section-container {
+    min-height: 710px;
 }
 
 .profile-content-section-container b, 

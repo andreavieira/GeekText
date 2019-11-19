@@ -128,15 +128,13 @@ Bookstore.prototype.viewHome = function (bDetails) {
 Bookstore.prototype.viewCreateAcc = function(doc) {
     var createAccPage = document.querySelector('#createAcc-page').cloneNode(true);
     let me = this;
+
+    // Once the user has clicked on the create account button, it will redirect user
+    // back to the homepage with the user already logged in
     createAccPage.querySelector(".create-acc-btn").addEventListener('click',function() {
         me.router.navigate("/")
     });
-    // this.router.navigate("/");
-    // const userInfo = document.querySelector('.profile-info');
-
-    // const setupUser = (data) => {
-    //     userInfo(snapshot.docs);
-    // }
+    
 
     createAccPage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), createAccPage);
@@ -146,19 +144,23 @@ Bookstore.prototype.viewCreateAcc = function(doc) {
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
     
-    const userInfo = document.querySelector('.profile-info');
+    // const userInfo = document.querySelector('.profile-info');
 
-    const setupUser = (data) => {
-        userInfo(snapshot.docs);
-    }
-    
-    // if (document.readyState == 'loading') {
-    //     document.addEventListener('DOMContentLoaded', ready)
-    // } else {
-    //     ready()
+    // const setupUser = (data) => {
+    //     userInfo(snapshot.docs);
     // }
+    
+    
     profilePage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), profilePage);
+
+    var pfName = profilePage.querySelector(".profile-fName");
+    pfName.innerHTML = "" + doc.get("fName");
+
+    var plName = profilePage.querySelector(".profile-lName");
+    plName.innerHTML = "" + doc.get("lName");
+
+
 }
 
 

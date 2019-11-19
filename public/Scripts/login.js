@@ -1,7 +1,7 @@
 
 
 var db = firebase.firestore();
-
+var auth = firebase.auth();
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -36,17 +36,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         document.getElementById("loggedin-div").style.display = "block";
         document.getElementById("not-loggedin-div").style.display = "none";
 
-        // var user = firebase.auth().currentUser;
-        // db.get().then(function (db) {
-        //     // Catch errors if it exists
-        //     promise.catch(function (error) {
-        //         // Return error
-        //     });
-        //     promise.then(function () {
-        //         // Continue with success
-        //     })
-        // })
-
         if(user != null) {
             var email_id = user.email;
             var email_verified = user.emailVerified;
@@ -59,7 +48,6 @@ firebase.auth().onAuthStateChanged(function(user) {
                                                                 "\n" + "User NOT Verified"; 
                 document.getElementById("verify-btn").style.display = "block";
             }
-
         }
 
     } else {
@@ -77,7 +65,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 function createUser() {
     // TODO: Validate for REAL email
 
-    var auth = firebase.auth();
+    // var auth = firebase.auth();
 
     // Obtains and initializes var with user email and pass
     var cUserfName = document.getElementById("createfName").value;
@@ -106,7 +94,7 @@ function createUser() {
     // If there are no errors, creates the account and stores all information to firestore
     promise.then(function() {
         var userUid = auth.currentUser.uid
-        var db = firebase.firestore();
+        // var db = firebase.firestore();
 
         db.collection('users').doc(userUid).set({
             fName: cUserfName,
@@ -136,7 +124,7 @@ function login() {
         // Handle errors here
         var errorCode = error.code;
         var errorMessage = error.message;
-    });    
+    });
 }
 
 
@@ -161,7 +149,7 @@ function sendUserVerification() {
 
 
 
-// Send an email to reset password 
+// Send an email to reset password NOT IMPLEMENTED OR USED YET
 function resetPassword(){
 
     var auth = firebase.auth();
@@ -196,5 +184,55 @@ function updateUserProfile() {
         window.alert("Update was successful");  // Update successful.
     }).catch(function(error) {
         window.alert("Error with update: " + error.message);    // An error happened.
-});
+    });
+}
+
+
+function displayUserInfo() {
+
+    var user = firebase.auth().currentUser;
+    
+    if(user != null) {
+        
+        var userUid = auth.currentUser.uid;
+        // var docRef = db.collection('users').doc('userUid');
+
+        // docRef.get().then(function(doc) {
+        //     if(doc.exists) {
+        //         document.getElementById("profile-fName").innerHTML = "Hi " + fName;
+        //         document.getElementById("profile-lName").innerHTML = "Hi " + lName;
+        //         document.getElementById("profile-email").innerHTML = "Hi " + email_id;
+        //     } else {
+        //         window.alert("Error in finding profile first name")
+        //     }
+        // })
+
+        var docRef = db.collection("users")
+            .where("userUid", "==", true)
+            .onSnapshot(querySnapshot => {
+                const articles = []
+                querySnapshot.forEach((doc) => {
+                    articles.push({
+                        id: doc.id,
+                        ...doc.data()
+                })
+            })
+        })
+        // docRef.get().then(function(doc) {
+        //     if (doc.exists) {
+        //         var firstName = docRef.where("fName", "==", true);
+
+        //         console.log("Document data: ", doc.data(firstName));
+        //     } else {
+        //         // doc.data() will be undefined in this case
+        //         console.log("No such document!");
+        //     }
+        // }).catch(function(error) {
+        //     console.log("Error getting document:", error);
+        // });
+
+
+    } else {
+        console.log("Error occurred: Not loading user information");
+    }
 }

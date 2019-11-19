@@ -55,7 +55,7 @@
                 <div id="loggedin-div">
                     <p id="welcome-user"></p>
                     <a id="verify-btn" onclick="sendUserVerification()">Send Verification</a>
-                    <a id="profile-btn">Edit Profile</a>
+                    <a id="profile-btn" onclick="displayUserInfo()">Edit Profile</a>
                     <a onclick="logout()">Sign out</a>
                 </div>
             </div>
@@ -294,19 +294,22 @@
         <div id="personal-information">
             <h1>Personal Information</h1>
             <b>First Name: </b>
-            <input type="text" id="changefName" placeholder="First Name"/>
+            <p class="profile-fName"></p>
+            <!-- <input type="text" id="changefName" placeholder="First Name"/> -->
             <button>
                 <img src="/images/edit.png" width="25" height="25">
             </button>
             <br>
             <b>Last Name: </b>
-            <input type="text" id="changelName" placeholder="Last Name"/>
+            <p class="profile-lName"></p>
+            <!-- <input type="text" id="changelName" placeholder="Last Name"/> -->
             <button>
                 <img src="/images/edit.png" width="25" height="25">
             </button>
             <br>
             <b>Email: </b>
-            <input type="email" id="changeEmail" placeholder="Email"/>
+            <p class="profile-email"></p>
+            <!-- <input type="email" id="changeEmail" placeholder="Email"/> -->
             <button>
                 <img src="/images/edit.png" width="25" height="25">
             </button>
