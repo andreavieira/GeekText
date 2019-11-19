@@ -61,10 +61,6 @@ Bookstore.prototype.viewHeader = function () {
 Bookstore.prototype.viewHome = function (doc) {
   var homePage = document.querySelector('#home-page').cloneNode(true);
 
-
-=======
-
-
   homePage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), homePage);
 
@@ -360,7 +356,6 @@ function renderSave(doc) {
             })
       renderSave();
     }
-  }
 
   // Function calculates cart total based on quantity and price
   function updateCartTotal(event) {
