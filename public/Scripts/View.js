@@ -486,7 +486,7 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
     //send review to database
     //update rating
     let list = starRating.querySelectorAll("input");
-    console.log(list);
+    //console.log(list);
     for(let i = 0; i < 5; i++){
 
       if(list[i].checked){
@@ -497,19 +497,26 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
 
     if(starRating.rating == -1) {
       alert("Please add a star rating to your review");
+    } else if (reviewText.value == "" ) {
+      alert("Please add a review");
+    } else if (currentUser == null) {
+      alert("Please Log in to submit a review")
     } else {
-      let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
-        Rating: starRating.rating,
-        Text: reviewText.value
-      });
-      console.log("review added");
+      // let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
+      //   Rating: starRating.rating,
+      //   Text: reviewText.value,
+      //   Uid: currentUser.uid
+      // });
+      alert("Review Submitted!");
       console.log({
         rating: starRating.rating,
-        reviewText: reviewText.value
+        reviewText: reviewText.value,
+        Uid: currentUser.uid
       });
-
       reviewText.setAttribute("disabled", true);
       submitBtn.setAttribute("disabled", true);
+
+      //average out the ratings based on reviews.
     }
   };
 }
