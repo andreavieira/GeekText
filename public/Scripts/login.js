@@ -1,7 +1,7 @@
 
-
-var db = firebase.firestore();
 var auth = firebase.auth();
+var db = firebase.firestore();
+
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -63,9 +63,6 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 // Creating user in function
 function createUser() {
-    // TODO: Validate for REAL email
-
-    // var auth = firebase.auth();
 
     // Obtains and initializes var with user email and pass
     var cUserfName = document.getElementById("createfName").value;
@@ -78,37 +75,42 @@ function createUser() {
     var cUserZipCode = document.getElementById("createZipCode").value;
     var cUserCountry = document.getElementById("createCountry").value;
 
+    if((cUserfName == "") || (cUserlName == "") || (cUserEmail == "") 
+        || (cUserPassword == "") || (cUserStreetAddress == "") || (cUserCity == "") 
+        || (cUserState == "") || (cUserZipCode == "") || (cUserCountry == "")) 
+    {
+        window.alert("All fields are required, \nPlease fill out everything")
+    } else {
+        // Sign into firebase with email and pass. Stores to a promise for error catching
+        var promise = firebase.auth().createUserWithEmailAndPassword(cUserEmail, cUserPassword);
+        
+        // Handle any errors that occur
+        promise.catch(function(error) {
+            // Handle errors here
+            var errorCode = error.code;
+            window.alert("Error: " + errorCode)
+            if (errorCode == 'auth/weak-password') return // password to weak. Minimal 6 characters
+            if (errorCode == 'auth/email-already-in-use') return // Return a email already in use error  
+        });
 
-    // Sign into firebase with email and pass. Stores to a promise for error catching
-    var promise = firebase.auth().createUserWithEmailAndPassword(cUserEmail, cUserPassword);
-    
-    // Handle any errors that occur
-    promise.catch(function(error) {
-        // Handle errors here
-        var errorCode = error.code;
-        console.log("Error: " + errorCode)
-        if (errorCode == 'auth/weak-password') return // password to weak. Minimal 6 characters
-        if (errorCode == 'auth/email-already-in-use') return // Return a email already in use error  
-    });
+        // If there are no errors, creates the account and stores all information to firestore
+        promise.then(function() {
+            var userUid = auth.currentUser.uid
 
-    // If there are no errors, creates the account and stores all information to firestore
-    promise.then(function() {
-        var userUid = auth.currentUser.uid
-        // var db = firebase.firestore();
-
-        db.collection('users').doc(userUid).set({
-            fName: cUserfName,
-            lName: cUserlName,
-            email: cUserEmail,
-            emailVerified: false,
-            password: cUserPassword,
-            streetAddress: cUserStreetAddress,
-            city: cUserCity,
-            state: cUserState,
-            zipCode: cUserZipCode,
-            country: cUserCountry
+            db.collection('users').doc(userUid).set({
+                fName: cUserfName,
+                lName: cUserlName,
+                email: cUserEmail,
+                emailVerified: false,
+                password: cUserPassword,
+                streetAddress: cUserStreetAddress,
+                city: cUserCity,
+                state: cUserState,
+                zipCode: cUserZipCode,
+                country: cUserCountry
+            })
         })
-    })
+    }
 }
 
 
@@ -163,76 +165,38 @@ function resetPassword(){
 
 }
 
+function changefName() {
+    document.getElementById("changefName").type="hidden";
+    document.getElementById("fNameChange").type="text";
+    document.getElementById("saveNewfName").type="button";
+}
 
-// Used on the profile page to update user information
-function updateUserProfile() {
-    // stores the current user instance in var user
-    var user = firebase.auth().currentUser;
+function changelName() {
+    document.getElementById("changelName").type="hidden";
+    document.getElementById("lNameChange").type="text";
+    document.getElementById("saveNewlName").type="button";
+}
 
-    user.updateProfile({
-        displayName: "Jane Q. User",
-        photoURL: "https://example.com/jane-q-user/profile.jpg"
+function changeEmail() {
+    document.getElementById("changeEmail").type="hidden";
+    document.getElementById("emailChange").type="text";
+    document.getElementById("saveNewEmail").type="button";
+}
 
-        // console.log("Sign-in provider: " + profile.providerId);
-        // console.log("  Provider-specific UID: " + profile.uid);
-        // console.log("  Name: " + profile.displayName);
-        // console.log("  Email: " + profile.email);
-        // console.log("  Photo URL: " + profile.photoURL);
-
-
-    }).then(function() {
-        window.alert("Update was successful");  // Update successful.
-    }).catch(function(error) {
-        window.alert("Error with update: " + error.message);    // An error happened.
-    });
+function changePassword() {
+    document.getElementById("changePassword").type="hidden";
+    document.getElementById("passwordChange").type="text";
+    document.getElementById("saveNewPassword").type="button";
 }
 
 
-function displayUserInfo() {
-
-    var user = firebase.auth().currentUser;
-    
-    if(user != null) {
-        
-        var userUid = auth.currentUser.uid;
-        // var docRef = db.collection('users').doc('userUid');
-
-        // docRef.get().then(function(doc) {
-        //     if(doc.exists) {
-        //         document.getElementById("profile-fName").innerHTML = "Hi " + fName;
-        //         document.getElementById("profile-lName").innerHTML = "Hi " + lName;
-        //         document.getElementById("profile-email").innerHTML = "Hi " + email_id;
-        //     } else {
-        //         window.alert("Error in finding profile first name")
-        //     }
-        // })
-
-        var docRef = db.collection("users")
-            .where("userUid", "==", true)
-            .onSnapshot(querySnapshot => {
-                const articles = []
-                querySnapshot.forEach((doc) => {
-                    articles.push({
-                        id: doc.id,
-                        ...doc.data()
-                })
-            })
-        })
-        // docRef.get().then(function(doc) {
-        //     if (doc.exists) {
-        //         var firstName = docRef.where("fName", "==", true);
-
-        //         console.log("Document data: ", doc.data(firstName));
-        //     } else {
-        //         // doc.data() will be undefined in this case
-        //         console.log("No such document!");
-        //     }
-        // }).catch(function(error) {
-        //     console.log("Error getting document:", error);
-        // });
-
-
-    } else {
-        console.log("Error occurred: Not loading user information");
-    }
+function changeHomeAdd() {
+    document.getElementById("changeHomeAdd").type="hidden";
+    document.getElementById("streetChange").type="text";
+    document.getElementById("cityChange").type="text";
+    document.getElementById("stateChange").type="text";
+    document.getElementById("zipChange").type="text";
+    document.getElementById("countryChange").type="text";
+    document.getElementById("saveNewHomeAdd").type="button";
 }
+

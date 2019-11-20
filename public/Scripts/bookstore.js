@@ -24,7 +24,6 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
-  let userInfoRef = firebase.firestore().collection("users")
 
   this.router
     .on({
@@ -154,31 +153,33 @@ Bookstore.prototype.initRouter = function () {
 
     
     this.router
-    .on({
-        "/createAcc": function(params) {
-            // Get data
-
-            // userInfoRef.get().then(snapshot => {
-            //     console.log(snapshot.docs)
-            // })
-            that.viewCreateAcc();
-        }
-    }).resolve();
+        .on({
+            "/createAcc": function(params) {
+                
+                that.viewCreateAcc();
+            }
+        }).resolve();
 
     this.router
-      .on({
-        "/profile": function(params) {
-            let allUsers = that.db.collection("users");
-            let usersRef = allUsers.doc(params.id);
+        .on({
+            "/profile": function(params) {
+                
+                let auth = firebase.auth();
+                var userUid = auth.currentUser.uid;
 
-            
-            // Get data
-            userInfoRef.get().then(snapshot => {
-                console.log(snapshot.docs)
-            })
-            that.viewProfile();
-        }
-      }).resolve();
+                let allUsers = firebase.firestore().collection("users")
+                let userDetails = allUsers.doc(userUid)
+
+                let getUDetails = userDetails.get()
+                .then(doc => {
+                    if (doc.exists) {
+                        that.viewProfile(doc);
+                    } else {
+                        console.log('No user found');
+                    }
+                })
+            }
+        }).resolve();
 
   this.router      
     .on({

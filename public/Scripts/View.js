@@ -32,9 +32,11 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-  // var accntButton = header.querySelector('#profile-btn');
-  // accntButton.addEventListener('click', function(event) {
-  //   me.router.navigate('/profile');
+
+  var accntButton = header.querySelector('#profile-btn');
+  accntButton.addEventListener('click', function(event) {
+    me.router.navigate('/profile');
+  });
 
   var signupButton = header.querySelector('#signup-btn');
   signupButton.addEventListener('click', function(event) {
@@ -45,16 +47,6 @@ Bookstore.prototype.viewHeader = function () {
   this.replaceElement(document.querySelector('header'), header);
 }
 
-// STEVEN ---------------------
-// Bookstore.prototype.viewProfile = function(doc) {
-//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
-
-//   profilePage.removeAttribute('hidden');
-//   this.replaceElement(document.querySelector('main'), profilePage);
-
-
-//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
-// }
 
 
 /* HOME SCRIPTS */
@@ -163,37 +155,39 @@ Bookstore.prototype.viewCreateAcc = function(doc) {
 
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
-<<<<<<< HEAD
-    
-    // const userInfo = document.querySelector('.profile-info');
-
-    // const setupUser = (data) => {
-    //     userInfo(snapshot.docs);
-=======
-
-    const userInfo = document.querySelector('.profile-info');
-
-    const setupUser = (data) => {
-        userInfo(snapshot.docs);
-    }
-
-    // if (document.readyState == 'loading') {
-    //     document.addEventListener('DOMContentLoaded', ready)
-    // } else {
-    //     ready()
->>>>>>> 058b04f7e78b3d79872afa277d680ea19a055ffe
-    // }
-    
+    let me = this;
     
     profilePage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), profilePage);
 
-    var pfName = profilePage.querySelector(".profile-fName");
-    pfName.innerHTML = "" + doc.get("fName");
+    var fName = profilePage.querySelector(".profile-fName");
+    fName.innerHTML = "<strong>First Name: </strong>" + doc.get("fName");
 
-    var plName = profilePage.querySelector(".profile-lName");
-    plName.innerHTML = "" + doc.get("lName");
+    var lName = profilePage.querySelector(".profile-lName");
+    lName.innerHTML = "<strong>Last Name: </strong>" + doc.get("lName");
 
+    var email = profilePage.querySelector(".profile-email");
+    email.innerHTML = "<strong>Email: </strong>" + doc.get("email");
+
+    var password = profilePage.querySelector(".profile-password");
+    password.innerHTML = "<strong>Password: </strong> CENSORED lol";
+    
+    var street = profilePage.querySelector(".profile-street");
+    street.innerHTML = "<strong>Home Address: </strong>" + doc.get("streetAddress");
+    
+    var city = profilePage.querySelector(".profile-city");
+    city.innerHTML = "<strong>City: </strong>" + doc.get("city");
+    
+    var state = profilePage.querySelector(".profile-state");
+    state.innerHTML = "<strong>State: </strong>" + doc.get("state");
+    
+    var zip = profilePage.querySelector(".profile-zip");
+    zip.innerHTML = "<strong>Zip Code: </strong>" + doc.get("zipCode");
+    
+    var country = profilePage.querySelector(".profile-country");
+    country.innerHTML = "<strong>Country: </strong>" + doc.get("country");
+
+    
 
 }
 

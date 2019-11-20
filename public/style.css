@@ -181,6 +181,10 @@ hr {
     display:block;
 }
 
+.hide {
+    display:none;
+}
+
 .account-dropdown-content p {
     padding: 10px;
     font: 12px;
@@ -211,7 +215,7 @@ hr {
 /* Start of edit profile container */
 .profileDiv,
 .createAccDiv{
-    min-height: 900px;
+    min-height: 1000px;
 }
 
 .profile-content-section-container,
@@ -230,13 +234,19 @@ hr {
     min-height: 710px;
 }
 
-.profile-content-section-container b, 
 .create-content-section-container b {
     padding-left: 20px;
     font-size: 18px;
     display: inline-block;
-    width: 200px;
+    width: 400px;
+}
 
+.profile-content-section-container p {
+    padding-left: 20px;
+    font-size: 20px;
+    display: inline-block;
+    width: 400px;
+    padding-bottom: 10px;
 }
 
 .profile-content-section-container input,
