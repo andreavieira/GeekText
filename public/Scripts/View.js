@@ -32,9 +32,11 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-  // var accntButton = header.querySelector('#profile-btn');
-  // accntButton.addEventListener('click', function(event) {
-  //   me.router.navigate('/profile');
+
+  var accntButton = header.querySelector('#profile-btn');
+  accntButton.addEventListener('click', function(event) {
+    me.router.navigate('/profile');
+  });
 
   var signupButton = header.querySelector('#signup-btn');
   signupButton.addEventListener('click', function(event) {
@@ -45,16 +47,6 @@ Bookstore.prototype.viewHeader = function () {
   this.replaceElement(document.querySelector('header'), header);
 }
 
-// STEVEN ---------------------
-// Bookstore.prototype.viewProfile = function(doc) {
-//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
-
-//   profilePage.removeAttribute('hidden');
-//   this.replaceElement(document.querySelector('main'), profilePage);
-
-
-//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
-// }
 
 
 /* HOME SCRIPTS */
@@ -148,15 +140,13 @@ Bookstore.prototype.viewHome = function (bDetails) {
 Bookstore.prototype.viewCreateAcc = function(doc) {
     var createAccPage = document.querySelector('#createAcc-page').cloneNode(true);
     let me = this;
+
+    // Once the user has clicked on the create account button, it will redirect user
+    // back to the homepage with the user already logged in
     createAccPage.querySelector(".create-acc-btn").addEventListener('click',function() {
         me.router.navigate("/")
     });
-    // this.router.navigate("/");
-    // const userInfo = document.querySelector('.profile-info');
-
-    // const setupUser = (data) => {
-    //     userInfo(snapshot.docs);
-    // }
+    
 
     createAccPage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), createAccPage);
@@ -165,20 +155,40 @@ Bookstore.prototype.viewCreateAcc = function(doc) {
 
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
-
-    const userInfo = document.querySelector('.profile-info');
-
-    const setupUser = (data) => {
-        userInfo(snapshot.docs);
-    }
-
-    // if (document.readyState == 'loading') {
-    //     document.addEventListener('DOMContentLoaded', ready)
-    // } else {
-    //     ready()
-    // }
+    let me = this;
+    
     profilePage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), profilePage);
+
+    var fName = profilePage.querySelector(".profile-fName");
+    fName.innerHTML = "<strong>First Name: </strong>" + doc.get("fName");
+
+    var lName = profilePage.querySelector(".profile-lName");
+    lName.innerHTML = "<strong>Last Name: </strong>" + doc.get("lName");
+
+    var email = profilePage.querySelector(".profile-email");
+    email.innerHTML = "<strong>Email: </strong>" + doc.get("email");
+
+    var password = profilePage.querySelector(".profile-password");
+    password.innerHTML = "<strong>Password: </strong> CENSORED lol";
+    
+    var street = profilePage.querySelector(".profile-street");
+    street.innerHTML = "<strong>Home Address: </strong>" + doc.get("streetAddress");
+    
+    var city = profilePage.querySelector(".profile-city");
+    city.innerHTML = "<strong>City: </strong>" + doc.get("city");
+    
+    var state = profilePage.querySelector(".profile-state");
+    state.innerHTML = "<strong>State: </strong>" + doc.get("state");
+    
+    var zip = profilePage.querySelector(".profile-zip");
+    zip.innerHTML = "<strong>Zip Code: </strong>" + doc.get("zipCode");
+    
+    var country = profilePage.querySelector(".profile-country");
+    country.innerHTML = "<strong>Country: </strong>" + doc.get("country");
+
+    
+
 }
 
 

@@ -253,37 +253,42 @@
     </section>
   </div>
 
+
+  <!-- CREATE YOUR ACCOUNT HERE -->
   <div hidden class="createAccDiv" id="createAcc-page" style="padding-top: 0px;">
       <section class="create-content-section-container" style="padding-right: 16px; padding-top: 0px;" >
         <div id="create-personal-information">
             <h1>Personal Information</h1>
-            <b>First Name: </b>
-            <input type="text" id="createfName" placeholder="First Name"/>
-            <br>
-            <b>Last Name: </b>
-            <input type="text" id="createlName" placeholder="Last Name"/>
-            <br>
-            <b>Email: </b>
-            <input type="email" id="createEmail" placeholder="Email"/>
-            <br>
-            <b>Password: </b>
-            <input type="password" id="createPassword" placeholder="Password"/>
-            <br>
-            <b>Street Address: </b>
-            <input type="text" id="createStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
-            <br>
-            <b>City: </b>
-            <input type="text" id="createCity" placeholder="Ex: Miami"/>
-            <br>
-            <b>State: </b>
-            <input type="text" id="createState" placeholder="Ex: FL"/>
-            <br>
-            <b>Zip code: </b>
-            <input type="number" id="createZipCode" placeholder="Ex: 33123"/>
-            <br>
-            <b>Country: </b>
-            <input type="text" id="createCountry" placeholder="Ex: USA"/>
-            <br>
+            <form>
+                <b>First Name: </b>
+                <input required type="text" id="createfName" placeholder="First Name" required/>
+                <br>
+                <b>Last Name: </b>
+                <input type="text" id="createlName" placeholder="Last Name" required/>
+                <br>
+                <b>Email: </b>
+                <input type="email" id="createEmail" placeholder="Email" required/>
+                <br>
+                <b>Password: </b>
+                <input type="password" id="createPassword" placeholder="Password"/>
+                <br>
+                <b>Street Address: </b>
+                <input type="text" id="createStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
+                <br>
+                <b>City: </b>
+                <input type="text" id="createCity" placeholder="Ex: Miami"/>
+                <br>
+                <b>State: </b>
+                <input type="text" id="createState" placeholder="Ex: FL"/>
+                <br>
+                <b>Zip code: </b>
+                <input type="number" id="createZipCode" placeholder="Ex: 33123"/>
+                <br>
+                <b>Country: </b>
+                <input type="text" id="createCountry" placeholder="Ex: USA"/>
+                <br>
+            </form>
+
         </div>
         <br>
         <button class="create-acc-btn" onclick="createUser()">Create Account</button>
@@ -295,48 +300,50 @@
     <section class="profile-content-section-container">
         <div id="personal-information">
             <h1>Personal Information</h1>
-            <b>First Name: </b>
-            <input type="text" id="changefName" placeholder="First Name"/>
-            <button>
-                <img src="/images/edit.png" width="25" height="25">
-            </button>
+            <p class="profile-fName">First Name: </p>
+            <input id="changefName" type="button" onclick="changefName()" value="Edit">
+            <input id="fNameChange" type="hidden" placeholder="New First Name">
+            <input id="saveNewfName" type="hidden" value="Change">
             <br>
-            <b>Last Name: </b>
-            <input type="text" id="changelName" placeholder="Last Name"/>
-            <button>
-                <img src="/images/edit.png" width="25" height="25">
-            </button>
+            <p class="profile-lName">Last Name: </p>
+            <input id="changelName" type="button" onclick="changelName()" value="Edit">
+            <input id="lNameChange" type="hidden" placeholder="New Last Name">
+            <input id="saveNewlName" type="hidden" value="Change">
             <br>
-            <b>Email: </b>
-            <input type="email" id="changeEmail" placeholder="Email"/>
-            <button>
-                <img src="/images/edit.png" width="25" height="25">
-            </button>
+            <p class="profile-email">Email: </p>
+            <input id="changeEmail" type="button" onclick="changeEmail()" value="Edit">
+            <input id="emailChange" type="hidden" placeholder="New Email">
+            <input id="saveNewEmail" type="hidden" value="Change">
             <br>
-            <b>Password: </b>
-            <input type="password" id="changePassword" placeholder="Password"/>
-            <button>
-                <img src="/images/edit.png" width="25" height="25">
-            </button>
+            <p class="profile-password">Password: </p>
+            <input id="changePassword" type="button" onclick="changePassword()" value="Edit">
+            <input id="passwordChange" type="hidden" placeholder="New Password">
+            <input id="saveNewPassword" type="hidden" value="Change">
             <br>
-            <b>Street Address: </b>
-            <input type="text" id="changeStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
-            <button>
-                <img src="/images/edit.png" width="25" height="25">
-            </button>
+            <p class="profile-street">Home Address: </p>
+            <input id="changeHomeAdd" type="button" onclick="changeHomeAdd()" value="Edit">
+            <input id="streetChange" type="hidden" placeholder="New Street Address">
             <br>
-            <b>City: </b>
-            <input type="text" id="changeCityAddress" placeholder="Ex: Miami"/>
+            <p class="profile-city">City: </p>
+            <input id="cityChange" type="hidden" placeholder="New City">
             <br>
-            <b>State: </b>
-            <input type="text" id="changeStateAddress" placeholder="Ex: FL"/>
+            <p class="profile-state">State: </p>
+            <input id="stateChange" type="hidden" placeholder="New State">
             <br>
-            <b>Zip code: </b>
-            <input type="number" id="changeZipCode" placeholder="Ex: 33123"/>
+            <p class="profile-zip">Zip code: </p>
+            <input id="zipChange" type="hidden" placeholder="New Zip Code">
             <br>
-            <b>Country: </b>
-            <input type="number" id="changeCountry" placeholder="Ex: USA"/>
+            <p class="profile-country">Country: </p>
+            <input id="countryChange" type="hidden" placeholder="New Country">
             <br>
+            <input id="saveNewHomeAdd" type="hidden" value="Change">
+            <br>
+            <b>
+                Currently Unavailable: <br>
+                Plans to make drop down that is able to 
+                add new credit cards and store multiple card information <br>
+                Unable to change information only displaying rn lol
+            </b>
         </div>
         <br>
         <br>
@@ -355,6 +362,11 @@
             <b>CVV: </b>
             <input type="number" id="changeCreditCardCVV" placeholder="CVV"/>
             <br>
+            <b>
+                Currently Unavailable: <br>
+                Plans to make drop down that is able to 
+                add new credit cards and store multiple card information
+            </b>
 
         </div>
         <br>
