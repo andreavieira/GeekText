@@ -192,13 +192,14 @@ Bookstore.prototype.viewCart = function (doc) {
 
   //Eventlistener constructors
   function ready() {
+    //listener for remove cart item button
     var removeCartItemButtons = document.getElementsByClassName('btn-danger-cart')   //for btn-danger class
     console.log(removeCartItemButtons)
     for (var i = 0; i < removeCartItemButtons.length; i++) {                      //loops through all buttons in cart
       var button = removeCartItemButtons[i]                                   //listener for 'click' event
       button.addEventListener('click', removeCartItem)
     }
-
+    //listener for remove save item button
     var removeSavedItemButtons = document.getElementsByClassName('btn-danger-save')   //for btn-danger class
     console.log(removeSavedItemButtons)
     for (var i = 0; i < removeCartItemButtons.length; i++) {                      //loops through all buttons in cart
@@ -206,13 +207,14 @@ Bookstore.prototype.viewCart = function (doc) {
       button.addEventListener('click', removeSavedItem)
     }
 
-
+    //listener for quantity field
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (var i = 0; i < quantityInputs.length; i++) {
       var input = quantityInputs[i]
       input.addEventListener('change', quantityChanged)
     }
 
+    //listener for add to cart button
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (var i = 0; i < addToCartButtons.length; i++) {
         var button = addToCartButtons[i]
@@ -237,17 +239,17 @@ Bookstore.prototype.viewCart = function (doc) {
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
           })
-    //updateCartTotal();
+    updateCartTotal();
   }
 
 
   function removeSavedItem(event) {
     //gets item ID
     var buttonClicked = event.target
-    var cartItem = buttonClicked.parentElement.parentElement.parentElement.parentElement;
+    var cartItem =buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("save-data-id")[0].innerText;
 
-    
+     
     let cartDocRef = promise.collection("save");
     let allItems = cartDocRef.get()
       .then(snapshot => {
@@ -256,7 +258,7 @@ Bookstore.prototype.viewCart = function (doc) {
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
           })
-    //updateCartTotal();
+    updateCartTotal();
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
@@ -266,7 +268,7 @@ Bookstore.prototype.viewCart = function (doc) {
     if (isNaN(input.value) || input.value <= 0) {
       input.value = 1                             
     }
-    updateCartTotal()                               
+    updateCartTotal();                               
   }
 
   //Getter function that gets saved item to cart
@@ -313,7 +315,7 @@ Bookstore.prototype.viewCart = function (doc) {
         var deleteDoc =  saveDocRef.doc(ID).delete();
           });
         })
-    //updateCartTotal();
+    updateCartTotal();
   }
 
   //Getter function that gets item and sends item to saved for later
@@ -327,18 +329,16 @@ Bookstore.prototype.viewCart = function (doc) {
     var docTitle = cartItem.getElementsByClassName("item-book-title")[0].innerText;
     var docAuthor = cartItem.getElementsByClassName("item-author-name")[0].innerText;
     var docPrice = cartItem.getElementsByClassName("item-price")[0].innerText;
-    //var docImage = cartItem.getElementsByClassName("item-image").src;
+    var docImage = cartItem.getElementsByClassName("item-image")[0].src;
 
-    //FIX ME ADD FIELD IMAGE TO saveForLaterBD param
-    saveForLaterDB(ID, docTitle, docAuthor, docPrice);        //calls function to pass item to save collection
+    saveForLaterDB(ID, docTitle, docAuthor, docPrice, docImage);        //calls function to pass item to save collection
     removeCartItemDB(ID);                                               //removes item from cart database
     cartItem.remove();                                                  //removes item from cart HTML row
 
   }
 
-  //FIX ME!! ADD FIELD IMAGE TO saveForLaterDB param
   //Adds item to save collection in the database
-  function saveForLaterDB(ID, docTitle, docAuthor, docPrice){
+  function saveForLaterDB(ID, docTitle, docAuthor, docPrice, docImage){
     //gets the path to the saved items
     let saveDocRef = promise.collection("save");
     //adds item to the database
@@ -346,7 +346,7 @@ Bookstore.prototype.viewCart = function (doc) {
       title: docTitle,
       authorName: docAuthor,
       price: docPrice,
-      //image: docImage
+      image: docImage
     }).then(ID => {
       console.log('Added document with ID: ', ID.id);
     });
@@ -363,7 +363,7 @@ Bookstore.prototype.viewCart = function (doc) {
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
           })
-   // updateCartTotal();
+   updateCartTotal();
   }
 
   
@@ -385,11 +385,10 @@ Bookstore.prototype.viewCart = function (doc) {
                 </span>
                 </div>
                 <span class="cart-price cart-column">
-                  <span class="item-price">${doc.get("price")}</span>
+                  <span id ="item-price">${doc.get("price")}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <input class="cart-quantity-input" id="quant"
-                  type="number" value="1"></input>
+                <input class="cart-quantity-input" id="quant" type="number" value="1">
                   <ul style="list-style-type:none;">
                   <li>
                   <button class="btn btn-save cart-quantity-button"
@@ -434,8 +433,6 @@ function renderSave(doc) {
                 <span class="save-price">${doc.get("price")}</span>
               </span>
               <div class="cart-quantity cart-column">
-                <input class="cart-quantity-input" id="quant"
-                type="number" value="1"></input>
                 <ul style="list-style-type:none;">
                 <li>
                 <button class="btn btn-add cart-quantity-button"
@@ -453,7 +450,6 @@ function renderSave(doc) {
   saveItems.append(saveRow);
 
   saveRow.getElementsByClassName('btn-danger-save')[0].addEventListener('click', removeSavedItem);
-  saveRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged);
   saveRow.getElementsByClassName('btn-add')[0].addEventListener('click', addToCartClicked);
 }
 
@@ -494,6 +490,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
           snapshot.forEach(doc => {
             console.log(doc.id, '=>', doc.data());
             renderCart(doc);
+            updateCartTotal();
           });
         });
       }
@@ -508,6 +505,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
               snapshot.forEach(doc => {
                 console.log(doc.id, '=>', doc.data());
                 renderSave(doc);
+                updateCartTotal();
               });
             });
         }
@@ -515,15 +513,20 @@ let promise = firebase.firestore().collection('users').doc(userUid);
 
   // Function calculates cart total based on quantity and price
   function updateCartTotal(event) {
-
+    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
+    var total = 0
+    //doesn't work for more than one item
+    for (var i = 1; i < cartRows.length; i++) {
       var cartRow = cartRows[i];
       var priceElement = document.getElementById('item-price').innerHTML;
       var price = parseFloat(priceElement.replace('$',''));
-      console.log(price)
+      console.log(priceElement)
       var quantityElement = document.getElementById('quant').value;
       console.log(quantityElement);
       var quantity = quantityElement;
       total = total + (price * quantity);
+    }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
   }
