@@ -408,7 +408,7 @@ hr {
     font-size:1.3em;
 }
 
-.btn-danger {
+.btn-danger-save {
     display: block;
     margin-top: 2px;
     font-size: 0.7em;
@@ -420,8 +420,24 @@ hr {
     border: none;
 }
 
-.btn-danger:hover {
-    background-color: rgb(43, 107, 54);
+.btn-danger-save:hover {
+    background-color: rgb(143, 14, 14);
+}
+
+.btn-danger-cart {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.7em;
+    color: white;
+    background-color: rgb(230, 100, 100);
+    border-radius: .2em;
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-danger-cart:hover {
+    background-color: rgb(143, 14, 14);
 }
 
 .btn-save{
@@ -437,6 +453,22 @@ hr {
 }
 .btn-save:hover{
     background-color: rgb(54, 138, 68);
+}
+
+.btn-add {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.7em;
+    color: white;
+    background-color: rgb(100, 146, 230);
+    border-radius: .2em;
+    padding: 10px;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-add:hover {
+    background-color: rgb(43, 78, 107);
 }
 
 .cart-quantity-input{

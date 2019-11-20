@@ -96,7 +96,6 @@ function createUser() {
     
     // Handle any errors that occur
     promise.catch(function(error) {
-        // Handle errors here
         var errorCode = error.code;
         console.log("Error: " + errorCode)
         if (errorCode == 'auth/weak-password') return // password to weak. Minimal 6 characters
