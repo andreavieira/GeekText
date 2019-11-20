@@ -215,23 +215,22 @@ hr {
 /* Start of edit profile container */
 .profileDiv,
 .createAccDiv{
-    min-height: 1000px;
+    min-height: 1200px;
+    text-align: center;
 }
 
 .profile-content-section-container,
  .create-content-section-container {
-    margin-top: 80px;
+    text-align: left;
+    display: inline-block;
+    margin-top: 20px;
     min-width: 550px;
-    max-width: 750px;
-    margin-left: 20%;
-    margin-right: 20%;
+    max-width: 1000px;
+    /* margin-left: 20%;
+    margin-right: 20%; */
     border: darkgray solid 4px;
     border-radius: 10px;
     padding: 10px;
-}
-
-.profile-content-section-container {
-    min-height: 710px;
 }
 
 .create-content-section-container b {
@@ -293,6 +292,17 @@ hr {
     background: rgb(95, 95, 95);
     color: rgb(255, 255, 255);
     cursor: pointer;
+}
+
+#saveNewfName, 
+#saveNewlName, 
+#saveNewEmail, 
+#saveNewPassword,
+#saveNewHomeAdd {
+    display: inline-block;
+    text-align: center;
+    width: 25px;
+    margin-left: 62%;
 }
 
 .profile-save-btn button{

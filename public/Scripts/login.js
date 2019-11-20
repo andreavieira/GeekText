@@ -185,7 +185,9 @@ function changeEmail() {
 
 function changePassword() {
     document.getElementById("changePassword").type="hidden";
+    document.getElementById("oldPasswordConfirmation").type="text";
     document.getElementById("passwordChange").type="text";
+    document.getElementById("newPasswordConfirmation").type="text";
     document.getElementById("saveNewPassword").type="button";
 }
 
