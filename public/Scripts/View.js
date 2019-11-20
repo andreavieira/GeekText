@@ -220,6 +220,20 @@ Bookstore.prototype.viewCart = function (doc) {
         var button = addToCartButtons[i]
         button.addEventListener('click', addToCartClicked)
     }
+
+    //listener for purchase button
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked);
+
+  }
+
+  //function shows an alert and removes from HTML
+  function purchaseClicked() {
+    alert('Thank you for your purchase')
+    var cartItems = document.getElementsByClassName('cart-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+    updateCartTotal()
   }
 
   // Function calls the updateCartTotal function when ONLY the remove button is clicked.
