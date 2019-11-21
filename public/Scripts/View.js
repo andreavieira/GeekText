@@ -249,7 +249,7 @@ Bookstore.prototype.viewCart = function (doc) {
     var cartItem = buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("data-id")[0].innerText;
 
-    
+
     let cartDocRef = promise.collection("cart");
     let allItems = cartDocRef.get()
       .then(snapshot => {
@@ -268,7 +268,7 @@ Bookstore.prototype.viewCart = function (doc) {
     var cartItem =buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("save-data-id")[0].innerText;
 
-     
+
     let cartDocRef = promise.collection("save");
     let allItems = cartDocRef.get()
       .then(snapshot => {
@@ -287,7 +287,7 @@ Bookstore.prototype.viewCart = function (doc) {
     if (isNaN(input.value) || input.value <= 0) {
       input.value = 1
     }
-    updateCartTotal();                               
+    updateCartTotal();
   }
 
   //Getter function that gets saved item to cart
@@ -310,7 +310,7 @@ Bookstore.prototype.viewCart = function (doc) {
 
   }
 
-  //Setter function that adds item elements to the cart database 
+  //Setter function that adds item elements to the cart database
   function addToCartDB(ID, docTitle, docAuthor, docPrice, docImage){
     let cartDocRef = promise.collection("cart");
     //adds item to the database
@@ -387,7 +387,7 @@ Bookstore.prototype.viewCart = function (doc) {
    updateCartTotal();
   }
 
-  
+
   //renders all the items in the shopping cart section
   //@param is the documents in the cart
   function renderCart(doc) {
@@ -481,7 +481,7 @@ function renderSave(doc) {
 //global reference variables
 var user = firebase.auth().currentUser;
 var userUid = user.uid
-let promise = firebase.firestore().collection('users').doc(userUid); 
+let promise = firebase.firestore().collection('users').doc(userUid);
 
 //handles async calls
   function resolveAfter1Second(saveRef) {
@@ -491,7 +491,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
       }, 500);
     });
   }
-  
+
   async function asyncCall() {
     let cartRef = promise.collection("cart");
     let saveRef = promise.collection("save");
@@ -499,7 +499,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
     startCart(cartRef);
     var result = await resolveAfter1Second(saveRef);
   }
-  
+
   asyncCall();
 
     //if there are items in the cart
@@ -516,7 +516,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
         });
       }
     }
-  
+
       //if there are items saved for later
       //get all saved items and render
       function startSave(saveRef){
@@ -659,7 +659,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
         break;
       }
     }
-    console.log(unList);
+    
     if(starRating.rating == -1) { // no rating
       alert("Please add a star rating to your review");
     } else if (reviewText.value == "" ) { //no review
