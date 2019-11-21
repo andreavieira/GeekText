@@ -1,7 +1,6 @@
 function Bookstore() {
 
     var me = this;
-    me.initTemplates();
     me.viewHeader();
     me.initRouter();
     me.db = firebase.firestore();
@@ -151,11 +150,11 @@ Bookstore.prototype.initRouter = function () {
     //   }
     // }).resolve();
 
-    
+
     this.router
         .on({
             "/createAcc": function(params) {
-                
+
                 that.viewCreateAcc();
             }
         }).resolve();
@@ -163,7 +162,7 @@ Bookstore.prototype.initRouter = function () {
     this.router
         .on({
             "/profile": function(params) {
-                
+
                 let auth = firebase.auth();
                 var userUid = auth.currentUser.uid;
 
@@ -181,12 +180,12 @@ Bookstore.prototype.initRouter = function () {
             }
         }).resolve();
 
-  this.router      
+  this.router
     .on({
       "/book/:id": function(params){
         let allBooks = that.db.collection("bookdetails");
         let detailsRef = allBooks.doc(params.id);
-        
+
         let getDoc = detailsRef.get()
         .then(doc => {
            if (!doc.exists) {
@@ -204,17 +203,33 @@ Bookstore.prototype.initRouter = function () {
   this.router
     .on({
       '/cart': function () {
-        let cartDocRef = that.db.collection("users").doc("nrodr047").collection("cart");
-        let allItemsCart = cartDocRef.get()
-          .then(snapshot => {
-            snapshot.forEach(doc => {
-              console.log(doc.id, '=>', doc.data());
-              that.viewCart(doc);
+        //get current logged-in user
+        var user = firebase.auth().currentUser;
+        let db = firebase.firestore();
+
+        if (user) {
+          // If user is signed in:
+          //let userInfoRef = firebase.firestore().collection("users")
+          var userUid = user.uid                //currentuser ID
+          var getUser = db.collection('users').doc(userUid)
+          let userRef = getUser.get()
+            .then(doc => {
+              if (!doc.exists) {
+                console.log('No such document!');
+              } else {
+                console.log('Document data:', doc.data());
+                //send user information to viewCart
+                that.viewCart(doc);
+              }
+            })
+            .catch(err => {
+              console.log('Error getting document', err);
             });
-          })
-          .catch(err => {
-            console.log('Error getting documents', err);
-          });
+        
+        } else {
+          // No user is signed in.
+          console.log('No user is signed in.');
+        }
       }
     }).resolve();
 

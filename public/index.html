@@ -98,7 +98,7 @@
             <span class="cart-quantity cart-header
                 cart-column">RATING</span>
           </div>
-          
+
           <div id="home-books" class="cart-items">
             <div class ="cart-row">
               <!-- Here is the home sort container in view.js file -->
@@ -132,25 +132,27 @@
                   </div>
                     <div class="cart-total">
                       <strong class="cart-total-title">TOTAL:</strong>
-                      <span class="cart-total-price">$32.97</span>
+                      <span class="cart-total-price"></span>
                     </div>
                     <button class="btn btn-primary btn-purchase"
                       role="button">PURCHASE </button>
             <div>
               <h1>SAVED FOR LATER</h1>
-              <div class = "save-row">
-                <span class="cart-item cart-header
-                cart-column">ITEM</span>
-                <span class="cart-description cart-header
-                cart-column">DESCRIPTION</span>
-                <span class="cart-price cart-header
-                cart-column">PRICE</span>
-                <span class="cart-quantity cart-header
-                cart-column">QUANTITY</span>
+                <div class = "save-row">
+                  <span class="cart-item cart-header
+                  cart-column">ITEM</span>
+                  <span class="cart-description cart-header
+                  cart-column">DESCRIPTION</span>
+                  <span class="cart-price cart-header
+                  cart-column">PRICE</span>
+                  <span class="cart-quantity cart-header
+                  cart-column">QUANTITY</span>
+                </div>
+              <div class ="saved-items">
+                <div class="save-row">
+                  <!-- Saved items Container -->
+                </div>
               </div>
-              <br>
-              <i>You currently do not have items saved for later.</i>
-              </br>
             </div>
           </section>
   </div>
@@ -222,7 +224,10 @@
             <input disabled type="radio" name="rated" value="1" />
             <label fitle="text">1 star</label>
           </div>
-          <p class="filled-review-text">Filled Review Box</p>
+          <div class="filled-review-text-username">
+            <p class="filled-review-username"><strong>Temp</strong></p>
+            <p class="filled-review-text">Filled Review Box</p>
+          </div>
         </div>
       </div>
       <div class="empty-review-container">
@@ -238,12 +243,6 @@
             <label for="ratedstar2" title="text">2 stars</label>
             <input type="radio" id="ratedstar1" name="rate" value="1" />
             <label for="ratedstar1" title="text">1 star</label>
-
-            <!-- <label><input type="radio" id="star5" name="rate" value="5" /></label>
-            <label><input type="radio" id="star4" name="rate" value="4" /></label>
-            <label><input type="radio" id="star3" name="rate" value="3" /></label>
-            <label><input type="radio" id="star2" name="rate" value="2" /></label>
-            <label><input type="radio" id="star1" name="rate" value="1" /></label> -->
           </div>
           <textarea id="review-text" style="width: 732px;  font-size: 16px;"></textarea><br>
           <button class="btn btn-purchase" id="submit-btn" value="Submit">Submit Review</button>
@@ -340,7 +339,7 @@
             <br>
             <b>
                 Currently Unavailable: <br>
-                Plans to make drop down that is able to 
+                Plans to make drop down that is able to
                 add new credit cards and store multiple card information <br>
                 Unable to change information only displaying rn lol
             </b>
@@ -364,7 +363,7 @@
             <br>
             <b>
                 Currently Unavailable: <br>
-                Plans to make drop down that is able to 
+                Plans to make drop down that is able to
                 add new credit cards and store multiple card information
             </b>
 
@@ -373,7 +372,7 @@
         <div class="profile-save-btn">
             <button >SAVE</button>
         </div>
-        
+
 
     </section>
   </div>

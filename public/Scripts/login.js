@@ -75,6 +75,7 @@ function createUser() {
     var cUserZipCode = document.getElementById("createZipCode").value;
     var cUserCountry = document.getElementById("createCountry").value;
 
+
     if((cUserfName == "") || (cUserlName == "") || (cUserEmail == "") 
         || (cUserPassword == "") || (cUserStreetAddress == "") || (cUserCity == "") 
         || (cUserState == "") || (cUserZipCode == "") || (cUserCountry == "")) 
