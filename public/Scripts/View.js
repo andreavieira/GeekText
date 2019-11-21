@@ -59,6 +59,7 @@ Bookstore.prototype.viewHeader = function () {
 
 /* HOME SCRIPTS */
 Bookstore.prototype.viewHome = function (doc) {
+  console.log("test github");
   var homePage = document.querySelector('#home-page').cloneNode(true);
 
   homePage.removeAttribute('hidden');
