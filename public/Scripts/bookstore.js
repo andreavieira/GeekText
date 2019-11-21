@@ -1,7 +1,6 @@
 function Bookstore() {
 
     var me = this;
-    me.initTemplates();
     me.viewHeader();
     me.initRouter();
     me.db = firebase.firestore();
@@ -24,7 +23,6 @@ Bookstore.prototype.initRouter = function () {
   this.router = new Navigo();
   var that = this;
   let booksDocRef = firebase.firestore().collection("bookdetails")
-  let userInfoRef = firebase.firestore().collection("users")
 
   this.router
     .on({
@@ -152,63 +150,48 @@ Bookstore.prototype.initRouter = function () {
     //   }
     // }).resolve();
 
-    
-    this.router
-    .on({
-        "/createAcc": function(params) {
-            // Get data
-
-            // userInfoRef.get().then(snapshot => {
-            //     console.log(snapshot.docs)
-            // })
-            that.viewCreateAcc();
-        }
-    }).resolve();
 
     this.router
-      .on({
-        "/profile": function(params) {
-            // Get data
-            userInfoRef.get().then(snapshot => {
-                console.log(snapshot.docs)
-            })
-            that.viewProfile();
-        }
-      }).resolve();
+        .on({
+            "/createAcc": function(params) {
 
-  this.router      
+                that.viewCreateAcc();
+            }
+        }).resolve();
+
+    this.router
+        .on({
+            "/profile": function(params) {
+
+                let auth = firebase.auth();
+                var userUid = auth.currentUser.uid;
+
+                let allUsers = firebase.firestore().collection("users")
+                let userDetails = allUsers.doc(userUid)
+
+                let getUDetails = userDetails.get()
+                .then(doc => {
+                    if (doc.exists) {
+                        that.viewProfile(doc);
+                    } else {
+                        console.log('No user found');
+                    }
+                })
+            }
+        }).resolve();
+
+  this.router
     .on({
       "/book/:id": function(params){
         let allBooks = that.db.collection("bookdetails");
         let detailsRef = allBooks.doc(params.id);
-
-        var currentBookAuthor = "";
-        let getCurrentAuthor = detailsRef.get()
-        .then(doc => {
-          if (!doc.exists) {
-            console.log('No such document!');
-          } else {
-            currentBookAuthor = doc.get("AuthorLn")
-          }
-        })
-        
-        // TODO: Should be able to use this as replacement for third argument in allBooks.where
-        console.log(currentBookAuthor)
-
-        let booksByAuthor = [];
-        let allItems = allBooks.where("AuthorLn", "==", "Coelho").get()
-          .then(snapshot => {
-            snapshot.forEach(doc => {
-              booksByAuthor.push(doc.data());
-            });
-          })
 
         let getDoc = detailsRef.get()
         .then(doc => {
            if (!doc.exists) {
              console.log('No such document!');
            } else {
-             that.viewBookDetails(doc, booksByAuthor);
+             that.viewBookDetails(doc);
            }
          })
          .catch(err => {

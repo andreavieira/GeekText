@@ -6,16 +6,6 @@
 
 'use strict'
 
-Bookstore.prototype.initTemplates = function () {
-  this.templates = {};
-
-  var that = this;
-  document.querySelectorAll('.template').forEach(function (el) {
-    that.templates[el.getAttribute('id')] = el;
-  });
-
-};
-
 /* HEADER SCRIPTS */
 Bookstore.prototype.viewHeader = function () {
   //grab clone of template header
@@ -27,14 +17,16 @@ Bookstore.prototype.viewHeader = function () {
   cartButton.addEventListener('click', function (event) {
     me.router.navigate('/cart');
   });
-  
+
   var homeButton = header.querySelector('#home-btn');
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-  // var accntButton = header.querySelector('#profile-btn');
-  // accntButton.addEventListener('click', function(event) {
-  //   me.router.navigate('/profile');
+
+  var accntButton = header.querySelector('#profile-btn');
+  accntButton.addEventListener('click', function(event) {
+    me.router.navigate('/profile');
+  });
 
   var signupButton = header.querySelector('#signup-btn');
   signupButton.addEventListener('click', function(event) {
@@ -45,21 +37,11 @@ Bookstore.prototype.viewHeader = function () {
   this.replaceElement(document.querySelector('header'), header);
 }
 
-// STEVEN ---------------------
-// Bookstore.prototype.viewProfile = function(doc) {
-//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
-
-//   profilePage.removeAttribute('hidden');
-//   this.replaceElement(document.querySelector('main'), profilePage);
-
-
-//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
-// }
 
 
 /* HOME SCRIPTS */
-Bookstore.prototype.viewHome = function (doc) {
-  console.log("test github");
+
+Bookstore.prototype.viewHome = function (bDetails) {
   var homePage = document.querySelector('#home-page').cloneNode(true);
 
   homePage.removeAttribute('hidden');
@@ -69,30 +51,31 @@ Bookstore.prototype.viewHome = function (doc) {
   document.getElementById("home-books").innerHTML = "";
   var bookItems = document.getElementById("home-books");
 
+  // function renderRating(bookRating) {
+  //   return bookRating;
+  //   // Will turn double rating in DB to star representation
+  // }
 
-  function renderRating(bookRating) {
-    return bookRating;
-    // Will turn double rating in DB to star representation
-  }
-  
-  function renderCart() {
+  var bs = this;
+
+  function renderBookRow(doc) {
     var bookRow = document.createElement('div');
     bookRow.classList.add('cart-row');
     // TODO make routing work for pertaining books!
     var bookRowContents = `
                 <div class="cart-item cart-column">
-                  <i class="book-details-link" id="ZyeZCXscDEzIKRG7gqUJ">
-                  <img class="item-image" src="${doc.get("Cover")}" width="100" height="200">
+                  <i class="book-details-link" id="${doc.Id}">
+                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
                   </i>
                 </div>
                 <div class="cart-description cart-column">
-                  <span id="description">${"<i> " + doc.get("BookTitle") + "</i> By: " + doc.get("AuthorFn") + " " + doc.get("AuthorLn")}</span>
+                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
                 </div>
                 <span class="cart-price cart-column">
-                  <span id ="item-price">$${doc.get("Price")}</span>
+                  <span id ="item-price">$${doc.Price}</span>
                 </span>
                 <div class="cart-quantity cart-column">
-                  <span>${renderRating(doc.get("Rating"))}</span>
+                  <span>${doc.Rating}</span>
                 </div>
               </div>
               </div>
@@ -109,9 +92,12 @@ Bookstore.prototype.viewHome = function (doc) {
 
     bookItems.append(bookRow);
   }
-  renderCart();
 
-  let bs = this;
+  bDetails.forEach(book =>{
+    renderBookRow(book);
+  });
+
+  //let bs = this;
   var bookDetails = homePage.querySelector('.book-details-link');
   bookDetails.addEventListener('click', function () {
     bs.router.navigate('/book/' + bookDetails.id);
@@ -145,15 +131,13 @@ Bookstore.prototype.viewHome = function (doc) {
 Bookstore.prototype.viewCreateAcc = function(doc) {
     var createAccPage = document.querySelector('#createAcc-page').cloneNode(true);
     let me = this;
+
+    // Once the user has clicked on the create account button, it will redirect user
+    // back to the homepage with the user already logged in
     createAccPage.querySelector(".create-acc-btn").addEventListener('click',function() {
         me.router.navigate("/")
     });
-    // this.router.navigate("/");
-    // const userInfo = document.querySelector('.profile-info');
 
-    // const setupUser = (data) => {
-    //     userInfo(snapshot.docs);
-    // }
 
     createAccPage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), createAccPage);
@@ -162,20 +146,40 @@ Bookstore.prototype.viewCreateAcc = function(doc) {
 
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
-    
-    const userInfo = document.querySelector('.profile-info');
+    let me = this;
 
-    const setupUser = (data) => {
-        userInfo(snapshot.docs);
-    }
-    
-    // if (document.readyState == 'loading') {
-    //     document.addEventListener('DOMContentLoaded', ready)
-    // } else {
-    //     ready()
-    // }
     profilePage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), profilePage);
+
+    var fName = profilePage.querySelector(".profile-fName");
+    fName.innerHTML = "<strong>First Name: </strong>" + doc.get("fName");
+
+    var lName = profilePage.querySelector(".profile-lName");
+    lName.innerHTML = "<strong>Last Name: </strong>" + doc.get("lName");
+
+    var email = profilePage.querySelector(".profile-email");
+    email.innerHTML = "<strong>Email: </strong>" + doc.get("email");
+
+    var password = profilePage.querySelector(".profile-password");
+    password.innerHTML = "<strong>Password: </strong> CENSORED lol";
+
+    var street = profilePage.querySelector(".profile-street");
+    street.innerHTML = "<strong>Home Address: </strong>" + doc.get("streetAddress");
+
+    var city = profilePage.querySelector(".profile-city");
+    city.innerHTML = "<strong>City: </strong>" + doc.get("city");
+
+    var state = profilePage.querySelector(".profile-state");
+    state.innerHTML = "<strong>State: </strong>" + doc.get("state");
+
+    var zip = profilePage.querySelector(".profile-zip");
+    zip.innerHTML = "<strong>Zip Code: </strong>" + doc.get("zipCode");
+
+    var country = profilePage.querySelector(".profile-country");
+    country.innerHTML = "<strong>Country: </strong>" + doc.get("country");
+
+
+
 }
 
 
@@ -279,9 +283,9 @@ Bookstore.prototype.viewCart = function (doc) {
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
   // @param {*} event used when quantity value is changed
   function quantityChanged(event) {
-    var input = event.target                        
+    var input = event.target
     if (isNaN(input.value) || input.value <= 0) {
-      input.value = 1                             
+      input.value = 1
     }
     updateCartTotal();                               
   }
@@ -320,6 +324,7 @@ Bookstore.prototype.viewCart = function (doc) {
     });
     //refresh cart somehow
   }
+
 
   //Removes item from database
   function removeSavedDBItem(ID){
@@ -549,8 +554,9 @@ let promise = firebase.firestore().collection('users').doc(userUid);
 }
 
 /** BOOK DETAILS SCRIPTS **/
-Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
+Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
+  var currentUser = firebase.auth().currentUser;
 
 
   bookDetails.removeAttribute('hidden');
@@ -588,7 +594,7 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
-  
+
   //Modal
   var modal = bookDetails.querySelector("#myModal");
   var img = bookDetails.querySelector(".book-cover");
@@ -606,38 +612,20 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   }
 
   // Books being passed are:
-  console.log(booksByAuthor)
+  var authorBookRef = this.db.collection("bookdetails").where("AuthorLn", "==", doc.get("AuthorLn"));
+  //console.log(doc.get("AuthorLn"));
+  //console.log(authorBookRef)
+    authorBookRef.get().then(books =>{
+      books.forEach(book =>{
+
+        let simBooks = bookDetails.querySelector(".similar-books");
+        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
+
+      })
+    });
 
   // Books by the same author
   var bookItems = document.getElementById("books-by-author");
-  
-  function renderBookRow(doc) {
-    var bookRow = document.createElement('div');
-    bookRow.classList.add('cart-row');
-    var bookRowContents = `
-                <div class="cart-item cart-column">
-                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
-                </div>
-                <div class="cart-description cart-column">
-                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
-                </div>
-                <span class="cart-price cart-column">
-                  <span id ="item-price">$${doc.Price}</span>
-                </span>
-                <div class="cart-quantity cart-column">
-                  <span>${doc.Rating}</span>
-                </div>
-              </div>
-              </div>
-            </div>`
-    bookRow.innerHTML = bookRowContents
-
-    bookItems.append(bookRow);
-  }
-
-  booksByAuthor.forEach(book => {
-    renderBookRow(book);
-  });
 
   // End books by same author
 
@@ -649,7 +637,7 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
     snapshot.forEach(review => {
       bReviews.push(review.data());
     });
-    this.renderReviews(bReviews, bookDetails);
+    this.renderReviews(bReviews, bookDetails, doc.id);
   });
 
   let reviewText = bookDetails.querySelector("#review-text");
@@ -661,7 +649,7 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
     //send review to database
     //update rating
     let list = starRating.querySelectorAll("input");
-    console.log(list);
+    //console.log(list);
     for(let i = 0; i < 5; i++){
 
       if(list[i].checked){
@@ -672,27 +660,34 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
 
     if(starRating.rating == -1) {
       alert("Please add a star rating to your review");
+    } else if (reviewText.value == "" ) {
+      alert("Please add a review");
+    } else if (currentUser == null) {
+      alert("Please Log in to submit a review")
     } else {
       let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
         Rating: starRating.rating,
-        Text: reviewText.value
+        Text: reviewText.value,
+        Uid: currentUser.uid
       });
-      console.log("review added");
+      alert("Review Submitted!");
       console.log({
         rating: starRating.rating,
-        reviewText: reviewText.value
+        reviewText: reviewText.value,
+        Uid: currentUser.uid
       });
-
       reviewText.setAttribute("disabled", true);
       submitBtn.setAttribute("disabled", true);
+      //average out the ratings based on reviews.
     }
   };
 }
 
-Bookstore.prototype.renderReviews = function (bReviews, details_El) {
+Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
   let review_Container = document.createElement("div");
   let reviewID = 0;
   bReviews.forEach(review => {
+    //console.log(review);
     let review_El = details_El.querySelector(".filled-review").cloneNode(true);
     review_El.querySelector(".rated").setAttribute("rating", review.Rating);
     let index = 5;
@@ -708,38 +703,27 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El) {
         }
       });
 
-    review_El.querySelector(".filled-review-text").innerHTML = review.Text;
+    if(review.Uid == null) {
+      review_El.querySelector(".filled-review-username").innerHTML =
+        "<strong> Guest </strong> says...";
+    } else {
+      let unRef = this.db.collection("users").doc(review.Uid).get().then(user => {
+        console.log(user);
+        review_El.querySelector(".filled-review-username").innerHTML =
+          "<strong>" + user.get("fName") + " " + user.get("lName") + "</strong> says...";
+      });
+    }
+
+    review_El.querySelector(".filled-review-text").innerHTML = "<q>" + review.Text + "</q>";
     review_El.removeAttribute("hidden");
     review_Container.appendChild(review_El);
-
     reviewID++;
   });
   details_El.querySelector(".filled-review-container").removeAttribute("hidden");
   details_El.querySelector(".filled-review-container").innerHTML = '';
   details_El.querySelector(".filled-review-container").appendChild(review_Container);
 }
-//TODO CLEANUP
-Bookstore.prototype.renderTemplate = function (id, data) {
-  var template = this.templates[id];
-  var el = template.cloneNode(true);
-  el.removeAttribute('hidden');
-  this.render(el, data);
-  return el;
-}
 
-Bookstore.prototype.render = function (el, data) {
-  if (!data) {
-    return;
-  }
-
-}
-
-Bookstore.prototype.getDeepItem = function (obj, path) {
-  path.split('/').forEach(function (chunck) {
-    obj = obj[chunk];
-  });
-  return obj;
-};
 
 
 //USED FOR RENDERING;
