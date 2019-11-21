@@ -262,7 +262,7 @@ Bookstore.prototype.viewCart = function (doc) {
     var cartItem = buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("data-id")[0].innerText;
 
-    
+
     let cartDocRef = promise.collection("cart");
     let allItems = cartDocRef.get()
       .then(snapshot => {
@@ -281,7 +281,7 @@ Bookstore.prototype.viewCart = function (doc) {
     var cartItem =buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("save-data-id")[0].innerText;
 
-     
+
     let cartDocRef = promise.collection("save");
     let allItems = cartDocRef.get()
       .then(snapshot => {
@@ -300,7 +300,7 @@ Bookstore.prototype.viewCart = function (doc) {
     if (isNaN(input.value) || input.value <= 0) {
       input.value = 1
     }
-    updateCartTotal();                               
+    updateCartTotal();
   }
 
   //Getter function that gets saved item to cart
@@ -323,7 +323,7 @@ Bookstore.prototype.viewCart = function (doc) {
 
   }
 
-  //Setter function that adds item elements to the cart database 
+  //Setter function that adds item elements to the cart database
   function addToCartDB(ID, docTitle, docAuthor, docPrice, docImage){
     let cartDocRef = promise.collection("cart");
     //adds item to the database
@@ -400,7 +400,7 @@ Bookstore.prototype.viewCart = function (doc) {
    updateCartTotal();
   }
 
-  
+
   //renders all the items in the shopping cart section
   //@param is the documents in the cart
   function renderCart(doc) {
@@ -494,7 +494,7 @@ function renderSave(doc) {
 //global reference variables
 var user = firebase.auth().currentUser;
 var userUid = user.uid
-let promise = firebase.firestore().collection('users').doc(userUid); 
+let promise = firebase.firestore().collection('users').doc(userUid);
 
 //handles async calls
   function resolveAfter1Second(saveRef) {
@@ -504,7 +504,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
       }, 500);
     });
   }
-  
+
   async function asyncCall() {
     let cartRef = promise.collection("cart");
     let saveRef = promise.collection("save");
@@ -512,7 +512,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
     startCart(cartRef);
     var result = await resolveAfter1Second(saveRef);
   }
-  
+
   asyncCall();
 
     //if there are items in the cart
@@ -529,7 +529,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
         });
       }
     }
-  
+
       //if there are items saved for later
       //get all saved items and render
       function startSave(saveRef){
@@ -575,8 +575,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
 
+
   var bookCover = bookDetails.querySelector(".book-cover");
-  bookCover.src = "http://localhost:5000/" + doc.get("Cover");
+  bookCover.src = doc.get("Cover");
 
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
@@ -607,6 +608,13 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
+
+  var bookID = bookDetails.querySelector(".id");
+  bookID.innerHTML =  doc.get("Id");
+
+  var idBook = bookID.innerHTML;
+  console.log("Daniela: " + idBook)
+
 
   //Modal
   var modal = bookDetails.querySelector("#myModal");
@@ -642,12 +650,53 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   // End books by same author
 
+//ADD TO CART BUTTON
+    //global reference variables
+
+    var user = firebase.auth().currentUser;
+    var userUid = user.uid
+    let promise = firebase.firestore().collection('users').doc(userUid);
+
+    //button
+    //listener for purchase button
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', setter);
+    console.log("BOOKS ID: " + idBook)
+
+    function setter(event){
+      var bookid = bookID.innerHTML;
+      var booktitle = bookTitle.innerHTML;
+      var bookcover = bookCover.src;
+      addToCartDB(bookid,booktitle,bookcover);
+    }
+    //Setter function that adds item elements to the cart database
+   // function addToCartDB(event,idBook,bookTitle,author,price,bookCover){
+        function addToCartDB(bookid,booktitle,bookcover){
+        console.log("BOOKS ID INSIDE NATS FUNC: " + bookid)
+        let cartDocRef = promise.collection("cart");
+
+        //adds item to the database
+        let addDoc = cartDocRef.add({
+            title: booktitle,
+            // authorName: author,
+            // price: price,
+             image: bookcover
+        }).then(bookid => {
+            console.log('Added document with ID: ', bookid.id);
+        });
+        //refresh cart somehow
+    }
+
+
+    //END OF ADD TO CART
+
   let bReviews = [];
+  let unList = [];
   let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
   reviewRef.get().then(snapshot => {
     if(!snapshot.exists){
     }
     snapshot.forEach(review => {
+      unList.push(review.get("Uid"));
       bReviews.push(review.data());
     });
     this.renderReviews(bReviews, bookDetails, doc.id);
@@ -670,13 +719,15 @@ Bookstore.prototype.viewBookDetails = function (doc) {
         break;
       }
     }
-
-    if(starRating.rating == -1) {
+    
+    if(starRating.rating == -1) { // no rating
       alert("Please add a star rating to your review");
-    } else if (reviewText.value == "" ) {
+    } else if (reviewText.value == "" ) { //no review
       alert("Please add a review");
-    } else if (currentUser == null) {
+    } else if (currentUser == null) { // not logged in
       alert("Please Log in to submit a review")
+    } else if (unList.includes(currentUser.uid)){ // already been reviewed
+      alert("This book has already been reviewed by you");
     } else {
       let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
         Rating: starRating.rating,
@@ -699,8 +750,14 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
   let review_Container = document.createElement("div");
   let reviewID = 0;
+  let ratingAvg = 0;
+  let numReviews = 0;
+  let unList = [];
   bReviews.forEach(review => {
-    //console.log(review);
+    //HANDLE AVG RATINGS
+    ratingAvg += review.Rating;
+    numReviews++;
+
     let review_El = details_El.querySelector(".filled-review").cloneNode(true);
     review_El.querySelector(".rated").setAttribute("rating", review.Rating);
     let index = 5;
@@ -721,7 +778,6 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
         "<strong> Guest </strong> says...";
     } else {
       let unRef = this.db.collection("users").doc(review.Uid).get().then(user => {
-        console.log(user);
         review_El.querySelector(".filled-review-username").innerHTML =
           "<strong>" + user.get("fName") + " " + user.get("lName") + "</strong> says...";
       });
@@ -732,6 +788,8 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
     review_Container.appendChild(review_El);
     reviewID++;
   });
+  if(numReviews > 0) ratingAvg = (ratingAvg/numReviews).toFixed(2);
+  this.db.collection("bookdetails").doc(bid).update({Rating: ratingAvg});
   details_El.querySelector(".filled-review-container").removeAttribute("hidden");
   details_El.querySelector(".filled-review-container").innerHTML = '';
   details_El.querySelector(".filled-review-container").appendChild(review_Container);
