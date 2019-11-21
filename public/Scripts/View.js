@@ -302,6 +302,7 @@ Bookstore.prototype.viewCart = function (doc) {
     addToCartDB(ID,docTitle,docAuthor,docPrice,docImage);     //function adds item elements to cart database
     removeSavedDBItem(ID);                                    //function removes item from save database
     cartItem.remove();                                        //removes HTML row from 'saved for later'
+
   }
 
   //Setter function that adds item elements to the cart database 
@@ -342,13 +343,13 @@ Bookstore.prototype.viewCart = function (doc) {
     var ID = cartItem.getElementsByClassName("data-id")[0].innerText
     var docTitle = cartItem.getElementsByClassName("item-book-title")[0].innerText;
     var docAuthor = cartItem.getElementsByClassName("item-author-name")[0].innerText;
-    var docPrice = cartItem.getElementsByClassName("item-price")[0].innerText;
+    var docPrice = cartItem.getElementsByClassName("cart-price")[0].innerText;
     var docImage = cartItem.getElementsByClassName("item-image")[0].src;
 
     saveForLaterDB(ID, docTitle, docAuthor, docPrice, docImage);        //calls function to pass item to save collection
     removeCartItemDB(ID);                                               //removes item from cart database
     cartItem.remove();                                                  //removes item from cart HTML row
-
+    //$('#shopping-cart').load('./cart');
   }
 
   //Adds item to save collection in the database
