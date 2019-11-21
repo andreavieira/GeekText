@@ -466,7 +466,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     snapshot.forEach(review => {
       bReviews.push(review.data());
     });
-    this.renderReviews(bReviews, bookDetails);
+    this.renderReviews(bReviews, bookDetails, doc.id);
   });
 
   let reviewText = bookDetails.querySelector("#review-text");
@@ -494,11 +494,11 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     } else if (currentUser == null) {
       alert("Please Log in to submit a review")
     } else {
-      // let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
-      //   Rating: starRating.rating,
-      //   Text: reviewText.value,
-      //   Uid: currentUser.uid
-      // });
+      let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
+        Rating: starRating.rating,
+        Text: reviewText.value,
+        Uid: currentUser.uid
+      });
       alert("Review Submitted!");
       console.log({
         rating: starRating.rating,
@@ -507,16 +507,16 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       });
       reviewText.setAttribute("disabled", true);
       submitBtn.setAttribute("disabled", true);
-
       //average out the ratings based on reviews.
     }
   };
 }
 
-Bookstore.prototype.renderReviews = function (bReviews, details_El) {
+Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
   let review_Container = document.createElement("div");
   let reviewID = 0;
   bReviews.forEach(review => {
+    //console.log(review);
     let review_El = details_El.querySelector(".filled-review").cloneNode(true);
     review_El.querySelector(".rated").setAttribute("rating", review.Rating);
     let index = 5;
@@ -532,10 +532,20 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El) {
         }
       });
 
-    review_El.querySelector(".filled-review-text").innerHTML = review.Text;
+    if(review.Uid == null) {
+      review_El.querySelector(".filled-review-username").innerHTML =
+        "<strong> Guest </strong> says...";
+    } else {
+      let unRef = this.db.collection("users").doc(review.Uid).get().then(user => {
+        console.log(user);
+        review_El.querySelector(".filled-review-username").innerHTML =
+          "<strong>" + user.get("fName") + " " + user.get("lName") + "</strong> says...";
+      });
+    }
+
+    review_El.querySelector(".filled-review-text").innerHTML = "<q>" + review.Text + "</q>";
     review_El.removeAttribute("hidden");
     review_Container.appendChild(review_El);
-
     reviewID++;
   });
   details_El.querySelector(".filled-review-container").removeAttribute("hidden");
