@@ -22,9 +22,11 @@ Bookstore.prototype.viewHeader = function () {
   homeButton.addEventListener('click', function (event) {
     me.router.navigate('/');
   });
-  // var accntButton = header.querySelector('#profile-btn');
-  // accntButton.addEventListener('click', function(event) {
-  //   me.router.navigate('/profile');
+
+  var accntButton = header.querySelector('#profile-btn');
+  accntButton.addEventListener('click', function(event) {
+    me.router.navigate('/profile');
+  });
 
   var signupButton = header.querySelector('#signup-btn');
   signupButton.addEventListener('click', function(event) {
@@ -35,16 +37,6 @@ Bookstore.prototype.viewHeader = function () {
   this.replaceElement(document.querySelector('header'), header);
 }
 
-// STEVEN ---------------------
-// Bookstore.prototype.viewProfile = function(doc) {
-//   var profilePage = document.querySelector('#profile-page').cloneNode(true);
-
-//   profilePage.removeAttribute('hidden');
-//   this.replaceElement(document.querySelector('main'), profilePage);
-
-
-//   //STEVEN ADD YOUR PROFILE PAGE CODE HERE
-// }
 
 
 /* HOME SCRIPTS */
@@ -138,15 +130,13 @@ Bookstore.prototype.viewHome = function (bDetails) {
 Bookstore.prototype.viewCreateAcc = function(doc) {
     var createAccPage = document.querySelector('#createAcc-page').cloneNode(true);
     let me = this;
+
+    // Once the user has clicked on the create account button, it will redirect user
+    // back to the homepage with the user already logged in
     createAccPage.querySelector(".create-acc-btn").addEventListener('click',function() {
         me.router.navigate("/")
     });
-    // this.router.navigate("/");
-    // const userInfo = document.querySelector('.profile-info');
 
-    // const setupUser = (data) => {
-    //     userInfo(snapshot.docs);
-    // }
 
     createAccPage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), createAccPage);
@@ -155,20 +145,40 @@ Bookstore.prototype.viewCreateAcc = function(doc) {
 
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
+    let me = this;
 
-    const userInfo = document.querySelector('.profile-info');
-
-    const setupUser = (data) => {
-        userInfo(snapshot.docs);
-    }
-
-    // if (document.readyState == 'loading') {
-    //     document.addEventListener('DOMContentLoaded', ready)
-    // } else {
-    //     ready()
-    // }
     profilePage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), profilePage);
+
+    var fName = profilePage.querySelector(".profile-fName");
+    fName.innerHTML = "<strong>First Name: </strong>" + doc.get("fName");
+
+    var lName = profilePage.querySelector(".profile-lName");
+    lName.innerHTML = "<strong>Last Name: </strong>" + doc.get("lName");
+
+    var email = profilePage.querySelector(".profile-email");
+    email.innerHTML = "<strong>Email: </strong>" + doc.get("email");
+
+    var password = profilePage.querySelector(".profile-password");
+    password.innerHTML = "<strong>Password: </strong> CENSORED lol";
+
+    var street = profilePage.querySelector(".profile-street");
+    street.innerHTML = "<strong>Home Address: </strong>" + doc.get("streetAddress");
+
+    var city = profilePage.querySelector(".profile-city");
+    city.innerHTML = "<strong>City: </strong>" + doc.get("city");
+
+    var state = profilePage.querySelector(".profile-state");
+    state.innerHTML = "<strong>State: </strong>" + doc.get("state");
+
+    var zip = profilePage.querySelector(".profile-zip");
+    zip.innerHTML = "<strong>Zip Code: </strong>" + doc.get("zipCode");
+
+    var country = profilePage.querySelector(".profile-country");
+    country.innerHTML = "<strong>Country: </strong>" + doc.get("country");
+
+
+
 }
 
 
@@ -373,7 +383,7 @@ function renderSave(doc) {
 }
 
 /** BOOK DETAILS SCRIPTS **/
-Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
+Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
   var currentUser = firebase.auth().currentUser;
 
@@ -431,38 +441,20 @@ Bookstore.prototype.viewBookDetails = function (doc, booksByAuthor) {
   }
 
   // Books being passed are:
-  //console.log(booksByAuthor)
+  var authorBookRef = this.db.collection("bookdetails").where("AuthorLn", "==", doc.get("AuthorLn"));
+  //console.log(doc.get("AuthorLn"));
+  //console.log(authorBookRef)
+    authorBookRef.get().then(books =>{
+      books.forEach(book =>{
+
+        let simBooks = bookDetails.querySelector(".similar-books");
+        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
+
+      })
+    });
 
   // Books by the same author
   var bookItems = document.getElementById("books-by-author");
-
-  function renderBookRow(doc) {
-    var bookRow = document.createElement('div');
-    bookRow.classList.add('cart-row');
-    var bookRowContents = `
-                <div class="cart-item cart-column">
-                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
-                </div>
-                <div class="cart-description cart-column">
-                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
-                </div>
-                <span class="cart-price cart-column">
-                  <span id ="item-price">$${doc.Price}</span>
-                </span>
-                <div class="cart-quantity cart-column">
-                  <span>${doc.Rating}</span>
-                </div>
-              </div>
-              </div>
-            </div>`
-    bookRow.innerHTML = bookRowContents
-
-    bookItems.append(bookRow);
-  }
-
-  booksByAuthor.forEach(book => {
-    renderBookRow(book);
-  });
 
   // End books by same author
 
