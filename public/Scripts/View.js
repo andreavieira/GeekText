@@ -562,8 +562,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
 
+
   var bookCover = bookDetails.querySelector(".book-cover");
-  bookCover.src = "http://localhost:5000/" + doc.get("Cover");
+  bookCover.src = doc.get("Cover");
 
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
@@ -594,6 +595,13 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var numSales = bookDetails.querySelector(".num-sales");
   numSales.innerHTML = "<strong> Number of Sales: </strong> " + doc.get("NumSales");
+
+  var bookID = bookDetails.querySelector(".id");
+  bookID.innerHTML =  doc.get("Id");
+
+  var idBook = bookID.innerHTML;
+  console.log("Daniela: " + idBook)
+
 
   //Modal
   var modal = bookDetails.querySelector("#myModal");
@@ -628,6 +636,45 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var bookItems = document.getElementById("books-by-author");
 
   // End books by same author
+
+//ADD TO CART BUTTON
+    //global reference variables
+
+    var user = firebase.auth().currentUser;
+    var userUid = user.uid
+    let promise = firebase.firestore().collection('users').doc(userUid);
+
+    //button
+    //listener for purchase button
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', setter);
+    console.log("BOOKS ID: " + idBook)
+
+    function setter(event){
+      var bookid = bookID.innerHTML;
+      var booktitle = bookTitle.innerHTML;
+      var bookcover = bookCover.src;
+      addToCartDB(bookid,booktitle,bookcover);
+    }
+    //Setter function that adds item elements to the cart database
+   // function addToCartDB(event,idBook,bookTitle,author,price,bookCover){
+        function addToCartDB(bookid,booktitle,bookcover){
+        console.log("BOOKS ID INSIDE NATS FUNC: " + bookid)
+        let cartDocRef = promise.collection("cart");
+
+        //adds item to the database
+        let addDoc = cartDocRef.add({
+            title: booktitle,
+            // authorName: author,
+            // price: price,
+             image: bookcover
+        }).then(bookid => {
+            console.log('Added document with ID: ', bookid.id);
+        });
+        //refresh cart somehow
+    }
+
+
+    //END OF ADD TO CART
 
   let bReviews = [];
   let reviewRef = this.db.collection("bookdetails").doc(doc.id).collection("Reviews");
