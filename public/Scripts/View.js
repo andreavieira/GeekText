@@ -257,7 +257,8 @@ Bookstore.prototype.viewCart = function (doc) {
           console.log(doc.id, '=>', doc.data());
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
-          })
+          });
+    cartItem.remove();
     updateCartTotal();
   }
 
@@ -324,7 +325,6 @@ Bookstore.prototype.viewCart = function (doc) {
     });
     //refresh cart somehow
   }
-
 
   //Removes item from database
   function removeSavedDBItem(ID){
