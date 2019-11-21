@@ -1,7 +1,6 @@
 function Bookstore() {
 
     var me = this;
-    me.initTemplates();
     me.viewHeader();
     me.initRouter();
     me.db = firebase.firestore();
@@ -151,11 +150,11 @@ Bookstore.prototype.initRouter = function () {
     //   }
     // }).resolve();
 
-    
+
     this.router
         .on({
             "/createAcc": function(params) {
-                
+
                 that.viewCreateAcc();
             }
         }).resolve();
@@ -163,7 +162,7 @@ Bookstore.prototype.initRouter = function () {
     this.router
         .on({
             "/profile": function(params) {
-                
+
                 let auth = firebase.auth();
                 var userUid = auth.currentUser.uid;
 
@@ -181,12 +180,12 @@ Bookstore.prototype.initRouter = function () {
             }
         }).resolve();
 
-  this.router      
+  this.router
     .on({
       "/book/:id": function(params){
         let allBooks = that.db.collection("bookdetails");
         let detailsRef = allBooks.doc(params.id);
-        
+
         let getDoc = detailsRef.get()
         .then(doc => {
            if (!doc.exists) {

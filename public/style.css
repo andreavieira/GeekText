@@ -284,7 +284,7 @@ hr {
     border-radius: 1px;
     background: rgb(141, 137, 137);
     color: rgb(255, 255, 255);
-    
+
 
 }
 
@@ -294,9 +294,9 @@ hr {
     cursor: pointer;
 }
 
-#saveNewfName, 
-#saveNewlName, 
-#saveNewEmail, 
+#saveNewfName,
+#saveNewlName,
+#saveNewEmail,
 #saveNewPassword,
 #saveNewHomeAdd {
     display: inline-block;
@@ -587,7 +587,18 @@ hr {
   border-radius:5px;
   /* position:absolute; */
 }
+.filled-review-text-username {
+  display:flex;
+  flex-direction:column;
+}
+.filled-review-username {
+  display:block;
+  
+  padding: 5px;
+}
 .filled-review-text {
+  display:block;
+  padding: 5px;
   text-align: center;
     font-family: 'Play', sans-serif;
     font-size: 16px;

@@ -6,16 +6,6 @@
 
 'use strict'
 
-Bookstore.prototype.initTemplates = function () {
-  this.templates = {};
-
-  var that = this;
-  document.querySelectorAll('.template').forEach(function (el) {
-    that.templates[el.getAttribute('id')] = el;
-  });
-
-};
-
 /* HEADER SCRIPTS */
 Bookstore.prototype.viewHeader = function () {
   //grab clone of template header
@@ -146,7 +136,7 @@ Bookstore.prototype.viewCreateAcc = function(doc) {
     createAccPage.querySelector(".create-acc-btn").addEventListener('click',function() {
         me.router.navigate("/")
     });
-    
+
 
     createAccPage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), createAccPage);
@@ -156,7 +146,7 @@ Bookstore.prototype.viewCreateAcc = function(doc) {
 Bookstore.prototype.viewProfile = function(doc) {
     var profilePage = document.querySelector('#profile-page').cloneNode(true);
     let me = this;
-    
+
     profilePage.removeAttribute('hidden');
     this.replaceElement(document.querySelector('main'), profilePage);
 
@@ -171,23 +161,23 @@ Bookstore.prototype.viewProfile = function(doc) {
 
     var password = profilePage.querySelector(".profile-password");
     password.innerHTML = "<strong>Password: </strong> CENSORED lol";
-    
+
     var street = profilePage.querySelector(".profile-street");
     street.innerHTML = "<strong>Home Address: </strong>" + doc.get("streetAddress");
-    
+
     var city = profilePage.querySelector(".profile-city");
     city.innerHTML = "<strong>City: </strong>" + doc.get("city");
-    
+
     var state = profilePage.querySelector(".profile-state");
     state.innerHTML = "<strong>State: </strong>" + doc.get("state");
-    
+
     var zip = profilePage.querySelector(".profile-zip");
     zip.innerHTML = "<strong>Zip Code: </strong>" + doc.get("zipCode");
-    
+
     var country = profilePage.querySelector(".profile-country");
     country.innerHTML = "<strong>Country: </strong>" + doc.get("country");
 
-    
+
 
 }
 
@@ -395,6 +385,7 @@ function renderSave(doc) {
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
+  var currentUser = firebase.auth().currentUser;
 
 
   bookDetails.removeAttribute('hidden');
@@ -475,7 +466,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     snapshot.forEach(review => {
       bReviews.push(review.data());
     });
-    this.renderReviews(bReviews, bookDetails);
+    this.renderReviews(bReviews, bookDetails, doc.id);
   });
 
   let reviewText = bookDetails.querySelector("#review-text");
@@ -487,7 +478,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     //send review to database
     //update rating
     let list = starRating.querySelectorAll("input");
-    console.log(list);
+    //console.log(list);
     for(let i = 0; i < 5; i++){
 
       if(list[i].checked){
@@ -498,27 +489,34 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
     if(starRating.rating == -1) {
       alert("Please add a star rating to your review");
+    } else if (reviewText.value == "" ) {
+      alert("Please add a review");
+    } else if (currentUser == null) {
+      alert("Please Log in to submit a review")
     } else {
       let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
         Rating: starRating.rating,
-        Text: reviewText.value
+        Text: reviewText.value,
+        Uid: currentUser.uid
       });
-      console.log("review added");
+      alert("Review Submitted!");
       console.log({
         rating: starRating.rating,
-        reviewText: reviewText.value
+        reviewText: reviewText.value,
+        Uid: currentUser.uid
       });
-
       reviewText.setAttribute("disabled", true);
       submitBtn.setAttribute("disabled", true);
+      //average out the ratings based on reviews.
     }
   };
 }
 
-Bookstore.prototype.renderReviews = function (bReviews, details_El) {
+Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
   let review_Container = document.createElement("div");
   let reviewID = 0;
   bReviews.forEach(review => {
+    //console.log(review);
     let review_El = details_El.querySelector(".filled-review").cloneNode(true);
     review_El.querySelector(".rated").setAttribute("rating", review.Rating);
     let index = 5;
@@ -534,38 +532,27 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El) {
         }
       });
 
-    review_El.querySelector(".filled-review-text").innerHTML = review.Text;
+    if(review.Uid == null) {
+      review_El.querySelector(".filled-review-username").innerHTML =
+        "<strong> Guest </strong> says...";
+    } else {
+      let unRef = this.db.collection("users").doc(review.Uid).get().then(user => {
+        console.log(user);
+        review_El.querySelector(".filled-review-username").innerHTML =
+          "<strong>" + user.get("fName") + " " + user.get("lName") + "</strong> says...";
+      });
+    }
+
+    review_El.querySelector(".filled-review-text").innerHTML = "<q>" + review.Text + "</q>";
     review_El.removeAttribute("hidden");
     review_Container.appendChild(review_El);
-
     reviewID++;
   });
   details_El.querySelector(".filled-review-container").removeAttribute("hidden");
   details_El.querySelector(".filled-review-container").innerHTML = '';
   details_El.querySelector(".filled-review-container").appendChild(review_Container);
 }
-//TODO CLEANUP
-Bookstore.prototype.renderTemplate = function (id, data) {
-  var template = this.templates[id];
-  var el = template.cloneNode(true);
-  el.removeAttribute('hidden');
-  this.render(el, data);
-  return el;
-}
 
-Bookstore.prototype.render = function (el, data) {
-  if (!data) {
-    return;
-  }
-
-}
-
-Bookstore.prototype.getDeepItem = function (obj, path) {
-  path.split('/').forEach(function (chunck) {
-    obj = obj[chunk];
-  });
-  return obj;
-};
 
 
 //USED FOR RENDERING;
