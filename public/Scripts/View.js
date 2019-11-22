@@ -122,9 +122,9 @@ Bookstore.prototype.viewHome = function (bDetails) {
     document.getElementById("sortByPrice").addEventListener("click", function() {
         bs.router.navigate('/sortByPrice');
     });
-    // document.getElementById("sortByRelease").addEventListener("click", function() {
-    //   bs.router.navigate('/sortByRelease');
-    // });
+    document.getElementById("sortByRelease").addEventListener("click", function() {
+      bs.router.navigate('/sortByRelease');
+    });
 }
 
 
@@ -645,6 +645,10 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var price = bookDetails.querySelector(".price");
   price.innerHTML = "<strong> Price: </strong> " + doc.get("Price");
 
+    var bookPrice = doc.get("Price");
+
+    console.log(bookPrice)
+
   var rating = bookDetails.querySelector(".rating");
   rating.innerHTML = "<strong> Rating: </strong> " + doc.get("Rating");
 
@@ -695,6 +699,10 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 //ADD TO CART BUTTON
     //global reference variables
 
+
+    var bookAuthor = doc.get("AuthorFn") + " " + doc.get("AuthorLn");
+    var bookPrice = doc.get("Price");
+
     var user = firebase.auth().currentUser;
     var userUid = user.uid
     let promise = firebase.firestore().collection('users').doc(userUid);
@@ -708,19 +716,22 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       var bookid = bookID.innerHTML;
       var booktitle = bookTitle.innerHTML;
       var bookcover = bookCover.src;
-      addToCartDB(bookid,booktitle,bookcover);
+      var bookprice = bookPrice;
+      var bookauthor = bookAuthor;
+      addToCartDB(bookid,booktitle,bookcover,bookprice, bookauthor);
     }
     //Setter function that adds item elements to the cart database
    // function addToCartDB(event,idBook,bookTitle,author,price,bookCover){
-        function addToCartDB(bookid,booktitle,bookcover){
-        console.log("BOOKS ID INSIDE NATS FUNC: " + bookid)
+        function addToCartDB(bookid,booktitle,bookcover, bookprice, bookauthor){
+        console.log("PRICE: " + bookprice)
+            console.log(bookauthor)
         let cartDocRef = promise.collection("cart");
 
         //adds item to the database
         let addDoc = cartDocRef.add({
-            title: booktitle,
-            // authorName: author,
-            // price: price,
+             title: booktitle,
+             authorName: bookauthor,
+             price: bookprice,
              image: bookcover
         }).then(bookid => {
             console.log('Added document with ID: ', bookid.id);
