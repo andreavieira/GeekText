@@ -278,6 +278,7 @@ Bookstore.prototype.viewCart = function (doc) {
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
           })
+    cartItem.remove();
     updateCartTotal();
   }
 
@@ -308,6 +309,23 @@ Bookstore.prototype.viewCart = function (doc) {
     addToCartDB(ID,docTitle,docAuthor,docPrice,docImage);     //function adds item elements to cart database
     removeSavedDBItem(ID);                                    //function removes item from save database
     cartItem.remove();                                        //removes HTML row from 'saved for later'
+    alert(docTitle +' By ' + docAuthor + ' has been added to your cart!')
+
+    //Removes all cart items from HTML
+    var cartItems = document.getElementsByClassName('cart-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+
+    //Reloads cart items to HTML
+    let cartDocRef = promise.collection("cart");
+    let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          renderCart(doc);
+            });
+          })
+    updateCartTotal();
 
   }
 
@@ -323,7 +341,7 @@ Bookstore.prototype.viewCart = function (doc) {
     }).then(ID => {
       console.log('Added document with ID: ', ID.id);
     });
-    //refresh cart somehow
+
   }
 
   //Removes item from database
@@ -355,7 +373,23 @@ Bookstore.prototype.viewCart = function (doc) {
     saveForLaterDB(ID, docTitle, docAuthor, docPrice, docImage);        //calls function to pass item to save collection
     removeCartItemDB(ID);                                               //removes item from cart database
     cartItem.remove();                                                  //removes item from cart HTML row
-    //$('#shopping-cart').load('./cart');
+    alert(docTitle +' By ' + docAuthor + ' has been saved for later!')
+    
+    //Removes all saved items from HTML
+    var cartItems = document.getElementsByClassName('saved-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+
+    //Reloads saved items to HTML
+    let cartDocRef = promise.collection("save");
+    let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          renderSave(doc);
+            });
+          })
+    updateCartTotal();
   }
 
   //Adds item to save collection in the database
@@ -534,24 +568,35 @@ let promise = firebase.firestore().collection('users').doc(userUid);
 
   // Function calculates cart total based on quantity and price
   function updateCartTotal(event) {
+    var docPrice = 0;
+    var price = 0;
+    var total = 0
+    
+    let cartDocRef = promise.collection("cart");
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
-    var total = 0
-    //doesn't work for more than one item
-    for (var i = 1; i < cartRows.length; i++) {
-      var cartRow = cartRows[i];
-      var priceElement = document.getElementById('item-price').innerHTML;
-      var price = parseFloat(priceElement.replace('$',''));
-      console.log(priceElement)
-      var quantityElement = document.getElementById('quant').value;
-      console.log(quantityElement);
-      var quantity = quantityElement;
-      total = total + (price * quantity);
-    }
-    total = Math.round(total * 100) / 100
-    document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
+    
+    let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+            docPrice = doc.get("price");
+            price = parseFloat(docPrice.replace('$',''));
+            var quantity = document.getElementById('quant').value
+            total = total + (price * quantity)
+            console.log(price)
+            console.log(total)
+            total = Math.round(total * 100) / 100
+            document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total; 
+            });
+          }) 
+        }   
   }
-}
+
+
+    
+  //   var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+  //   var cartRows = cartItemContainer.getElementsByClassName('cart-row')
+
 
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc) {
