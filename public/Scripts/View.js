@@ -6,6 +6,7 @@
 
 'use strict'
 
+
 /* HEADER SCRIPTS */
 Bookstore.prototype.viewHeader = function () {
   //grab clone of template header
@@ -121,9 +122,9 @@ Bookstore.prototype.viewHome = function (bDetails) {
     document.getElementById("sortByPrice").addEventListener("click", function() {
         bs.router.navigate('/sortByPrice');
     });
-    // document.getElementById("sortByRelease").addEventListener("click", function() {
-    //   bs.router.navigate('/sortByRelease');
-    // });
+    document.getElementById("sortByRelease").addEventListener("click", function() {
+      bs.router.navigate('/sortByRelease');
+    });
 }
 
 
@@ -262,7 +263,6 @@ Bookstore.prototype.viewCart = function (doc) {
     var cartItem = buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("data-id")[0].innerText;
 
-
     let cartDocRef = promise.collection("cart");
     let allItems = cartDocRef.get()
       .then(snapshot => {
@@ -270,8 +270,16 @@ Bookstore.prototype.viewCart = function (doc) {
           console.log(doc.id, '=>', doc.data());
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
-          })
+          });
+    cartItem.remove();
     updateCartTotal();
+    swal({
+      title: "Item removed from cart!",
+      text: "Your cart has been updated.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
   }
 
 
@@ -281,7 +289,6 @@ Bookstore.prototype.viewCart = function (doc) {
     var cartItem =buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("save-data-id")[0].innerText;
 
-
     let cartDocRef = promise.collection("save");
     let allItems = cartDocRef.get()
       .then(snapshot => {
@@ -290,6 +297,7 @@ Bookstore.prototype.viewCart = function (doc) {
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
           })
+    cartItem.remove();
     updateCartTotal();
   }
 
@@ -320,6 +328,25 @@ Bookstore.prototype.viewCart = function (doc) {
     addToCartDB(ID,docTitle,docAuthor,docPrice,docImage);     //function adds item elements to cart database
     removeSavedDBItem(ID);                                    //function removes item from save database
     cartItem.remove();                                        //removes HTML row from 'saved for later'
+    
+
+    //Removes all cart items from HTML
+    var cartItems = document.getElementsByClassName('cart-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+
+    //Reloads cart items to HTML
+    let cartDocRef = promise.collection("cart");
+    let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          renderCart(doc);
+            });
+          })
+    updateCartTotal();
+    swal("Added to Cart!", docTitle + " By " + docAuthor + " has been added to your cart.", "success");
+
 
   }
 
@@ -335,9 +362,8 @@ Bookstore.prototype.viewCart = function (doc) {
     }).then(ID => {
       console.log('Added document with ID: ', ID.id);
     });
-    //refresh cart somehow
-  }
 
+  }
 
   //Removes item from database
   function removeSavedDBItem(ID){
@@ -368,7 +394,24 @@ Bookstore.prototype.viewCart = function (doc) {
     saveForLaterDB(ID, docTitle, docAuthor, docPrice, docImage);        //calls function to pass item to save collection
     removeCartItemDB(ID);                                               //removes item from cart database
     cartItem.remove();                                                  //removes item from cart HTML row
-    //$('#shopping-cart').load('./cart');
+    
+    
+    //Removes all saved items from HTML
+    var cartItems = document.getElementsByClassName('saved-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+
+    //Reloads saved items to HTML
+    let cartDocRef = promise.collection("save");
+    let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          renderSave(doc);
+            });
+          })
+    updateCartTotal();
+    swal("Item saved!", docTitle + " By " + docAuthor + " has been saved for later.", "success");
   }
 
   //Adds item to save collection in the database
@@ -547,24 +590,29 @@ let promise = firebase.firestore().collection('users').doc(userUid);
 
   // Function calculates cart total based on quantity and price
   function updateCartTotal(event) {
-    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
+    var docPrice = 0;
+    var price = 0;
     var total = 0
-    //doesn't work for more than one item
-    for (var i = 1; i < cartRows.length; i++) {
-      var cartRow = cartRows[i];
-      var priceElement = document.getElementById('item-price').innerHTML;
-      var price = parseFloat(priceElement.replace('$',''));
-      console.log(priceElement)
-      var quantityElement = document.getElementById('quant').value;
-      console.log(quantityElement);
-      var quantity = quantityElement;
-      total = total + (price * quantity);
-    }
-    total = Math.round(total * 100) / 100
-    document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
+    
+    let cartDocRef = promise.collection("cart");
+    // var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+    // var listedPrices = cartItemContainer.getElementsByClassName('input')
+
+      let allItems = cartDocRef.get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+            docPrice = doc.get("price");
+            price = parseFloat(docPrice.replace('$',''));
+            var quantity = document.getElementById('quant').value
+            total = total + (price * quantity)
+            console.log(price)
+            console.log(total)
+            total = Math.round(total * 100) / 100
+            document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total; 
+            });
+          })     
+    }   
   }
-}
 
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc) {
@@ -585,6 +633,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var author = bookDetails.querySelector(".author-fn");
   author.innerHTML = "<strong> Author: </strong> " + doc.get("AuthorFn") + " " + doc.get("AuthorLn");
 
+    var bookAuthor = bookDetails.querySelector(".author-fn");
+    author.innerHTML = doc.get("AuthorFn") + " " + doc.get("AuthorLn");
+
   var bookDesc = bookDetails.querySelector(".book-description");
   bookDesc.innerHTML = "<strong> Description: </strong> " + doc.get("BookDesc");
 
@@ -603,6 +654,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var price = bookDetails.querySelector(".price");
   price.innerHTML = "<strong> Price: </strong> " + doc.get("Price");
 
+    var bookPrice = bookDetails.querySelector(".price");
+    price.innerHTML = doc.get("Price");
+
   var rating = bookDetails.querySelector(".rating");
   rating.innerHTML = "<strong> Rating: </strong> " + doc.get("Rating");
 
@@ -613,8 +667,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   bookID.innerHTML =  doc.get("Id");
 
   var idBook = bookID.innerHTML;
-  console.log("Daniela: " + idBook)
-
 
   //Modal
   var modal = bookDetails.querySelector("#myModal");
@@ -640,7 +692,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       books.forEach(book =>{
 
         let simBooks = bookDetails.querySelector(".similar-books");
-        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
+        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle") + "| ";
 
       })
     });
@@ -666,19 +718,21 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       var bookid = bookID.innerHTML;
       var booktitle = bookTitle.innerHTML;
       var bookcover = bookCover.src;
-      addToCartDB(bookid,booktitle,bookcover);
+      var bookprice = bookPrice.innerHTML;
+      var bookauthor = bookAuthor.innerHTML;
+      addToCartDB(bookid,booktitle,bookcover,bookprice, bookauthor);
     }
     //Setter function that adds item elements to the cart database
    // function addToCartDB(event,idBook,bookTitle,author,price,bookCover){
-        function addToCartDB(bookid,booktitle,bookcover){
-        console.log("BOOKS ID INSIDE NATS FUNC: " + bookid)
+        function addToCartDB(bookid,booktitle,bookcover, bookprice, bookauthor){
+        console.log("PRICE: " + bookprice)
         let cartDocRef = promise.collection("cart");
 
         //adds item to the database
         let addDoc = cartDocRef.add({
-            title: booktitle,
-            // authorName: author,
-            // price: price,
+             title: booktitle,
+             authorName: bookauthor,
+             price: bookprice,
              image: bookcover
         }).then(bookid => {
             console.log('Added document with ID: ', bookid.id);
