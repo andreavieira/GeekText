@@ -200,14 +200,14 @@ Bookstore.prototype.viewCart = function (doc) {
   function ready() {
     //listener for remove cart item button
     var removeCartItemButtons = document.getElementsByClassName('btn-danger-cart')   //for btn-danger class
-    console.log(removeCartItemButtons)
+    //console.log(removeCartItemButtons)
     for (var i = 0; i < removeCartItemButtons.length; i++) {                      //loops through all buttons in cart
       var button = removeCartItemButtons[i]                                   //listener for 'click' event
       button.addEventListener('click', removeCartItem)
     }
     //listener for remove save item button
     var removeSavedItemButtons = document.getElementsByClassName('btn-danger-save')   //for btn-danger class
-    console.log(removeSavedItemButtons)
+    //console.log(removeSavedItemButtons)
     for (var i = 0; i < removeCartItemButtons.length; i++) {                      //loops through all buttons in cart
       var button = removeCartItemButtons[i]                                   //listener for 'click' event
       button.addEventListener('click', removeSavedItem)
@@ -280,12 +280,19 @@ Bookstore.prototype.viewCart = function (doc) {
     let allItems = cartDocRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
+          //console.log(doc.id, '=>', doc.data());
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
           })
     cartItem.remove();
     updateCartTotal();
+    swal({
+      title: "Item no longer saved!",
+      text: "Your saved list has been update.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
@@ -347,7 +354,7 @@ Bookstore.prototype.viewCart = function (doc) {
       price: docPrice,
       image: docImage
     }).then(ID => {
-      console.log('Added document with ID: ', ID.id);
+      //console.log('Added document with ID: ', ID.id);
     });
 
   }
@@ -358,7 +365,7 @@ Bookstore.prototype.viewCart = function (doc) {
     let allItems = saveDocRef.get()
     .then(snapshot => {
       snapshot.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
+        //console.log(doc.id, '=>', doc.data());
         var deleteDoc =  saveDocRef.doc(ID).delete();
           });
         })
@@ -412,7 +419,7 @@ Bookstore.prototype.viewCart = function (doc) {
       price: docPrice,
       image: docImage
     }).then(ID => {
-      console.log('Added document with ID: ', ID.id);
+      //console.log('Added document with ID: ', ID.id);
     });
   }
 
@@ -423,7 +430,7 @@ Bookstore.prototype.viewCart = function (doc) {
     let allItems = cartDocRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
+          //console.log(doc.id, '=>', doc.data());
           var deleteDoc =  cartDocRef.doc(ID).delete();
             });
           })
@@ -552,8 +559,8 @@ let promise = firebase.firestore().collection('users').doc(userUid);
         let cartItems = cartRef.get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            console.log(doc.id, '=>', doc.data());
-            renderCart(doc);
+            //console.log(doc.id, '=>', doc.data());
+            renderCart(doc); 
             updateCartTotal();
           });
         });
@@ -567,7 +574,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
           let saveItems = saveRef.get()
             .then(snapshot => {
               snapshot.forEach(doc => {
-                console.log(doc.id, '=>', doc.data());
+                //console.log(doc.id, '=>', doc.data());
                 renderSave(doc);
                 updateCartTotal();
               });
@@ -592,8 +599,8 @@ let promise = firebase.firestore().collection('users').doc(userUid);
             price = parseFloat(docPrice.replace('$',''));
             var quantity = document.getElementById('quant').value
             total = total + (price * quantity)
-            console.log(price)
-            console.log(total)
+            //console.log(price)
+            //console.log(total)
             total = Math.round(total * 100) / 100
             document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total; 
             });
@@ -648,6 +655,8 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   bookID.innerHTML =  doc.get("Id");
 
   var idBook = bookID.innerHTML;
+  //console.log("Daniela: " + idBook)
+
 
   //Modal
   var modal = bookDetails.querySelector("#myModal");
@@ -673,7 +682,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       books.forEach(book =>{
 
         let simBooks = bookDetails.querySelector(".similar-books");
-        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle") + "| ";
+        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
 
       })
     });
