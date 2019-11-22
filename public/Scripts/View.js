@@ -249,12 +249,7 @@ Bookstore.prototype.viewCart = function (doc) {
     var buttonClicked = event.target
     var cartItem = buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("data-id")[0].innerText;
-<<<<<<< HEAD
-    
-=======
 
-
->>>>>>> upstream/master
     let cartDocRef = promise.collection("cart");
     let allItems = cartDocRef.get()
       .then(snapshot => {
@@ -280,12 +275,7 @@ Bookstore.prototype.viewCart = function (doc) {
     var buttonClicked = event.target
     var cartItem =buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("save-data-id")[0].innerText;
-<<<<<<< HEAD
-     
-=======
 
-
->>>>>>> upstream/master
     let cartDocRef = promise.collection("save");
     let allItems = cartDocRef.get()
       .then(snapshot => {
