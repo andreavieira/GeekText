@@ -6,6 +6,7 @@
 
 'use strict'
 
+
 /* HEADER SCRIPTS */
 Bookstore.prototype.viewHeader = function () {
   //grab clone of template header
@@ -248,7 +249,6 @@ Bookstore.prototype.viewCart = function (doc) {
     var buttonClicked = event.target
     var cartItem = buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("data-id")[0].innerText;
-
     
     let cartDocRef = promise.collection("cart");
     let allItems = cartDocRef.get()
@@ -260,6 +260,13 @@ Bookstore.prototype.viewCart = function (doc) {
           });
     cartItem.remove();
     updateCartTotal();
+    swal({
+      title: "Item removed from cart!",
+      text: "Your cart has been updated.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
   }
 
 
@@ -268,7 +275,6 @@ Bookstore.prototype.viewCart = function (doc) {
     var buttonClicked = event.target
     var cartItem =buttonClicked.parentElement.parentElement.parentElement.parentElement;
     var ID = cartItem.getElementsByClassName("save-data-id")[0].innerText;
-
      
     let cartDocRef = promise.collection("save");
     let allItems = cartDocRef.get()
@@ -309,7 +315,7 @@ Bookstore.prototype.viewCart = function (doc) {
     addToCartDB(ID,docTitle,docAuthor,docPrice,docImage);     //function adds item elements to cart database
     removeSavedDBItem(ID);                                    //function removes item from save database
     cartItem.remove();                                        //removes HTML row from 'saved for later'
-    alert(docTitle +' By ' + docAuthor + ' has been added to your cart!')
+    
 
     //Removes all cart items from HTML
     var cartItems = document.getElementsByClassName('cart-items')[0]
@@ -326,6 +332,8 @@ Bookstore.prototype.viewCart = function (doc) {
             });
           })
     updateCartTotal();
+    swal("Added to Cart!", docTitle + " By " + docAuthor + " has been added to your cart.", "success");
+
 
   }
 
@@ -373,7 +381,7 @@ Bookstore.prototype.viewCart = function (doc) {
     saveForLaterDB(ID, docTitle, docAuthor, docPrice, docImage);        //calls function to pass item to save collection
     removeCartItemDB(ID);                                               //removes item from cart database
     cartItem.remove();                                                  //removes item from cart HTML row
-    alert(docTitle +' By ' + docAuthor + ' has been saved for later!')
+    
     
     //Removes all saved items from HTML
     var cartItems = document.getElementsByClassName('saved-items')[0]
@@ -390,6 +398,7 @@ Bookstore.prototype.viewCart = function (doc) {
             });
           })
     updateCartTotal();
+    swal("Item saved!", docTitle + " By " + docAuthor + " has been saved for later.", "success");
   }
 
   //Adds item to save collection in the database
@@ -573,10 +582,10 @@ let promise = firebase.firestore().collection('users').doc(userUid);
     var total = 0
     
     let cartDocRef = promise.collection("cart");
-    var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-    var cartRows = cartItemContainer.getElementsByClassName('cart-row')
-    
-    let allItems = cartDocRef.get()
+    // var cartItemContainer = document.getElementsByClassName('cart-items')[0]
+    // var listedPrices = cartItemContainer.getElementsByClassName('input')
+
+      let allItems = cartDocRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
             docPrice = doc.get("price");
@@ -588,15 +597,9 @@ let promise = firebase.firestore().collection('users').doc(userUid);
             total = Math.round(total * 100) / 100
             document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total; 
             });
-          }) 
-        }   
+          })     
+    }   
   }
-
-
-    
-  //   var cartItemContainer = document.getElementsByClassName('cart-items')[0]
-  //   var cartRows = cartItemContainer.getElementsByClassName('cart-row')
-
 
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc) {
