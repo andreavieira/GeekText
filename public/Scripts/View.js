@@ -600,8 +600,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   bookID.innerHTML =  doc.get("Id");
 
   var idBook = bookID.innerHTML;
-  console.log("Daniela: " + idBook)
-
 
   //Modal
   var modal = bookDetails.querySelector("#myModal");
@@ -627,7 +625,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       books.forEach(book =>{
 
         let simBooks = bookDetails.querySelector(".similar-books");
-        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
+        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle") + "| ";
 
       })
     });
