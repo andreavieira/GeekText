@@ -620,6 +620,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var author = bookDetails.querySelector(".author-fn");
   author.innerHTML = "<strong> Author: </strong> " + doc.get("AuthorFn") + " " + doc.get("AuthorLn");
 
+    var bookAuthor = bookDetails.querySelector(".author-fn");
+    author.innerHTML = doc.get("AuthorFn") + " " + doc.get("AuthorLn");
+
   var bookDesc = bookDetails.querySelector(".book-description");
   bookDesc.innerHTML = "<strong> Description: </strong> " + doc.get("BookDesc");
 
@@ -638,6 +641,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var price = bookDetails.querySelector(".price");
   price.innerHTML = "<strong> Price: </strong> " + doc.get("Price");
 
+    var bookPrice = bookDetails.querySelector(".price");
+    price.innerHTML = doc.get("Price");
+
   var rating = bookDetails.querySelector(".rating");
   rating.innerHTML = "<strong> Rating: </strong> " + doc.get("Rating");
 
@@ -648,8 +654,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   bookID.innerHTML =  doc.get("Id");
 
   var idBook = bookID.innerHTML;
-  console.log("Daniela: " + idBook)
-
 
   //Modal
   var modal = bookDetails.querySelector("#myModal");
@@ -675,7 +679,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       books.forEach(book =>{
 
         let simBooks = bookDetails.querySelector(".similar-books");
-        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
+        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle") + "| ";
 
       })
     });
@@ -701,19 +705,21 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       var bookid = bookID.innerHTML;
       var booktitle = bookTitle.innerHTML;
       var bookcover = bookCover.src;
-      addToCartDB(bookid,booktitle,bookcover);
+      var bookprice = bookPrice.innerHTML;
+      var bookauthor = bookAuthor.innerHTML;
+      addToCartDB(bookid,booktitle,bookcover,bookprice, bookauthor);
     }
     //Setter function that adds item elements to the cart database
    // function addToCartDB(event,idBook,bookTitle,author,price,bookCover){
-        function addToCartDB(bookid,booktitle,bookcover){
-        console.log("BOOKS ID INSIDE NATS FUNC: " + bookid)
+        function addToCartDB(bookid,booktitle,bookcover, bookprice, bookauthor){
+        console.log("PRICE: " + bookprice)
         let cartDocRef = promise.collection("cart");
 
         //adds item to the database
         let addDoc = cartDocRef.add({
-            title: booktitle,
-            // authorName: author,
-            // price: price,
+             title: booktitle,
+             authorName: bookauthor,
+             price: bookprice,
              image: bookcover
         }).then(bookid => {
             console.log('Added document with ID: ', bookid.id);
