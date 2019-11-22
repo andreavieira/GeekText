@@ -132,23 +132,23 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
-    // this.router
-    // .on({
-    //   '/sortByRelease': function () { // Home sorted by Rating
-    //     console.log("Sorting by rating")
-    //     let bDetails = [];
-    //     let allItems = booksDocRef.orderBy("ReleaseDate").get()
-    //       .then(snapshot => {
-    //         snapshot.forEach(doc => {
-    //           bDetails.push(doc.data());
-    //         });
-    //         that.viewHome(bDetails);
-    //       })
-    //       .catch(err => {
-    //         console.log('Error getting documents', err);
-    //       });
-    //   }
-    // }).resolve();
+    this.router
+    .on({
+      '/sortByRelease': function () { // Home sorted by Rating
+        console.log("Sorting by publish date")
+        let bDetails = [];
+        let allItems = booksDocRef.orderBy("PublishDate", "desc").get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
 
 
     this.router
