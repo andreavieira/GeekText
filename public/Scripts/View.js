@@ -122,9 +122,9 @@ Bookstore.prototype.viewHome = function (bDetails) {
     document.getElementById("sortByPrice").addEventListener("click", function() {
         bs.router.navigate('/sortByPrice');
     });
-    // document.getElementById("sortByRelease").addEventListener("click", function() {
-    //   bs.router.navigate('/sortByRelease');
-    // });
+    document.getElementById("sortByRelease").addEventListener("click", function() {
+      bs.router.navigate('/sortByRelease');
+    });
 }
 
 
