@@ -237,7 +237,7 @@ Bookstore.prototype.viewCart = function (doc) {
       .doc(userUid).collection('cart').get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          db.collection('users').doc(userUid).collection('booksBought').add({
+          db.collection('users').doc(userUid).collection('booksBought').doc(doc.id).set({
             bookId: doc.id
           });
         });
@@ -246,6 +246,7 @@ Bookstore.prototype.viewCart = function (doc) {
     while (cartItems.hasChildNodes()) {
       cartItems.removeChild(cartItems.firstChild)
     }
+    let cartDocRef = db.collection('users').doc(userUid).collection("cart");
     updateCartTotal()
     swal({
       title: "Books purchased!",

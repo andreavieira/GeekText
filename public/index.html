@@ -31,29 +31,29 @@
 
         <div class="shop-box">
           <a class="shop-btn" id="cart-btn">
-            <img class="shopping-icon" src="/images/shopping-cart.png" width="25" height="25">
+              <img class="shopping-icon" src="/images/shopping-cart.png" width="25" height="25">
           </a>
         </div>
 
         <div class="account-box">
-            <a onclick="accountDrop()" class="account-btn">
-                <img class="account-icon" src="/images/user-icon.png" width="25" height="25">
-            </a>
-            <div id="accDropdown" class="account-dropdown-content">
-                <div id="not-loggedin-div">
-                    <input style="font-size: 16px;"id="userEmailin" type="email" placeholder="Email"/>
-                    <input style="font-size: 16px;" id="userPassword" type="password" placeholder="Password"/>
-                    <a id="forgot-password" onclick="resetPassword()">Forgot password?</a>
-                    <a onclick="login()">Log In</a>
-                    <a id="signup-btn">Create Account</a>
-                </div>
-                <div id="loggedin-div">
-                    <p id="welcome-user"></p>
-                    <a id="verify-btn" onclick="sendUserVerification()">Send Verification</a>
-                    <a id="profile-btn">Edit Profile</a>
-                    <a onclick="logout()">Sign out</a>
-                </div>
+          <a onclick="accountDrop()" class="account-btn">
+            <img class="account-icon" src="/images/user-icon.png" width="25" height="25">
+          </a>
+          <div id="accDropdown" class="account-dropdown-content">
+            <div id="not-loggedin-div">
+              <input style="font-size: 16px;"id="userEmailin" type="email" placeholder="Email"/>
+              <input style="font-size: 16px;" id="userPassword" type="password" placeholder="Password"/>
+              <a id="forgot-password" onclick="resetPassword()">Forgot password?</a>
+              <a onclick="login()">Log In</a>
+              <a id="signup-btn">Create Account</a>
             </div>
+            <div id="loggedin-div">
+              <p id="welcome-user"></p>
+              <a id="verify-btn" onclick="sendUserVerification()">Send Verification</a>
+              <a id="profile-btn">Edit Profile</a>
+              <a onclick="logout()">Sign out</a>
+            </div>
+          </div>
         </div>
       </header>
     </div> <!-- end of main-header class-->
@@ -85,13 +85,13 @@
         <div>
           <div class="cart-row">
             <span class="cart-item cart-header
-                cart-column">COVER</span>
+              cart-column">COVER</span>
             <span class="cart-description cart-header
-                cart-column">TITLE</span>
+              cart-column">TITLE</span>
             <span class="cart-price cart-header
-                cart-column">PRICE</span>
+              cart-column">PRICE</span>
             <span class="cart-quantity cart-header
-                cart-column">RATING</span>
+              cart-column">RATING</span>
           </div>
 
           <div id="home-books" class="cart-items">
@@ -104,89 +104,91 @@
       </section>
     </div>
 
-      <!--Books by Same Author-->
-      <div hidden class="template" id="same-author">
-          <section class="content-section container">
-
-              <div>
-                  <div class="cart-row">
+    <!--Books by Same Author-->
+    <div hidden class="template" id="same-author">
+      <section class="content-section container">
+        <div>
+          <div class="cart-row">
             <span class="cart-item cart-header
-                cart-column">COVER</span>
-                      <span class="cart-description cart-header
-                cart-column">TITLE</span>
-                      <span class="cart-price cart-header
-                cart-column">PRICE</span>
-                      <span class="cart-quantity cart-header
-                cart-column">RATING</span>
-                  </div>
+              cart-column">COVER</span>
+            <span class="cart-description cart-header
+              cart-column">TITLE</span>
+            <span class="cart-price cart-header
+              cart-column">PRICE</span>
+            <span class="cart-quantity cart-header
+              cart-column">RATING</span>
+          </div>
 
-                  <div id="home-books" class="cart-items">
-                      <div class ="cart-row">
-                          <!-- Here is the home sort container in view.js file -->
-                      </div>
-                  </div>
-              </div>
-          </section>
-      </div>
+          <div id="home-books" class="cart-items">
+            <div class ="cart-row">
+              <!-- Here is the home sort container in view.js file -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <!--Shopping Cart Container-->
     <div hidden class="template" id="shopping-cart">
-          <section class="content-section container">
-              <div>
-                  <h1>SHOPPING CART</h1>
-                  <div class="cart-row">
-                    <span class="cart-item cart-header
-                    cart-column">ITEM</span>
-                    <span class="cart-description cart-header
-                    cart-column">DESCRIPTION</span>
-                    <span class="cart-price cart-header
-                    cart-column">PRICE</span>
-                    <span class="cart-quantity cart-header
-                    cart-column">QUANTITY</span>
-                  </div>
+      <section class="content-section container">
+        <div>
+          <h1>SHOPPING CART</h1>
+          <div class="cart-row">
+            <span class="cart-item cart-header
+            cart-column">ITEM</span>
+            <span class="cart-description cart-header
+            cart-column">DESCRIPTION</span>
+            <span class="cart-price cart-header
+            cart-column">PRICE</span>
+            <span class="cart-quantity cart-header
+            cart-column">QUANTITY</span>
+          </div>
 
-                <ul style="list-style-type: none" id="cart-list">
-                <div class ="cart-items">
-                    <div class ="cart-row">
-                     <!-- Here is the shopping cart container in view.js file -->
-                    </div>
-                  </div>
-                    <div class="cart-total">
-                      <strong class="cart-total-title">TOTAL:</strong>
-                      <span class="cart-total-price"></span>
-                    </div>
-                    <button class="btn btn-primary btn-purchase"
-                      role="button">PURCHASE </button>
-            <div>
-              <h1>SAVED FOR LATER</h1>
-                <div class = "save-row">
-                  <span class="cart-item cart-header
-                  cart-column">ITEM</span>
-                  <span class="cart-description cart-header
-                  cart-column">DESCRIPTION</span>
-                  <span class="cart-price cart-header
-                  cart-column">PRICE</span>
-                  <span class="cart-quantity cart-header
-                  cart-column">QUANTITY</span>
-                </div>
-              <div class ="saved-items">
-                <div class="save-row">
-                  <!-- Saved items Container -->
-                </div>
+          <ul style="list-style-type: none" id="cart-list">
+          <div class ="cart-items">
+            <div class ="cart-row">
+              <!-- Here is the shopping cart container in view.js file -->
+            </div>
+          </div>
+          <div class="cart-total">
+            <strong class="cart-total-title">TOTAL:</strong>
+            <span class="cart-total-price"></span>
+          </div>
+          <button class="btn btn-primary btn-purchase"
+            role="button">
+            PURCHASE 
+          </button>
+          <div>
+            <h1>SAVED FOR LATER</h1>
+            <div class = "save-row">
+              <span class="cart-item cart-header
+              cart-column">ITEM</span>
+              <span class="cart-description cart-header
+              cart-column">DESCRIPTION</span>
+              <span class="cart-price cart-header
+              cart-column">PRICE</span>
+              <span class="cart-quantity cart-header
+              cart-column">QUANTITY</span>
+            </div>
+            <div class ="saved-items">
+              <div class="save-row">
+                <!-- Saved items Container -->
               </div>
             </div>
-          </section>
-  </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
-  <!--Book Details/Reviews Container-->
-  <div hidden class="template" id="book-details">
-    <section class="content-section container" style="width: 732px;padding-bottom: 0px;">
-      <!--<h1>BOOK DETAILS</h1>-->
+    <!--Book Details/Reviews Container-->
+    <div hidden class="template" id="book-details">
+      <section class="content-section container" style="width: 732px;padding-bottom: 0px;">
+        <!--<h1>BOOK DETAILS</h1>-->
 
         <!-- Book Cover Enlarging Modal -->
         <div id="myModal" class="modal">
-            <span class="close">&times;</span>
-            <img class="modal-content" id="img01">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="img01">
         </div>
 
         <img class="book-cover" alt="Book Cover" style="width:100%;max-width:300px;padding-bottom: 25px;">
@@ -257,113 +259,125 @@
 
   <!-- CREATE YOUR ACCOUNT HERE -->
   <div hidden class="createAccDiv" id="createAcc-page" style="padding-top: 0px;">
-      <section class="create-content-section-container" style="padding-right: 16px; padding-top: 0px;" >
-        <div id="create-personal-information">
-            <h1>Personal Information</h1>
-            <form>
-                <b>First Name: </b>
-                <input required type="text" id="createfName" placeholder="First Name" required/>
-                <br>
-                <b>Last Name: </b>
-                <input type="text" id="createlName" placeholder="Last Name" required/>
-                <br>
-                <b>Email: </b>
-                <input type="email" id="createEmail" placeholder="Email" required/>
-                <br>
-                <b>Password: </b>
-                <input type="password" id="createPassword" placeholder="Password"/>
-                <br>
-                <b>Street Address: </b>
-                <input type="text" id="createStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
-                <br>
-                <b>City: </b>
-                <input type="text" id="createCity" placeholder="Ex: Miami"/>
-                <br>
-                <b>State: </b>
-                <input type="text" id="createState" placeholder="Ex: FL"/>
-                <br>
-                <b>Zip code: </b>
-                <input type="number" id="createZipCode" placeholder="Ex: 33123"/>
-                <br>
-                <b>Country: </b>
-                <input type="text" id="createCountry" placeholder="Ex: USA"/>
-                <br>
-            </form>
+    <section class="create-content-section-container" style="padding-right: 16px; padding-top: 0px;" >
+      <div id="create-personal-information">
+        <h1>Personal Information</h1>
+        <form>
+          <b>First Name: </b>
+          <input required type="text" id="createfName" placeholder="First Name" required/>
+          <br>
+          <b>Last Name: </b>
+          <input type="text" id="createlName" placeholder="Last Name" required/>
+          <br>
+          <b>Email: </b>
+          <input type="email" id="createEmail" placeholder="Email" required/>
+          <br>
+          <b>Password: </b>
+          <input type="password" id="createPassword" placeholder="Password"/>
+          <br>
+          <b>Street Address: </b>
+          <input type="text" id="createStreetAddress" placeholder="Ex: 12345 SW 123 St"/>
+          <br>
+          <b>City: </b>
+          <input type="text" id="createCity" placeholder="Ex: Miami"/>
+          <br>
+          <b>State: </b>
+          <input type="text" id="createState" placeholder="Ex: FL"/>
+          <br>
+          <b>Zip code: </b>
+          <input type="number" id="createZipCode" placeholder="Ex: 33123"/>
+          <br>
+          <b>Country: </b>
+          <input type="text" id="createCountry" placeholder="Ex: USA"/>
+          <br>
+        </form>
 
-        </div>
-        <br>
-        <button class="create-acc-btn" onclick="createUser()">Create Account</button>
-      </section>
+      </div>
+      <br>
+      <button class="create-acc-btn" onclick="createUser()">Create Account</button>
+    </section>
   </div>
 
   <!--Profile Page Container-->
   <div hidden class="profileDiv" id="profile-page">
     <section class="profile-content-section-container">
-        <div id="personal-information">
-            <h1>Personal Information</h1>
-            <p>*All fields must be filled out when changing, even if it's not being changed</p><br>
-            <p class="profile-fName">First Name: </p>
-            <input id="fNameChange" type="text" placeholder="New First Name">
-            <br>
-            <p class="profile-lName">Last Name: </p>
-            <input id="lNameChange" type="text" placeholder="New Last Name">
-            <br>
-            <p class="profile-email">Email: </p>
-            <!-- <input id="emailChange" type="email" placeholder="Cannot Change Email"> -->
-            <br>
-            <p class="profile-password">Password: </p>
-            <input onclick="changePassword()" type="button" value="Change Password">
-            <br>
-            <p class="profile-street">Home Address: </p>
-            <br>
-            <p class="profile-city">City: </p>
-            <p class="profile-state">State: </p>
-            <p class="profile-zip">Zip code: </p>
-            <p class="profile-country">Country: </p>
-            <br>
-            <input id="streetChange" type="text" placeholder="New Street Address"/>
-            <input id="cityChange" type="text" placeholder="New City"/>
-            <input id="stateChange" type="text" placeholder="New State"/>
-            <input id="zipChange" type="text" placeholder="New Zip Code"/>
-            <input id="countryChange" type="text" placeholder="New Country"/>
-            <br>
-            <br>
-            <b>
-                Currently Unavailable: <br>
-                Plans to make drop down that is able to add more physical addresses
-                <br>
-            </b>
-        </div>
+      <div id="personal-information">
+        <h1>Personal Information</h1>
+        <p>*All fields must be filled out when changing, even if it's not being changed</p><br>
+        <p class="profile-fName">First Name: </p>
+        <input id="fNameChange" type="text" placeholder="New First Name">
         <br>
+        <p class="profile-lName">Last Name: </p>
+        <input id="lNameChange" type="text" placeholder="New Last Name">
+        <br>
+        <p class="profile-email">Email: </p>
+        <!-- <input id="emailChange" type="email" placeholder="Cannot Change Email"> -->
+        <br>
+        <p class="profile-password">Password: </p>
+        <input onclick="changePassword()" type="button" value="Change Password">
         <br>
 
-        <div id="payment-info">
-            <h1>Payment Information</h1>
-            <b>Credit Card Number: </b>
-            <input type="number" id="changeCreditCardNumber" placeholder="Credit card number"/>
-            <button>
-                <img src="/images/edit.png" width="25" height="25">
-            </button>
-            <br>
-            <b>Expiration Date: </b>
-            <input type="number" id="changeCreditCardExpDate" placeholder="Expiration Date"/>
-            <br>
-            <b>CVV: </b>
-            <input type="number" id="changeCreditCardCVV" placeholder="CVV"/>
-            <br>
-            <b>
-                Currently Unavailable: <br>
-                Plans to make drop down that is able to
-                add new credit cards and store multiple card information
-            </b>
+
+        <div class="addressDropdown">
+          <input onclick="addressDropdown()" type="button" class="addressDrop-btn" value="Addresses">
+          <div id="address-dropdown-content" class="address-dropdown-content">
+              <a id="" onclick="address1()">Address 1</a>
+              <a id="" onclick="address2()">Address 2</a>
+              <a id="" onclick="address3()">Address 3</a>
+          </div>
 
         </div>
         <br>
-        <div class="profile-save-btn" onclick="saveProfile()">
-            <button >SAVE</button>
-        </div>
 
+        <p class="profile-street">Home Address: </p>
+        <br>
+        <p class="profile-city">City: </p>
+        <p class="profile-state">State: </p>
+        <p class="profile-zip">Zip code: </p>
+        <p class="profile-country">Country: </p>
+        <br>
+        <input id="streetChange" type="text" placeholder="New Street Address"/>
+        <input id="cityChange" type="text" placeholder="New City"/>
+        <input id="stateChange" type="text" placeholder="New State"/>
+        <input id="zipChange" type="text" placeholder="New Zip Code"/>
+        <input id="countryChange" type="text" placeholder="New Country"/>
+        <button onclick="saveNewAddress()">Add New Address</button>
 
+        <br>
+        <br>
+        <b>
+          Currently Unavailable: <br>
+          Plans to make drop down that is able to add more physical addresses
+          <br>
+        </b>
+      </div>
+      <br>
+      <br>
+
+      <div id="payment-info">
+        <h1>Payment Information</h1>
+        <b>Credit Card Number: </b>
+        <input type="number" id="changeCreditCardNumber" placeholder="Credit card number"/>
+        <button>
+          <img src="/images/edit.png" width="25" height="25">
+        </button>
+        <br>
+        <b>Expiration Date: </b>
+        <input type="number" id="changeCreditCardExpDate" placeholder="Expiration Date"/>
+        <br>
+        <b>CVV: </b>
+        <input type="number" id="changeCreditCardCVV" placeholder="CVV"/>
+        <br>
+        <b>
+          Currently Unavailable: <br>
+          Plans to make drop down that is able to
+          add new credit cards and store multiple card information
+        </b>
+      </div>
+      <br>
+      <div class="profile-save-btn" onclick="saveProfile()">
+        <button >Add Credit Card Information</button>
+      </div>
     </section>
   </div>
 
@@ -375,20 +389,20 @@
         <li><a href=""></a></li>
       </nav>
       </footer>
-      </div>
+  </div>
 
-      <!-- update the version number as needed -->
-      <script src="/__/firebase/7.2.2/firebase-app.js"></script>
-      <!-- include only the Firebase features as you need -->
-      <script src="/__/firebase/7.2.2/firebase-auth.js"></script>
-      <script src="/__/firebase/7.2.2/firebase-firestore.js"></script>
-      <!-- initialize the SDK after all desired features are loaded -->
-      <script src="/__/firebase/init.js"></script>
-      <script src="//unpkg.com/navigo@6"></script>
+  <!-- update the version number as needed -->
+  <script src="/__/firebase/7.2.2/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script src="/__/firebase/7.2.2/firebase-auth.js"></script>
+  <script src="/__/firebase/7.2.2/firebase-firestore.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script src="/__/firebase/init.js"></script>
+  <script src="//unpkg.com/navigo@6"></script>
 
-      <script src="/scripts/bookstore.js"></script>
-      <script src="/scripts/view.js"></script>
-      <script src="/scripts/login.js"></script>
+  <script src="/scripts/bookstore.js"></script>
+  <script src="/scripts/view.js"></script>
+  <script src="/scripts/login.js"></script>
 
 </body>
 </html>
