@@ -239,7 +239,8 @@ hr {
     width: 400px;
 }
 
-.profile-content-section-container p {
+.profile-content-section-container p,
+.profile-content-section-container b{
     padding-left: 20px;
     font-size: 20px;
     display: inline-block;
