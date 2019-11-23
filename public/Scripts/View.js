@@ -95,8 +95,6 @@ Bookstore.prototype.viewHome = function (bDetails, pageNum, sortType, order) {
     bs.router.navigate('/book/' + bookDetails.id);
   });
 
-  console.log("sort", sortType);
-
   document.getElementsByClassName('btn-purchase')[0].addEventListener('click', function () {
     bs.router.navigate('/page/' + (pageNum + 1) + '/sort-by/' + sortType + '/order/' + order);
   });
@@ -124,7 +122,6 @@ Bookstore.prototype.viewHome = function (bDetails, pageNum, sortType, order) {
   });
 }
 
-
 /* PROFILE SCRIPTS */
 Bookstore.prototype.viewCreateAcc = function (doc) {
   var createAccPage = document.querySelector('#createAcc-page').cloneNode(true);
@@ -136,11 +133,9 @@ Bookstore.prototype.viewCreateAcc = function (doc) {
     me.router.navigate("/")
   });
 
-
   createAccPage.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), createAccPage);
 }
-
 
 Bookstore.prototype.viewProfile = function (doc) {
   var profilePage = document.querySelector('#profile-page').cloneNode(true);
@@ -193,14 +188,12 @@ Bookstore.prototype.viewCart = function (doc) {
   function ready() {
     //listener for remove cart item button
     var removeCartItemButtons = document.getElementsByClassName('btn-danger-cart')   //for btn-danger class
-    //console.log(removeCartItemButtons)
     for (var i = 0; i < removeCartItemButtons.length; i++) {                      //loops through all buttons in cart
       var button = removeCartItemButtons[i]                                   //listener for 'click' event
       button.addEventListener('click', removeCartItem)
     }
     //listener for remove save item button
     var removeSavedItemButtons = document.getElementsByClassName('btn-danger-save')   //for btn-danger class
-    //console.log(removeSavedItemButtons)
     for (var i = 0; i < removeCartItemButtons.length; i++) {                      //loops through all buttons in cart
       var button = removeCartItemButtons[i]                                   //listener for 'click' event
       button.addEventListener('click', removeSavedItem)
@@ -284,7 +277,6 @@ Bookstore.prototype.viewCart = function (doc) {
     })
   }
 
-
   function removeSavedItem(event) {
     //gets item ID
     var buttonClicked = event.target
@@ -295,7 +287,6 @@ Bookstore.prototype.viewCart = function (doc) {
     let allItems = cartDocRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          //console.log(doc.id, '=>', doc.data());
           var deleteDoc = cartDocRef.doc(ID).delete();
         });
       })
@@ -585,7 +576,6 @@ Bookstore.prototype.viewCart = function (doc) {
       let saveItems = saveRef.get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            //console.log(doc.id, '=>', doc.data());
             renderSave(doc);
             updateCartTotal();
           });
@@ -610,11 +600,9 @@ Bookstore.prototype.viewCart = function (doc) {
           price = parseFloat(docPrice.replace('$', ''));
           var quantity = document.getElementById('quant').value
           total = total + (price * quantity)
-          //console.log(price)
-          //console.log(total)
           total = Math.round(total * 100) / 100
           document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total;
-        });ß
+        });
       })
   }
 }
@@ -756,7 +744,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     //send review to database
     //update rating
     let list = starRating.querySelectorAll("input");
-    //console.log(list);
     for (let i = 0; i < 5; i++) {
 
       if (list[i].checked) {
