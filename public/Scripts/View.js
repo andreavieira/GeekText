@@ -635,7 +635,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
 
-  var author = bookDetails.querySelector(".author-fn");
+  var author = bookDetails.querySelector(".author");
   author.innerHTML =  doc.get("AuthorFn") + " " + doc.get("AuthorLn");
 
   var bookDesc = bookDetails.querySelector(".book-description");
