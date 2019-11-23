@@ -95,9 +95,10 @@ Bookstore.prototype.viewHome = function (bDetails, pageNum, sortType, order) {
     bs.router.navigate('/book/' + bookDetails.id);
   });
 
+  console.log('Paging:', pageNum);
   // Next page
   document.getElementsByClassName('btn-purchase')[0].addEventListener('click', function () {
-    bs.router.navigate('/page/' + (pageNum + 1) + '/sort-by/' + sortType + '/order/' + order);
+    bs.router.navigate('/page/' + parseFloat((pageNum + 1)) + '/sort-by/' + sortType + '/order/' + order);
   });
 
   // Different sorts
@@ -348,8 +349,6 @@ Bookstore.prototype.viewCart = function (doc) {
       })
     updateCartTotal();
     swal("Added to Cart!", docTitle + " By " + docAuthor + " has been added to your cart.", "success");
-
-
   }
 
   //Setter function that adds item elements to the cart database
@@ -443,7 +442,6 @@ Bookstore.prototype.viewCart = function (doc) {
       })
     updateCartTotal();
   }
-
 
   //renders all the items in the shopping cart section
   //@param is the documents in the cart
