@@ -232,7 +232,6 @@ Bookstore.prototype.viewCart = function (doc) {
 
   //function shows an alert and removes from HTML
   function purchaseClicked() {
-    window.alert('Thank you for your purchase!')
     var cartItems = document.getElementsByClassName('cart-items')[0]
 
     let auth = firebase.auth();
@@ -253,6 +252,13 @@ Bookstore.prototype.viewCart = function (doc) {
         cartItems.removeChild(cartItems.firstChild)
     }
     updateCartTotal()
+    swal({
+        title: "Books purchased!",
+        text: "Your cart has been updated.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
   }
 
   // Function calls the updateCartTotal function when ONLY the remove button is clicked.
