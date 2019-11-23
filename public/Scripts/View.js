@@ -341,7 +341,7 @@ Bookstore.prototype.viewCart = function (doc) {
     addToCartDB(ID,docTitle,docAuthor,docPrice,docImage);     //function adds item elements to cart database
     removeSavedDBItem(ID);                                    //function removes item from save database
     cartItem.remove();                                        //removes HTML row from 'saved for later'
-    
+
 
     //Removes all cart items from HTML
     var cartItems = document.getElementsByClassName('cart-items')[0]
@@ -407,8 +407,8 @@ Bookstore.prototype.viewCart = function (doc) {
     saveForLaterDB(ID, docTitle, docAuthor, docPrice, docImage);        //calls function to pass item to save collection
     removeCartItemDB(ID);                                               //removes item from cart database
     cartItem.remove();                                                  //removes item from cart HTML row
-    
-    
+
+
     //Removes all saved items from HTML
     var cartItems = document.getElementsByClassName('saved-items')[0]
     while (cartItems.hasChildNodes()) {
@@ -579,7 +579,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
         .then(snapshot => {
           snapshot.forEach(doc => {
             //console.log(doc.id, '=>', doc.data());
-            renderCart(doc); 
+            renderCart(doc);
             updateCartTotal();
           });
         });
@@ -606,7 +606,7 @@ let promise = firebase.firestore().collection('users').doc(userUid);
     var docPrice = 0;
     var price = 0;
     var total = 0
-    
+
     let cartDocRef = promise.collection("cart");
     // var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     // var listedPrices = cartItemContainer.getElementsByClassName('input')
@@ -621,16 +621,27 @@ let promise = firebase.firestore().collection('users').doc(userUid);
             //console.log(price)
             //console.log(total)
             total = Math.round(total * 100) / 100
-            document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total; 
+            document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total;
             });
-          })     
-    }   
+          })
+    }
   }
 
 /** BOOK DETAILS SCRIPTS **/
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
   var currentUser = firebase.auth().currentUser;
+  let anonCheck = bookDetails.querySelector(".anon-check");
+  let isAnonymous = false;
+  var booksOwnedRef = this.db.collection("users").doc(currentUser.uid).collection("booksBought");
+  var booksBought = [];
+  booksOwnedRef.get().then(books => {
+    books.forEach(book => {
+      booksBought.push(book.get("bookId"));
+    });
+    console.log(booksBought);
+  });
+
 
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
@@ -772,7 +783,9 @@ Bookstore.prototype.viewBookDetails = function (doc) {
         break;
       }
     }
-    
+
+    if(anonCheck.querySelector("input").checked) isAnonymous = true;
+
     if(starRating.rating == -1) { // no rating
         swal("Please add a star rating to your review");
     } else if (reviewText.value == "" ) { //no review
@@ -782,17 +795,22 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     } else if (unList.includes(currentUser.uid)){ // already been reviewed
       swal("This book has already been reviewed by you.");
     } else {
+
       let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
         Rating: starRating.rating,
         Text: reviewText.value,
-        Uid: currentUser.uid
+        Uid: currentUser.uid,
+        Anonymous: isAnonymous
       });
         swal( "Review Submitted!");
-      console.log({
-        rating: starRating.rating,
-        reviewText: reviewText.value,
-        Uid: currentUser.uid
-      });
+      // console.log({
+      //   rating: starRating.rating,
+      //   reviewText: reviewText.value,
+      //   Uid: currentUser.uid
+      // });
+
+
+
       reviewText.setAttribute("disabled", true);
       submitBtn.setAttribute("disabled", true);
       //average out the ratings based on reviews.
@@ -829,6 +847,9 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
     if(review.Uid == null) {
       review_El.querySelector(".filled-review-username").innerHTML =
         "<strong> Guest </strong> says...";
+    } else if(review.Anonymous) {
+      review_El.querySelector(".filled-review-username").innerHTML =
+        "<strong> Anonymous </strong> says...";
     } else {
       let unRef = this.db.collection("users").doc(review.Uid).get().then(user => {
         review_El.querySelector(".filled-review-username").innerHTML =
