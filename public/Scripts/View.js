@@ -611,6 +611,17 @@ Bookstore.prototype.viewCart = function (doc) {
 Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
   var currentUser = firebase.auth().currentUser;
+  let anonCheck = bookDetails.querySelector(".anon-check");
+  let isAnonymous = false;
+  var booksOwnedRef = this.db.collection("users").doc(currentUser.uid).collection("booksBought");
+  var booksBought = [];
+  booksOwnedRef.get().then(books => {
+    books.forEach(book => {
+      booksBought.push(book.get("bookId"));
+    });
+    console.log(booksBought);
+  });
+
 
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
@@ -752,26 +763,33 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       }
     }
 
-    if (starRating.rating == -1) { // no rating
-      swal("Please add a star rating to your review");
-    } else if (reviewText.value == "") { //no review
+    if(anonCheck.querySelector("input").checked) isAnonymous = true;
+
+    if(starRating.rating == -1) { // no rating
+        swal("Please add a star rating to your review");
+    } else if (reviewText.value == "" ) { //no review
       swal("Please add a review");
     } else if (currentUser == null) { // not logged in
       swal("Please Log in to submit a review")
     } else if (unList.includes(currentUser.uid)) { // already been reviewed
       swal("This book has already been reviewed by you.");
     } else {
+
       let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
         Rating: starRating.rating,
         Text: reviewText.value,
-        Uid: currentUser.uid
+        Uid: currentUser.uid,
+        Anonymous: isAnonymous
       });
-      swal("Review Submitted!");
-      console.log({
-        rating: starRating.rating,
-        reviewText: reviewText.value,
-        Uid: currentUser.uid
-      });
+        swal( "Review Submitted!");
+      // console.log({
+      //   rating: starRating.rating,
+      //   reviewText: reviewText.value,
+      //   Uid: currentUser.uid
+      // });
+
+
+
       reviewText.setAttribute("disabled", true);
       submitBtn.setAttribute("disabled", true);
       //average out the ratings based on reviews.
@@ -808,6 +826,9 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
     if (review.Uid == null) {
       review_El.querySelector(".filled-review-username").innerHTML =
         "<strong> Guest </strong> says...";
+    } else if(review.Anonymous) {
+      review_El.querySelector(".filled-review-username").innerHTML =
+        "<strong> Anonymous </strong> says...";
     } else {
       let unRef = this.db.collection("users").doc(review.Uid).get().then(user => {
         review_El.querySelector(".filled-review-username").innerHTML =
