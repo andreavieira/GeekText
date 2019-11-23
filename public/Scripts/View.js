@@ -784,20 +784,20 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     }
     
     if(starRating.rating == -1) { // no rating
-      alert("Please add a star rating to your review");
+        swal("Please add a star rating to your review");
     } else if (reviewText.value == "" ) { //no review
-      alert("Please add a review");
+      swal("Please add a review");
     } else if (currentUser == null) { // not logged in
-      alert("Please Log in to submit a review")
+      swal("Please Log in to submit a review")
     } else if (unList.includes(currentUser.uid)){ // already been reviewed
-      alert("This book has already been reviewed by you");
+      swal("This book has already been reviewed by you.");
     } else {
       let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
         Rating: starRating.rating,
         Text: reviewText.value,
         Uid: currentUser.uid
       });
-      alert("Review Submitted!");
+        swal( "Review Submitted!");
       console.log({
         rating: starRating.rating,
         reviewText: reviewText.value,
