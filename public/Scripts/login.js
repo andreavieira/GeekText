@@ -39,6 +39,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         if(user != null) {
             var email_id = user.email;
             var email_verified = user.emailVerified;
+            console.log("Current User: " + email_id + "; Email Verification: " + email_verified);
             
             if(email_verified) {
                 document.getElementById("welcome-user").innerHTML = "Welcome: \n" + email_id + "\n";
@@ -126,7 +127,7 @@ function login() {
     firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
         // Handle errors here
         var errorCode = error.code;
-        var errorMessage = error.message;
+        window.alert("Error: " + errorCode);
     });
 }
 
@@ -155,8 +156,7 @@ function sendUserVerification() {
 // Send an email to reset password NOT IMPLEMENTED OR USED YET
 function resetPassword(){
 
-    var auth = firebase.auth();
-    var emailAddress = "user@example.com";
+    var emailAddress = document.getElementById("userEmailin").value;
 
     auth.sendPasswordResetEmail(emailAddress).then(function() {
         window.alert("Reset email sent.");
@@ -166,40 +166,62 @@ function resetPassword(){
 
 }
 
-function changefName() {
-    document.getElementById("changefName").type="hidden";
-    document.getElementById("fNameChange").type="text";
-    document.getElementById("saveNewfName").type="button";
+function saveProfile() {
+    var newfName = document.getElementById("fNameChange").value;
+    var newlName = document.getElementById("lNameChange").value;
+    var newEmail = document.getElementById("emailChange").value;
+    var newOPassword = document.getElementById("oldPasswordConfirmation").value;
+    var newPassword = document.getElementById("passwordChange").value;
+    var newCPassword = document.getElementById("newPasswordConfirmation").value;
+    var newStreetAddress = document.getElementById("streetChange").value;
+    var newCity = document.getElementById("cityChange").value;
+    var newState = document.getElementById("stateChange").value;
+    var newZipCode = document.getElementById("zipChange").value;
+    var newCountry = document.getElementById("countryChange").value;
+
+    var userUid = auth.currentUser.uid
+    var user = auth.currentUser;
+
+
+    if(((newfName == "") || (newlName == "") || (newEmail == "") 
+        ||(newOPassword == "") || (newPassword == "") || (newCPassword == "") 
+        || (newStreetAddress == "") || (newCity == "")  || (newState == "") 
+        || (newZipCode == "") || (newCountry == "")) && (newPassword == newCPassword)
+        && (newOPassword == user.password))
+    {
+        window.alert("All inputs must not be blank or you entered the wrong password")
+    } else {
+        firebase.auth().then(function(userCredential) {
+            userCredential.user.updateEmail(newEmail)
+        })
+        // user.updateEmail(newEmail).then(function() {
+        //     console.log("Update Email Success: " + user.identifier);
+        // }).catch(function(error) {
+        //     // An error happened.
+        //     var errorCode = error.code;
+        //     console.log("Error: " + errorCode);
+        // });
+
+        user.updatePassword(newPassword).then(function() {
+            console.log("Update Password Success");
+        }).catch(function(error) {
+            // An error happened.
+            var errorCode = error.code;
+            console.log("Error: " + errorCode);
+        });
+        db.collection('users').doc(userUid).set({
+            fName: newfName,
+            lName: newlName,
+            email: newEmail,
+            emailVerified: false,
+            password: newPassword,
+            streetAddress: newStreetAddress,
+            city: newCity,
+            state: newState,
+            zipCode: newZipCode,
+            country: newCountry
+        })
+        window.alert("Success!");
+    }
+
 }
-
-function changelName() {
-    document.getElementById("changelName").type="hidden";
-    document.getElementById("lNameChange").type="text";
-    document.getElementById("saveNewlName").type="button";
-}
-
-function changeEmail() {
-    document.getElementById("changeEmail").type="hidden";
-    document.getElementById("emailChange").type="text";
-    document.getElementById("saveNewEmail").type="button";
-}
-
-function changePassword() {
-    document.getElementById("changePassword").type="hidden";
-    document.getElementById("oldPasswordConfirmation").type="text";
-    document.getElementById("passwordChange").type="text";
-    document.getElementById("newPasswordConfirmation").type="text";
-    document.getElementById("saveNewPassword").type="button";
-}
-
-
-function changeHomeAdd() {
-    document.getElementById("changeHomeAdd").type="hidden";
-    document.getElementById("streetChange").type="text";
-    document.getElementById("cityChange").type="text";
-    document.getElementById("stateChange").type="text";
-    document.getElementById("zipChange").type="text";
-    document.getElementById("countryChange").type="text";
-    document.getElementById("saveNewHomeAdd").type="button";
-}
-

@@ -220,11 +220,11 @@ hr {
 }
 
 .profile-content-section-container,
- .create-content-section-container {
+.create-content-section-container {
     text-align: left;
     display: inline-block;
     margin-top: 20px;
-    min-width: 550px;
+    min-width: 600px;
     max-width: 1000px;
     /* margin-left: 20%;
     margin-right: 20%; */
@@ -260,6 +260,9 @@ hr {
     max-width: 400px;
 }
 
+.create-content-section-container input {
+    margin-left: 20px;
+}
 .create-content-section-container button {
     background: rgb(141, 137, 137);
 	color: #fff;
