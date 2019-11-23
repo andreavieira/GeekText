@@ -95,10 +95,12 @@ Bookstore.prototype.viewHome = function (bDetails, pageNum, sortType, order) {
     bs.router.navigate('/book/' + bookDetails.id);
   });
 
+  // Next page
   document.getElementsByClassName('btn-purchase')[0].addEventListener('click', function () {
     bs.router.navigate('/page/' + (pageNum + 1) + '/sort-by/' + sortType + '/order/' + order);
   });
 
+  // Different sorts
   document.getElementById("sortByGenre").addEventListener("click", function () {
     bs.router.navigate('/sortByGenre');
   });
