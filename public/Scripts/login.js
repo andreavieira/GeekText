@@ -81,7 +81,13 @@ function createUser() {
         || (cUserPassword == "") || (cUserStreetAddress == "") || (cUserCity == "") 
         || (cUserState == "") || (cUserZipCode == "") || (cUserCountry == "")) 
     {
-        window.alert("All fields are required, \nPlease fill out everything")
+        swal({
+            title: "All fields must not be left blank",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     } else {
         // Sign into firebase with email and pass. Stores to a promise for error catching
         var promise = firebase.auth().createUserWithEmailAndPassword(cUserEmail, cUserPassword);
@@ -90,7 +96,13 @@ function createUser() {
         promise.catch(function(error) {
             // Handle errors here
             var errorCode = error.code;
-            window.alert("Error: " + errorCode)
+            swal({
+                title: "Error Message: " + errorCode,
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
             if (errorCode == 'auth/weak-password') return // password to weak. Minimal 6 characters
             if (errorCode == 'auth/email-already-in-use') return // Return a email already in use error  
         });
@@ -123,10 +135,26 @@ function login() {
     var userPass = document.getElementById("userPassword").value;
 
     // Sign into firebase with email and pass. Stores to a promise for error catching
-    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
+    .then(
+        swal({
+            title: "Login Successful",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    )
+    .catch(function(error) {
         // Handle errors here
         var errorCode = error.code;
-        window.alert("Error: " + errorCode);
+        swal({
+            title: "Error Message: " + errorCode,
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     });
 }
 
@@ -144,9 +172,21 @@ function sendUserVerification() {
     var user = firebase.auth().currentUser;
 
     user.sendEmailVerification().then(function() {
-        window.alert("Verification sent");   // Email sent.
+        swal({
+            title: "Verification email has been sent",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     }).catch(function(error) {
-        window.alert("Error: " + error.message);// An error happened.
+        swal({
+            title: "Error Message: " + error.message,
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     });
 }
 
@@ -158,9 +198,21 @@ function resetPassword(){
     var emailAddress = document.getElementById("userEmailin").value;
 
     auth.sendPasswordResetEmail(emailAddress).then(function() {
-        window.alert("Reset email sent.");
+        swal({
+            title: "Password reset email has been sent",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     }).catch(function(error) {
-        window.alert("Error: " + error.message);
+        swal({
+            title: "Error Message: " + error.message,
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     });
 
 }
@@ -170,10 +222,24 @@ function changePassword() {
     var emailAddress = user.email;
 
     auth.sendPasswordResetEmail(emailAddress).then(function() {
-        window.alert("Reset email sent.");
+        swal({
+            title: "Password reset email has been sent",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     }).catch(function(error) {
-        window.alert("Error: " + error.message);
+        swal({
+            title: "Error Message: " + error.message,
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     });
+
+    
 }
 
 function saveProfile() {
@@ -184,7 +250,6 @@ function saveProfile() {
     var newfName = document.getElementById("fNameChange").value;
     var newlName = document.getElementById("lNameChange").value;
     var userEmail = user.email;
-    var userPassword = user.password;
     var newStreetAddress = document.getElementById("streetChange").value;
     var newCity = document.getElementById("cityChange").value;
     var newState = document.getElementById("stateChange").value;
@@ -195,7 +260,13 @@ function saveProfile() {
         || (newCity == "")  || (newState == "") 
         || (newZipCode == "") || (newCountry == ""))
     {
-        console.log("All inputs must not be blank");
+        swal({
+            title: "Cannot Save",
+            text: "All input fields must not be left blank",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     } else {
         
         db.collection('users').doc(userUid).set({
@@ -208,7 +279,12 @@ function saveProfile() {
             zipCode: newZipCode,
             country: newCountry
         })
-        window.alert("Success!")
-        console.log("Success in updating profile!");
+        swal({
+            title: "Updating Profile was a success!",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        });
     }
 }
