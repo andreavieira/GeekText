@@ -191,16 +191,7 @@ function saveProfile() {
     {
         window.alert("All inputs must not be blank or you entered the wrong password")
     } else {
-        firebase.auth().then(function(userCredential) {
-            userCredential.user.updateEmail(newEmail)
-        })
-        // user.updateEmail(newEmail).then(function() {
-        //     console.log("Update Email Success: " + user.identifier);
-        // }).catch(function(error) {
-        //     // An error happened.
-        //     var errorCode = error.code;
-        //     console.log("Error: " + errorCode);
-        // });
+        
 
         user.updatePassword(newPassword).then(function() {
             console.log("Update Password Success");
