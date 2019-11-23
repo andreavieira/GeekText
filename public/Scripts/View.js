@@ -162,7 +162,7 @@ Bookstore.prototype.viewProfile = function(doc) {
     email.innerHTML = "<strong>Email: </strong>" + doc.get("email");
 
     var password = profilePage.querySelector(".profile-password");
-    password.innerHTML = "<strong>Password: </strong>" + doc.get("password");
+    password.innerHTML = "<strong>Password: </strong> Censored";
 
     var street = profilePage.querySelector(".profile-street");
     street.innerHTML = "<strong>Home Address: </strong>" + doc.get("streetAddress");

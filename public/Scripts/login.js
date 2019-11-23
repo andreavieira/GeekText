@@ -103,7 +103,6 @@ function createUser() {
                 fName: cUserfName,
                 lName: cUserlName,
                 email: cUserEmail,
-                emailVerified: false,
                 password: cUserPassword,
                 streetAddress: cUserStreetAddress,
                 city: cUserCity,
@@ -153,7 +152,7 @@ function sendUserVerification() {
 
 
 
-// Send an email to reset password NOT IMPLEMENTED OR USED YET
+// Send an email to reset password
 function resetPassword(){
 
     var emailAddress = document.getElementById("userEmailin").value;
@@ -166,53 +165,50 @@ function resetPassword(){
 
 }
 
+function changePassword() {
+    var user = firebase.auth().currentUser;
+    var emailAddress = user.email;
+
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+        window.alert("Reset email sent.");
+    }).catch(function(error) {
+        window.alert("Error: " + error.message);
+    });
+}
+
 function saveProfile() {
+
+    var userUid = auth.currentUser.uid
+    var user = firebase.auth().currentUser;
+
     var newfName = document.getElementById("fNameChange").value;
     var newlName = document.getElementById("lNameChange").value;
-    var newEmail = document.getElementById("emailChange").value;
-    var newOPassword = document.getElementById("oldPasswordConfirmation").value;
-    var newPassword = document.getElementById("passwordChange").value;
-    var newCPassword = document.getElementById("newPasswordConfirmation").value;
+    var userEmail = user.email;
+    var userPassword = user.password;
     var newStreetAddress = document.getElementById("streetChange").value;
     var newCity = document.getElementById("cityChange").value;
     var newState = document.getElementById("stateChange").value;
     var newZipCode = document.getElementById("zipChange").value;
     var newCountry = document.getElementById("countryChange").value;
 
-    var userUid = auth.currentUser.uid
-    var user = auth.currentUser;
-
-
-    if(((newfName == "") || (newlName == "") || (newEmail == "") 
-        ||(newOPassword == "") || (newPassword == "") || (newCPassword == "") 
-        || (newStreetAddress == "") || (newCity == "")  || (newState == "") 
-        || (newZipCode == "") || (newCountry == "")) && (newPassword == newCPassword)
-        && (newOPassword == user.password))
+    if  ((newfName == "") || (newlName == "") || (newStreetAddress == "") 
+        || (newCity == "")  || (newState == "") 
+        || (newZipCode == "") || (newCountry == ""))
     {
-        window.alert("All inputs must not be blank or you entered the wrong password")
+        console.log("All inputs must not be blank");
     } else {
         
-
-        user.updatePassword(newPassword).then(function() {
-            console.log("Update Password Success");
-        }).catch(function(error) {
-            // An error happened.
-            var errorCode = error.code;
-            console.log("Error: " + errorCode);
-        });
         db.collection('users').doc(userUid).set({
             fName: newfName,
             lName: newlName,
-            email: newEmail,
-            emailVerified: false,
-            password: newPassword,
+            email: userEmail,
             streetAddress: newStreetAddress,
             city: newCity,
             state: newState,
             zipCode: newZipCode,
             country: newCountry
         })
-        window.alert("Success!");
+        window.alert("Success!")
+        console.log("Success in updating profile!");
     }
-
 }
