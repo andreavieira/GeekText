@@ -239,26 +239,27 @@ Bookstore.prototype.viewCart = function (doc) {
 
     let db = firebase.firestore();
     let booksPurchased = db.collection('users')
-        .doc(userUid).collection('cart').get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                db.collection('users').doc(userUid).collection('booksBought').add({
-                    bookId: doc.id
-                });
-            });
+      .doc(userUid).collection('cart').get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          db.collection('users').doc(userUid).collection('booksBought').doc(doc.id).set({
+            bookId: doc.id
+          });
         });
+      });
 
     while (cartItems.hasChildNodes()) {
         cartItems.removeChild(cartItems.firstChild)
     }
+    let cartDocRef = db.collection('users').doc(userUid).collection("cart");
     updateCartTotal()
     swal({
-        title: "Books purchased!",
-        text: "Your cart has been updated.",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
+      title: "Books purchased!",
+      text: "Your cart has been updated.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
   }
 
   // Function calls the updateCartTotal function when ONLY the remove button is clicked.
@@ -275,8 +276,8 @@ Bookstore.prototype.viewCart = function (doc) {
         snapshot.forEach(doc => {
           console.log(doc.id, '=>', doc.data());
           var deleteDoc =  cartDocRef.doc(ID).delete();
-            });
-          });
+        });
+      });
     cartItem.remove();
     updateCartTotal();
     swal({
@@ -346,7 +347,7 @@ Bookstore.prototype.viewCart = function (doc) {
     //Removes all cart items from HTML
     var cartItems = document.getElementsByClassName('cart-items')[0]
     while (cartItems.hasChildNodes()) {
-        cartItems.removeChild(cartItems.firstChild)
+      cartItems.removeChild(cartItems.firstChild)
     }
 
     //Reloads cart items to HTML
@@ -355,8 +356,8 @@ Bookstore.prototype.viewCart = function (doc) {
       .then(snapshot => {
         snapshot.forEach(doc => {
           renderCart(doc);
-            });
-          })
+        });
+      })
     updateCartTotal();
     swal("Added to Cart!", docTitle + " By " + docAuthor + " has been added to your cart.", "success");
 

@@ -129,9 +129,9 @@ hr {
     border-radius: 40px;
 }
 
-.account-box:hover > .account-btn {
+/* .account-box:hover > .account-btn {
     transform: scale(1.2);
-}
+} */
 
 .account-btn {
     float: right;
@@ -258,11 +258,9 @@ hr {
     width: 50%;
     min-width: 200px;
     max-width: 400px;
-}
-
-.create-content-section-container input {
     margin-left: 20px;
 }
+
 .create-content-section-container button {
     background: rgb(141, 137, 137);
 	color: #fff;
@@ -324,6 +322,59 @@ hr {
 	color: rgb(255, 255, 255);
 	cursor: pointer;
 }
+
+.addressDrop-btn {
+    background-color: rgb(141, 137, 137);
+    color: rgb(255, 255, 255);
+    padding: 16px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 3px;
+    text-align: left;
+    width: 50%;
+    min-width: 200px;
+    max-width: 400px;
+    margin-left: 20px;
+}
+  
+/* Dropdown button on hover & focus */
+.addressDrop-btn:hover, .addressDrop-btn:focus {
+    background-color: rgb(95, 95, 95);
+    color: rgb(255, 255, 255);
+}
+  
+/* The container <div> - needed to position the dropdown content */
+.addressDropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.address-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.address-dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.address-dropdown-content a:hover {
+    background-color: #cacaca
+}
+
+
+
 /* End of edit profile container */
 
 
