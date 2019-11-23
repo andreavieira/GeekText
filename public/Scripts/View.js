@@ -648,7 +648,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   authorBio.innerHTML = "<strong> Biography: </strong> " + doc.get("AuthorBio");
 
   var publishDate = bookDetails.querySelector(".publish-date");
-  publishDate.innerHTML = "<strong> Publish Date: </strong> " + doc.get("PublishDate");
+  publishDate.innerHTML = "<strong> Publish Date: </strong> " + doc.get("PublishDate").toString();
   console.log(publishDate.innerHTML)
 
   var publisher = bookDetails.querySelector(".publish-date");
@@ -697,7 +697,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
 
     var bookAuthor = doc.get("AuthorFn") + " " + doc.get("AuthorLn");
-    var bookPrice = doc.get("Price");
+    var bookPrice = "$" + doc.get("Price");
     var title = doc.get("BookTitle");
 
     var user = firebase.auth().currentUser;
