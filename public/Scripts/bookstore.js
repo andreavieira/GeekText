@@ -120,9 +120,10 @@ Bookstore.prototype.initRouter = function () {
     //change logic
     this.router
         .on({
-            '/sameAuthor': function () { // Same Author
+            '/booksBy/:id': function (params) { // Same Author
                 let bDetails = [];
-                let allItems = booksDocRef.orderBy("AuthorLn").get()
+                var authorNameRef = this.db.collection("bookdetails").where("AuthorLn", "==", params.id);
+                authorNameRef.get()
                     .then(snapshot => {
                         snapshot.forEach(doc => {
                             bDetails.push(doc.data());

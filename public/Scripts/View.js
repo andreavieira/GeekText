@@ -694,7 +694,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     //BOOKS BY SAME AUTHOR ROUTING TO NEW PAGE
     var bs = this;
     document.getElementById("sameAuthor").addEventListener("click", function() {
-        bs.router.navigate('/sameAuthor');
+        bs.router.navigate('/booksBy/' + doc.get("AuthorLn"));
     });
 
   // End books by same author
