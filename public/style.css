@@ -194,7 +194,6 @@ hr {
     padding: 7px;
     width: 90%;
     margin-top: 5px;
-
 }
 
 .account-dropdown-content button {
@@ -262,7 +261,7 @@ hr {
 }
 
 .create-content-section-container button {
-    background: rgb(141, 137, 137);
+    background: rgb(51, 51, 51);
 	color: #fff;
     border-radius: 5px;
     font-size: 16px;
@@ -273,7 +272,7 @@ hr {
 }
 
 .create-content-section-container button:hover {
-    background: rgb(95, 95, 95);
+    background: rgb(0, 0, 0);
 	color: rgb(255, 255, 255);
 	cursor: pointer;
 }
@@ -283,14 +282,12 @@ hr {
     float: right;
     padding: 5px;
     border-radius: 1px;
-    background: rgb(141, 137, 137);
+    background: rgb(51, 51, 51);
     color: rgb(255, 255, 255);
-
-
 }
 
 .profile-content-section-container button:hover {
-    background: rgb(95, 95, 95);
+    background: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
     cursor: pointer;
 }
@@ -307,7 +304,7 @@ hr {
 }
 
 .profile-save-btn button{
-    background: rgb(141, 137, 137);
+    background: rgb(51, 51, 51);
 	color: #fff;
     border-radius: 5px;
     font-size: 16px;
@@ -318,7 +315,7 @@ hr {
 }
 
 .profile-save-btn button:hover {
-    background: rgb(95, 95, 95);
+    background: rgb(0, 0, 0);
 	color: rgb(255, 255, 255);
 	cursor: pointer;
 }
@@ -541,15 +538,15 @@ hr {
     margin-top: 2px;
     font-size: 0.7em;
     color: white;
-    background-color: rgb(100, 146, 230);
-    border-radius: .2em;
+    background-color: rgb(0, 0, 0);
+    border-radius: .1em;
     padding: 10px;
     font-weight: bold;
     border: none;
 }
 
 .btn-add:hover {
-    background-color: rgb(43, 78, 107);
+    background-color: rgb(0, 0, 0);
 }
 
 .cart-quantity-input{
@@ -594,17 +591,17 @@ hr {
 .btn-purchase {
     display: block;
     margin: 40px auto 80px auto;
-    font-size: 1.5em;
+    font-size: 16px;
     color: white;
-    background-color: #1F1F1F;
-    border-radius: .2em;
-    padding: 10px;
+    background-color: rgb(51, 51, 51);
+    border-radius: .1em;
+    padding: 16px;
     font-weight: bold;
     border: none;
 }
 
 .btn-purchase:hover {
-    background-color: rgb(66, 120, 180);
+    background-color: rgb(0, 0, 0);
 }
 
 /* Sort Dropdown CSS */
