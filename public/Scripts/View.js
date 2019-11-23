@@ -683,20 +683,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     modal.style.display = "none";
   }
 
-  // // Books being passed are:
-  // var authorBookRef = this.db.collection("bookdetails").where("AuthorLn", "==", doc.get("AuthorLn"));
-  //   authorBookRef.get().then(books =>{
-  //     books.forEach(book =>{
-  //
-  //       let simBooks = bookDetails.querySelector(".similar-books");
-  //       simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
-  //
-  //     })
-  //   });
-  //
-  // // Books by the same author
-  // var bookItems = document.getElementById("books-by-author");
-
     //BOOKS BY SAME AUTHOR ROUTING TO NEW PAGE
     var bs = this;
     document.getElementById("sameAuthor").addEventListener("click", function() {
@@ -704,7 +690,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     });
 
   // End books by same author
-
 
 
 //ADD TO CART BUTTON
@@ -748,7 +733,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
             swal("Added to Cart!", booktitle + " By " + bookauthor + " has been added to your cart.", "success");
 
         }
-
 
     //END OF ADD TO CART
 
