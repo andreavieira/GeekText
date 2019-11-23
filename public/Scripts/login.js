@@ -39,6 +39,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         if(user != null) {
             var email_id = user.email;
             var email_verified = user.emailVerified;
+            console.log("Current User: " + email_id + "; Email Verification: " + email_verified);
             
             if(email_verified) {
                 document.getElementById("welcome-user").innerHTML = "Welcome: \n" + email_id + "\n";
@@ -80,7 +81,13 @@ function createUser() {
         || (cUserPassword == "") || (cUserStreetAddress == "") || (cUserCity == "") 
         || (cUserState == "") || (cUserZipCode == "") || (cUserCountry == "")) 
     {
-        window.alert("All fields are required, \nPlease fill out everything")
+        swal({
+            title: "All fields must not be left blank",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     } else {
         // Sign into firebase with email and pass. Stores to a promise for error catching
         var promise = firebase.auth().createUserWithEmailAndPassword(cUserEmail, cUserPassword);
@@ -89,7 +96,13 @@ function createUser() {
         promise.catch(function(error) {
             // Handle errors here
             var errorCode = error.code;
-            window.alert("Error: " + errorCode)
+            swal({
+                title: "Error Message: " + errorCode,
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
             if (errorCode == 'auth/weak-password') return // password to weak. Minimal 6 characters
             if (errorCode == 'auth/email-already-in-use') return // Return a email already in use error  
         });
@@ -102,7 +115,6 @@ function createUser() {
                 fName: cUserfName,
                 lName: cUserlName,
                 email: cUserEmail,
-                emailVerified: false,
                 password: cUserPassword,
                 streetAddress: cUserStreetAddress,
                 city: cUserCity,
@@ -123,10 +135,26 @@ function login() {
     var userPass = document.getElementById("userPassword").value;
 
     // Sign into firebase with email and pass. Stores to a promise for error catching
-    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword(userEmail, userPass)
+    .then(
+        swal({
+            title: "Login Successful",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    )
+    .catch(function(error) {
         // Handle errors here
         var errorCode = error.code;
-        var errorMessage = error.message;
+        swal({
+            title: "Error Message: " + errorCode,
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     });
 }
 
@@ -144,62 +172,119 @@ function sendUserVerification() {
     var user = firebase.auth().currentUser;
 
     user.sendEmailVerification().then(function() {
-        window.alert("Verification sent");   // Email sent.
+        swal({
+            title: "Verification email has been sent",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     }).catch(function(error) {
-        window.alert("Error: " + error.message);// An error happened.
+        swal({
+            title: "Error Message: " + error.message,
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     });
 }
 
 
 
-// Send an email to reset password NOT IMPLEMENTED OR USED YET
+// Send an email to reset password
 function resetPassword(){
 
-    var auth = firebase.auth();
-    var emailAddress = "user@example.com";
+    var emailAddress = document.getElementById("userEmailin").value;
 
     auth.sendPasswordResetEmail(emailAddress).then(function() {
-        window.alert("Reset email sent.");
+        swal({
+            title: "Password reset email has been sent",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     }).catch(function(error) {
-        window.alert("Error: " + error.message);
+        swal({
+            title: "Error Message: " + error.message,
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
     });
 
-}
-
-function changefName() {
-    document.getElementById("changefName").type="hidden";
-    document.getElementById("fNameChange").type="text";
-    document.getElementById("saveNewfName").type="button";
-}
-
-function changelName() {
-    document.getElementById("changelName").type="hidden";
-    document.getElementById("lNameChange").type="text";
-    document.getElementById("saveNewlName").type="button";
-}
-
-function changeEmail() {
-    document.getElementById("changeEmail").type="hidden";
-    document.getElementById("emailChange").type="text";
-    document.getElementById("saveNewEmail").type="button";
 }
 
 function changePassword() {
-    document.getElementById("changePassword").type="hidden";
-    document.getElementById("oldPasswordConfirmation").type="text";
-    document.getElementById("passwordChange").type="text";
-    document.getElementById("newPasswordConfirmation").type="text";
-    document.getElementById("saveNewPassword").type="button";
+    var user = firebase.auth().currentUser;
+    var emailAddress = user.email;
+
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+        swal({
+            title: "Password reset email has been sent",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    }).catch(function(error) {
+        swal({
+            title: "Error Message: " + error.message,
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    });
+
+    
 }
 
+function saveProfile() {
 
-function changeHomeAdd() {
-    document.getElementById("changeHomeAdd").type="hidden";
-    document.getElementById("streetChange").type="text";
-    document.getElementById("cityChange").type="text";
-    document.getElementById("stateChange").type="text";
-    document.getElementById("zipChange").type="text";
-    document.getElementById("countryChange").type="text";
-    document.getElementById("saveNewHomeAdd").type="button";
+    var userUid = auth.currentUser.uid
+    var user = firebase.auth().currentUser;
+
+    var newfName = document.getElementById("fNameChange").value;
+    var newlName = document.getElementById("lNameChange").value;
+    var userEmail = user.email;
+    var newStreetAddress = document.getElementById("streetChange").value;
+    var newCity = document.getElementById("cityChange").value;
+    var newState = document.getElementById("stateChange").value;
+    var newZipCode = document.getElementById("zipChange").value;
+    var newCountry = document.getElementById("countryChange").value;
+
+    if  ((newfName == "") || (newlName == "") || (newStreetAddress == "") 
+        || (newCity == "")  || (newState == "") 
+        || (newZipCode == "") || (newCountry == ""))
+    {
+        swal({
+            title: "Cannot Save",
+            text: "All input fields must not be left blank",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    } else {
+        
+        db.collection('users').doc(userUid).set({
+            fName: newfName,
+            lName: newlName,
+            email: userEmail,
+            streetAddress: newStreetAddress,
+            city: newCity,
+            state: newState,
+            zipCode: newZipCode,
+            country: newCountry
+        })
+        swal({
+            title: "Updating Profile was a success!",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        });
+    }
 }
-

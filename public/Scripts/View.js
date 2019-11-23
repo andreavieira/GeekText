@@ -159,7 +159,7 @@ Bookstore.prototype.viewProfile = function (doc) {
   email.innerHTML = "<strong>Email: </strong>" + doc.get("email");
 
   var password = profilePage.querySelector(".profile-password");
-  password.innerHTML = "<strong>Password: </strong> CENSORED lol";
+  password.innerHTML = "<strong>Password: </strong> Censored";
 
   var street = profilePage.querySelector(".profile-street");
   street.innerHTML = "<strong>Home Address: </strong>" + doc.get("streetAddress");
@@ -175,11 +175,7 @@ Bookstore.prototype.viewProfile = function (doc) {
 
   var country = profilePage.querySelector(".profile-country");
   country.innerHTML = "<strong>Country: </strong>" + doc.get("country");
-
-
-
 }
-
 
 Bookstore.prototype.viewCart = function (doc) {
   var cartPage = document.querySelector('#shopping-cart').cloneNode(true);
@@ -197,14 +193,14 @@ Bookstore.prototype.viewCart = function (doc) {
   function ready() {
     //listener for remove cart item button
     var removeCartItemButtons = document.getElementsByClassName('btn-danger-cart')   //for btn-danger class
-    console.log(removeCartItemButtons)
+    //console.log(removeCartItemButtons)
     for (var i = 0; i < removeCartItemButtons.length; i++) {                      //loops through all buttons in cart
       var button = removeCartItemButtons[i]                                   //listener for 'click' event
       button.addEventListener('click', removeCartItem)
     }
     //listener for remove save item button
     var removeSavedItemButtons = document.getElementsByClassName('btn-danger-save')   //for btn-danger class
-    console.log(removeSavedItemButtons)
+    //console.log(removeSavedItemButtons)
     for (var i = 0; i < removeCartItemButtons.length; i++) {                      //loops through all buttons in cart
       var button = removeCartItemButtons[i]                                   //listener for 'click' event
       button.addEventListener('click', removeSavedItem)
@@ -231,12 +227,33 @@ Bookstore.prototype.viewCart = function (doc) {
 
   //function shows an alert and removes from HTML
   function purchaseClicked() {
-    alert('Thank you for your purchase')
     var cartItems = document.getElementsByClassName('cart-items')[0]
+
+    let auth = firebase.auth();
+    var userUid = auth.currentUser.uid
+
+    let db = firebase.firestore();
+    let booksPurchased = db.collection('users')
+      .doc(userUid).collection('cart').get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          db.collection('users').doc(userUid).collection('booksBought').add({
+            bookId: doc.id
+          });
+        });
+      });
+
     while (cartItems.hasChildNodes()) {
       cartItems.removeChild(cartItems.firstChild)
     }
     updateCartTotal()
+    swal({
+      title: "Books purchased!",
+      text: "Your cart has been updated.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
   }
 
   // Function calls the updateCartTotal function when ONLY the remove button is clicked.
@@ -277,12 +294,19 @@ Bookstore.prototype.viewCart = function (doc) {
     let allItems = cartDocRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
+          //console.log(doc.id, '=>', doc.data());
           var deleteDoc = cartDocRef.doc(ID).delete();
         });
       })
     cartItem.remove();
     updateCartTotal();
+    swal({
+      title: "Item no longer saved!",
+      text: "Your saved list has been update.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
   }
 
   // Checks if inputted value is an int greater than 1 and calls updateCartTotal.
@@ -344,9 +368,8 @@ Bookstore.prototype.viewCart = function (doc) {
       price: docPrice,
       image: docImage
     }).then(ID => {
-      console.log('Added document with ID: ', ID.id);
+      //console.log('Added document with ID: ', ID.id);
     });
-
   }
 
   //Removes item from database
@@ -355,7 +378,7 @@ Bookstore.prototype.viewCart = function (doc) {
     let allItems = saveDocRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
+          //console.log(doc.id, '=>', doc.data());
           var deleteDoc = saveDocRef.doc(ID).delete();
         });
       })
@@ -409,7 +432,7 @@ Bookstore.prototype.viewCart = function (doc) {
       price: docPrice,
       image: docImage
     }).then(ID => {
-      console.log('Added document with ID: ', ID.id);
+      //console.log('Added document with ID: ', ID.id);
     });
   }
 
@@ -420,7 +443,7 @@ Bookstore.prototype.viewCart = function (doc) {
     let allItems = cartDocRef.get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          console.log(doc.id, '=>', doc.data());
+          //console.log(doc.id, '=>', doc.data());
           var deleteDoc = cartDocRef.doc(ID).delete();
         });
       })
@@ -514,10 +537,7 @@ Bookstore.prototype.viewCart = function (doc) {
     saveRow.getElementsByClassName('btn-add')[0].addEventListener('click', addToCartClicked);
   }
 
-
-
   // MAIN FUNCTIONS SHOPPING CART***
-
   //global reference variables
   var user = firebase.auth().currentUser;
   var userUid = user.uid
@@ -549,7 +569,7 @@ Bookstore.prototype.viewCart = function (doc) {
       let cartItems = cartRef.get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            console.log(doc.id, '=>', doc.data());
+            //console.log(doc.id, '=>', doc.data());
             renderCart(doc);
             updateCartTotal();
           });
@@ -564,7 +584,7 @@ Bookstore.prototype.viewCart = function (doc) {
       let saveItems = saveRef.get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            console.log(doc.id, '=>', doc.data());
+            //console.log(doc.id, '=>', doc.data());
             renderSave(doc);
             updateCartTotal();
           });
@@ -589,11 +609,11 @@ Bookstore.prototype.viewCart = function (doc) {
           price = parseFloat(docPrice.replace('$', ''));
           var quantity = document.getElementById('quant').value
           total = total + (price * quantity)
-          console.log(price)
-          console.log(total)
+          //console.log(price)
+          //console.log(total)
           total = Math.round(total * 100) / 100
           document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total;
-        });
+        });ß
       })
   }
 }
@@ -603,10 +623,8 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
   var currentUser = firebase.auth().currentUser;
 
-
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
-
 
   var bookCover = bookDetails.querySelector(".book-cover");
   bookCover.src = doc.get("Cover");
@@ -614,10 +632,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var bookTitle = bookDetails.querySelector(".book-title");
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
 
-  var author = bookDetails.querySelector(".author-fn");
-  author.innerHTML = "<strong> Author: </strong> " + doc.get("AuthorFn") + " " + doc.get("AuthorLn");
-
-  var bookAuthor = bookDetails.querySelector(".author-fn");
+  var author = bookDetails.querySelector(".author");
   author.innerHTML = doc.get("AuthorFn") + " " + doc.get("AuthorLn");
 
   var bookDesc = bookDetails.querySelector(".book-description");
@@ -630,16 +645,14 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   authorBio.innerHTML = "<strong> Biography: </strong> " + doc.get("AuthorBio");
 
   var publishDate = bookDetails.querySelector(".publish-date");
-  publishDate.innerHTML = "<strong> Publish Date: </strong> " + doc.get("PublishDate");
+  publishDate.innerHTML = "<strong> Publish Date: </strong> " + doc.get("PublishDate").toString();
+  console.log(publishDate.innerHTML)
 
   var publisher = bookDetails.querySelector(".publish-date");
   publisher.innerHTML = "<strong> Publisher: </strong> " + doc.get("Publisher");
 
   var price = bookDetails.querySelector(".price");
-  price.innerHTML = "<strong> Price: </strong> " + doc.get("Price");
-
-  var bookPrice = bookDetails.querySelector(".price");
-  price.innerHTML = doc.get("Price");
+  price.innerHTML = "<strong> Price: </strong> " + "$" + doc.get("Price");
 
   var rating = bookDetails.querySelector(".rating");
   rating.innerHTML = "<strong> Rating: </strong> " + doc.get("Rating");
@@ -650,7 +663,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var bookID = bookDetails.querySelector(".id");
   bookID.innerHTML = doc.get("Id");
 
-  var idBook = bookID.innerHTML;
 
   //Modal
   var modal = bookDetails.querySelector("#myModal");
@@ -668,26 +680,22 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     modal.style.display = "none";
   }
 
-  // Books being passed are:
-  var authorBookRef = this.db.collection("bookdetails").where("AuthorLn", "==", doc.get("AuthorLn"));
-  //console.log(doc.get("AuthorLn"));
-  //console.log(authorBookRef)
-  authorBookRef.get().then(books => {
-    books.forEach(book => {
-
-      let simBooks = bookDetails.querySelector(".similar-books");
-      simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle") + "| ";
-
-    })
+  //BOOKS BY SAME AUTHOR ROUTING TO NEW PAGE
+  var bs = this;
+  document.getElementById("sameAuthor").addEventListener("click", function () {
+    bs.router.navigate('/booksBy/' + doc.get("AuthorLn"));
   });
-
-  // Books by the same author
-  var bookItems = document.getElementById("books-by-author");
 
   // End books by same author
 
+
   //ADD TO CART BUTTON
   //global reference variables
+
+
+  var bookAuthor = doc.get("AuthorFn") + " " + doc.get("AuthorLn");
+  var bookPrice = "$" + doc.get("Price");
+  var title = doc.get("BookTitle");
 
   var user = firebase.auth().currentUser;
   var userUid = user.uid
@@ -696,20 +704,18 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   //button
   //listener for purchase button
   document.getElementsByClassName('btn-purchase')[0].addEventListener('click', setter);
-  console.log("BOOKS ID: " + idBook)
 
   function setter(event) {
     var bookid = bookID.innerHTML;
-    var booktitle = bookTitle.innerHTML;
+    var booktitle = title;
     var bookcover = bookCover.src;
-    var bookprice = bookPrice.innerHTML;
-    var bookauthor = bookAuthor.innerHTML;
+    var bookprice = bookPrice;
+    var bookauthor = bookAuthor;
     addToCartDB(bookid, booktitle, bookcover, bookprice, bookauthor);
   }
   //Setter function that adds item elements to the cart database
   // function addToCartDB(event,idBook,bookTitle,author,price,bookCover){
   function addToCartDB(bookid, booktitle, bookcover, bookprice, bookauthor) {
-    console.log("PRICE: " + bookprice)
     let cartDocRef = promise.collection("cart");
 
     //adds item to the database
@@ -719,11 +725,11 @@ Bookstore.prototype.viewBookDetails = function (doc) {
       price: bookprice,
       image: bookcover
     }).then(bookid => {
-      console.log('Added document with ID: ', bookid.id);
     });
-    //refresh cart somehow
-  }
+    //Success modal
+    swal("Added to Cart!", booktitle + " By " + bookauthor + " has been added to your cart.", "success");
 
+  }
 
   //END OF ADD TO CART
 
@@ -759,20 +765,20 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     }
 
     if (starRating.rating == -1) { // no rating
-      alert("Please add a star rating to your review");
+      swal("Please add a star rating to your review");
     } else if (reviewText.value == "") { //no review
-      alert("Please add a review");
+      swal("Please add a review");
     } else if (currentUser == null) { // not logged in
-      alert("Please Log in to submit a review")
+      swal("Please Log in to submit a review")
     } else if (unList.includes(currentUser.uid)) { // already been reviewed
-      alert("This book has already been reviewed by you");
+      swal("This book has already been reviewed by you.");
     } else {
       let newReview = me.db.collection("bookdetails").doc(doc.id).collection("Reviews").add({
         Rating: starRating.rating,
         Text: reviewText.value,
         Uid: currentUser.uid
       });
-      alert("Review Submitted!");
+      swal("Review Submitted!");
       console.log({
         rating: starRating.rating,
         reviewText: reviewText.value,
@@ -839,4 +845,91 @@ Bookstore.prototype.renderReviews = function (bReviews, details_El, bid) {
 Bookstore.prototype.replaceElement = function (parent, content) {
   parent.innerHTML = '';
   parent.append(content);
+}
+
+
+/* BOOKS BY SAME AUTHOR*/
+Bookstore.prototype.viewSameAuthor = function (bDetails) {
+  var homePage = document.querySelector('#same-author').cloneNode(true);
+
+  homePage.removeAttribute('hidden');
+  this.replaceElement(document.querySelector('main'), homePage);
+
+
+  document.getElementById("home-books").innerHTML = "";
+  var bookItems = document.getElementById("home-books");
+
+  // function renderRating(bookRating) {
+  //   return bookRating;
+  //   // Will turn double rating in DB to star representation
+  // }
+
+  var bs = this;
+
+  function renderBookRow(doc) {
+    var bookRow = document.createElement('div');
+    bookRow.classList.add('cart-row');
+    // TODO make routing work for pertaining books!
+    var bookRowContents = `
+                <div class="cart-item cart-column">
+                  <i class="book-details-link" id="${doc.Id}">
+                  <img class="item-image" src="${doc.Cover}" width="100" height="200">
+                  </i>
+                </div>
+                <div class="cart-description cart-column">
+                  <span id="description">${"<i> " + doc.BookTitle + "</i> By: " + doc.AuthorFn + " " + doc.AuthorLn}</span>
+                </div>
+                <span class="cart-price cart-column">
+                  <span id ="item-price">$${doc.Price}</span>
+                </span>
+                <div class="cart-quantity cart-column">
+                  <span>${doc.Rating}</span>
+                </div>
+              </div>
+              </div>
+            </div>`
+    bookRow.innerHTML = bookRowContents
+
+    var bookItems = document.getElementsByClassName('cart-items')[0];
+
+
+    var bookDetails = bookRow.querySelector('.book-details-link');
+    bookDetails.addEventListener('click', function () {
+      bs.router.navigate('/book/' + bookDetails.id);
+    });
+
+    bookItems.append(bookRow);
+  }
+
+  bDetails.forEach(book => {
+    renderBookRow(book);
+  });
+
+  //let bs = this;
+  var bookDetails = homePage.querySelector('.book-details-link');
+  bookDetails.addEventListener('click', function () {
+    bs.router.navigate('/book/' + bookDetails.id);
+  });
+
+  document.getElementById("sortByGenre").addEventListener("click", function () {
+    bs.router.navigate('/sortByGenre');
+  });
+  document.getElementById("sortByBestSellers").addEventListener("click", function () {
+    bs.router.navigate('/sortByBestSellers');
+  });
+  document.getElementById("sortByRating").addEventListener("click", function () {
+    bs.router.navigate('/sortByRating');
+  });
+  document.getElementById("sortByBookTitle").addEventListener("click", function () {
+    bs.router.navigate('/');
+  });
+  document.getElementById("sortByAuthor").addEventListener("click", function () {
+    bs.router.navigate('/sortByAuthor');
+  });
+  document.getElementById("sortByPrice").addEventListener("click", function () {
+    bs.router.navigate('/sortByPrice');
+  });
+  document.getElementById("sortByRelease").addEventListener("click", function () {
+    bs.router.navigate('/sortByRelease');
+  });
 }

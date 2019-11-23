@@ -29,13 +29,6 @@
           </ul>
         </nav>
 
-        <div class="search-box">
-          <input class="search-text" name="" placeholder="Type to search">
-          <a class="search-btn" href="#">
-            <img class="mag-glass" src="/images/search.png" width="25" height="25">
-          </a>
-        </div>
-
         <div class="shop-box">
           <a class="shop-btn" id="cart-btn">
             <img class="shopping-icon" src="/images/shopping-cart.png" width="25" height="25">
@@ -50,7 +43,7 @@
                 <div id="not-loggedin-div">
                     <input style="font-size: 16px;"id="userEmailin" type="email" placeholder="Email"/>
                     <input style="font-size: 16px;" id="userPassword" type="password" placeholder="Password"/>
-                    <a onclick="resetPassword()">Forgot password?</a>
+                    <a id="forgot-password" onclick="resetPassword()">Forgot password?</a>
                     <a onclick="login()">Log In</a>
                     <a id="signup-btn">Create Account</a>
                 </div>
@@ -110,6 +103,31 @@
         </div>
       </section>
     </div>
+
+      <!--Books by Same Author-->
+      <div hidden class="template" id="same-author">
+          <section class="content-section container">
+
+              <div>
+                  <div class="cart-row">
+            <span class="cart-item cart-header
+                cart-column">COVER</span>
+                      <span class="cart-description cart-header
+                cart-column">TITLE</span>
+                      <span class="cart-price cart-header
+                cart-column">PRICE</span>
+                      <span class="cart-quantity cart-header
+                cart-column">RATING</span>
+                  </div>
+
+                  <div id="home-books" class="cart-items">
+                      <div class ="cart-row">
+                          <!-- Here is the home sort container in view.js file -->
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </div>
 
     <!--Shopping Cart Container-->
     <div hidden class="template" id="shopping-cart">
@@ -175,7 +193,9 @@
         <div class ="id" hidden></div>
         <!--<p class="id"> </p>-->
         <p class="book-title"> </p>
-        <p class="author-fn"> </p>
+        <strong> Author: </strong>
+        <a style= "text-decoration: underline; color: dodgerblue; "class= "author" id="sameAuthor">Other Books by this Author</a>
+        <!--<p class="author-fn"> </p>-->
         <p class="book-description"> </p>
         <p class="book-genre"> </p>
         <p class="author-bio"> </p>
@@ -186,29 +206,7 @@
         <p class="num-sales"> </p>
         <button class="btn-purchase" role="button">Add to Cart</button>
 
-        <!--Similar Books-->
         <div style="padding-top:20px 0;padding-bottom: 20px">
-        <!--<h1>BROWSE SIMILAR BOOKS</h1>-->
-        <!--<div>-->
-          <!--<div class="cart-row">-->
-            <!--<span class="cart-item cart-header-->
-                <!--cart-column">COVER</span>-->
-            <!--<span class="cart-description cart-header-->
-                <!--cart-column">TITLE</span>-->
-            <!--<span class="cart-price cart-header-->
-                <!--cart-column">PRICE</span>-->
-            <!--<span class="cart-quantity cart-header-->
-                <!--cart-column">RATING</span>-->
-        <!--</div>-->
-
-        <div id="books-by-author" class="cart-items">
-            <h3>Other books by this Author:</h3>
-            <div class ="cart-row">
-                <div class="similar-books"></div>
-              <!-- Here are similar books -->
-            </div>
-        </div>
-      </div>
 
     <!--Reviews-->
     <div style="margin-top:50px 0;">
@@ -303,27 +301,18 @@
     <section class="profile-content-section-container">
         <div id="personal-information">
             <h1>Personal Information</h1>
+            <p>*All fields must be filled out when changing, even if it's not being changed</p><br>
             <p class="profile-fName">First Name: </p>
-            <input id="changefName" type="button" onclick="changefName()" value="Edit">
-            <input id="fNameChange" type="hidden" placeholder="New First Name">
-            <input id="saveNewfName" type="hidden" value="Change">
+            <input id="fNameChange" type="text" placeholder="New First Name">
             <br>
             <p class="profile-lName">Last Name: </p>
-            <input id="changelName" type="button" onclick="changelName()" value="Edit">
-            <input id="lNameChange" type="hidden" placeholder="New Last Name">
-            <input id="saveNewlName" type="hidden" value="Change">
+            <input id="lNameChange" type="text" placeholder="New Last Name">
             <br>
             <p class="profile-email">Email: </p>
-            <input id="changeEmail" type="button" onclick="changeEmail()" value="Edit">
-            <input id="emailChange" type="hidden" placeholder="New Email">
-            <input id="saveNewEmail" type="hidden" value="Change">
+            <!-- <input id="emailChange" type="email" placeholder="Cannot Change Email"> -->
             <br>
             <p class="profile-password">Password: </p>
-            <input id="changePassword" type="button" onclick="changePassword()" value="Edit">
-            <input id="oldPasswordConfirmation" type="hidden" placeholder="Old Password">
-            <input id="passwordChange" type="hidden" placeholder="New Password">
-            <input id="newPasswordConfirmation" type="hidden" placeholder="Retype New Password">
-            <input id="saveNewPassword" type="hidden" value="Change">
+            <input onclick="changePassword()" type="button" value="Change Password">
             <br>
             <p class="profile-street">Home Address: </p>
             <br>
@@ -331,21 +320,18 @@
             <p class="profile-state">State: </p>
             <p class="profile-zip">Zip code: </p>
             <p class="profile-country">Country: </p>
-            <input id="changeHomeAdd" type="button" onclick="changeHomeAdd()" value="Edit">
             <br>
-            <input id="streetChange" type="hidden" placeholder="New Street Address"/>
-            <input id="cityChange" type="hidden" placeholder="New City"/>
-            <input id="stateChange" type="hidden" placeholder="New State"/>
-            <input id="zipChange" type="hidden" placeholder="New Zip Code"/>
-            <input id="countryChange" type="hidden" placeholder="New Country"/>
+            <input id="streetChange" type="text" placeholder="New Street Address"/>
+            <input id="cityChange" type="text" placeholder="New City"/>
+            <input id="stateChange" type="text" placeholder="New State"/>
+            <input id="zipChange" type="text" placeholder="New Zip Code"/>
+            <input id="countryChange" type="text" placeholder="New Country"/>
             <br>
-            <input id="saveNewHomeAdd" type="hidden" value="Change">
             <br>
             <b>
                 Currently Unavailable: <br>
-                Plans to make drop down that is able to
-                add new credit cards and store multiple card information <br>
-                Unable to change information only displaying rn lol
+                Plans to make drop down that is able to add more physical addresses
+                <br>
             </b>
         </div>
         <br>
@@ -373,7 +359,7 @@
 
         </div>
         <br>
-        <div class="profile-save-btn">
+        <div class="profile-save-btn" onclick="saveProfile()">
             <button >SAVE</button>
         </div>
 
@@ -386,9 +372,7 @@
     <footer class="main-footer">
       <hr>
       <nav class="nav footer-nav">
-        <li><a href="">HOME</a></li>
-        <li><a href="">ABOUT</a></li>
-        <li><a href="">FAQ</a></li>
+        <li><a href=""></a></li>
       </nav>
       </footer>
       </div>

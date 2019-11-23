@@ -134,6 +134,24 @@ Bookstore.prototype.initRouter = function () {
 
   this.router
     .on({
+      '/booksBy/:id': function (params) { // Same Author
+        let bDetails = [];
+        var authorNameRef = this.db.collection("bookdetails").where("AuthorLn", "==", params.id);
+        authorNameRef.get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewSameAuthor(bDetails);
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+  this.router
+    .on({
       '/sortByPrice': function () { // Home sorted by Price
         console.log("Sorting by price")
         let bDetails = [];
