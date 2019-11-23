@@ -77,6 +77,8 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
+
+
     this.router
     .on({
       '/sortByBestSellers': function () { // Home sorted by Rating
@@ -113,6 +115,26 @@ Bookstore.prototype.initRouter = function () {
           });
       }
     }).resolve();
+
+//DANIELA- BOOKS BY SAME AUTHOR
+    //change logic
+    this.router
+        .on({
+            '/booksBy/:id': function (params) { // Same Author
+                let bDetails = [];
+                var authorNameRef = this.db.collection("bookdetails").where("AuthorLn", "==", params.id);
+                authorNameRef.get()
+                    .then(snapshot => {
+                        snapshot.forEach(doc => {
+                            bDetails.push(doc.data());
+                        });
+                        that.viewSameAuthor(bDetails);
+                    })
+                    .catch(err => {
+                        console.log('Error getting documents', err);
+                    });
+            }
+        }).resolve();
 
     this.router
     .on({
