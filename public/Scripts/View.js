@@ -613,10 +613,8 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   var bookDetails = document.querySelector('#book-details').cloneNode(true);
   var currentUser = firebase.auth().currentUser;
 
-
   bookDetails.removeAttribute('hidden');
   this.replaceElement(document.querySelector('main'), bookDetails);
-
 
   var bookCover = bookDetails.querySelector(".book-cover");
   bookCover.src = doc.get("Cover");
@@ -625,7 +623,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   bookTitle.innerHTML = "<strong> Title: </strong>" + doc.get("BookTitle");
 
   var author = bookDetails.querySelector(".author-fn");
-  author.innerHTML = "<strong> Author: </strong> " + doc.get("AuthorFn") + " " + doc.get("AuthorLn");
+  author.innerHTML =  doc.get("AuthorFn") + " " + doc.get("AuthorLn");
 
   var bookDesc = bookDetails.querySelector(".book-description");
   bookDesc.innerHTML = "<strong> Description: </strong> " + doc.get("BookDesc");
@@ -644,7 +642,7 @@ Bookstore.prototype.viewBookDetails = function (doc) {
   publisher.innerHTML = "<strong> Publisher: </strong> " + doc.get("Publisher");
 
   var price = bookDetails.querySelector(".price");
-  price.innerHTML = "<strong> Price: </strong> " + doc.get("Price");
+  price.innerHTML = "<strong> Price: </strong> " + "$"+ doc.get("Price");
 
   var rating = bookDetails.querySelector(".rating");
   rating.innerHTML = "<strong> Rating: </strong> " + doc.get("Rating");
@@ -654,9 +652,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
 
   var bookID = bookDetails.querySelector(".id");
   bookID.innerHTML =  doc.get("Id");
-
-  var idBook = bookID.innerHTML;
-  //console.log("Daniela: " + idBook)
 
 
   //Modal
@@ -675,21 +670,19 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     modal.style.display = "none";
   }
 
-  // Books being passed are:
-  var authorBookRef = this.db.collection("bookdetails").where("AuthorLn", "==", doc.get("AuthorLn"));
-  //console.log(doc.get("AuthorLn"));
-  //console.log(authorBookRef)
-    authorBookRef.get().then(books =>{
-      books.forEach(book =>{
-
-        let simBooks = bookDetails.querySelector(".similar-books");
-        simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
-
-      })
-    });
-
-  // Books by the same author
-  var bookItems = document.getElementById("books-by-author");
+  // // Books being passed are:
+  // var authorBookRef = this.db.collection("bookdetails").where("AuthorLn", "==", doc.get("AuthorLn"));
+  //   authorBookRef.get().then(books =>{
+  //     books.forEach(book =>{
+  //
+  //       let simBooks = bookDetails.querySelector(".similar-books");
+  //       simBooks.innerHTML = simBooks.innerHTML + " " + book.get("BookTitle");
+  //
+  //     })
+  //   });
+  //
+  // // Books by the same author
+  // var bookItems = document.getElementById("books-by-author");
 
     //BOOKS BY SAME AUTHOR ROUTING TO NEW PAGE
     var bs = this;
@@ -717,8 +710,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     //listener for purchase button
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', setter);
 
-    console.log("BOOKS ID: " + idBook)
-
     function setter(event){
       var bookid = bookID.innerHTML;
       var booktitle = title;
@@ -730,8 +721,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
     //Setter function that adds item elements to the cart database
    // function addToCartDB(event,idBook,bookTitle,author,price,bookCover){
         function addToCartDB(bookid,booktitle,bookcover, bookprice, bookauthor){
-        console.log("PRICE: " + bookprice)
-            console.log(bookauthor)
         let cartDocRef = promise.collection("cart");
 
         //adds item to the database
@@ -741,7 +730,6 @@ Bookstore.prototype.viewBookDetails = function (doc) {
              price: bookprice,
              image: bookcover
         }).then(bookid => {
-            console.log('Added document with ID: ', bookid.id);
         });
         //Success modal
             swal("Added to Cart!", booktitle + " By " + bookauthor + " has been added to your cart.", "success");

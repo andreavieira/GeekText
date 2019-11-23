@@ -4,7 +4,6 @@
     <list default="true" id="3dfcb4ce-d79b-4469-b265-3014fa11161e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/Scripts/View.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Scripts/View.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Scripts/bookstore.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/Scripts/bookstore.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -132,15 +131,15 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="88" />
-          <entry key="html" value="760" />
-          <entry key="js" value="4151" />
+          <entry key="html" value="782" />
+          <entry key="js" value="4159" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="88" />
-          <entry key="HTML" value="767" />
-          <entry key="JavaScript" value="4144" />
+          <entry key="HTML" value="789" />
+          <entry key="JavaScript" value="4152" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -165,11 +164,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="193" column="44" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="44" />
+            <state relative-caret-position="254">
+              <caret line="195" column="132" selection-start-line="195" selection-start-column="132" selection-end-line="195" selection-end-column="132" />
               <folding>
                 <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#header#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#div#1;n#header#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -179,6 +178,7 @@
                 <element signature="n#style#0;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="e#7180#7187#1" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#section#0;n#div#3;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -202,8 +202,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Scripts/View.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="696" column="29" selection-start-line="696" selection-start-column="29" selection-end-line="696" selection-end-column="36" />
+            <state relative-caret-position="325">
+              <caret line="674" column="41" lean-forward="true" selection-start-line="674" selection-start-column="41" selection-end-line="674" selection-end-column="41" />
               <folding>
                 <element signature="n#style#0;n#ul#0;n#div#2;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#ul#0;n#div#2;n#!!top" expanded="true" />
@@ -212,10 +212,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Scripts/bookstore.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="598">
               <caret line="127" column="49" lean-forward="true" selection-start-line="127" selection-start-column="49" selection-end-line="127" selection-end-column="49" />
             </state>
           </provider>
@@ -232,7 +232,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>log</find>
       <find>not-lo</find>
       <find>sort</find>
       <find>byAuthor</find>
@@ -250,7 +249,6 @@
       <find>book detai</find>
       <find>sortByGenre</find>
       <find>book details</find>
-      <find>book deta</find>
       <find>sortBy</find>
       <find>book de</find>
       <find>sortbyAuthors</find>
@@ -260,8 +258,10 @@
       <find>slw</find>
       <find>other b</find>
       <find>BOOK DETAIL</find>
-      <find>sameAuthor</find>
       <find>sameAuth</find>
+      <find>sameAuthor</find>
+      <find>console</find>
+      <find>book deta</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -274,9 +274,9 @@
         <option value="$PROJECT_DIR$/bookdetails.html" />
         <option value="$PROJECT_DIR$/public/bookdetails.html" />
         <option value="$PROJECT_DIR$/public/style.css" />
-        <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/public/Scripts/View.js" />
         <option value="$PROJECT_DIR$/public/Scripts/bookstore.js" />
+        <option value="$PROJECT_DIR$/public/Scripts/View.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
       </list>
     </option>
   </component>
@@ -388,12 +388,12 @@
       <workItem from="1573859517473" duration="7648000" />
       <workItem from="1574005456350" duration="1447000" />
       <workItem from="1574033101112" duration="608000" />
-      <workItem from="1574201732556" duration="18708000" />
+      <workItem from="1574201732556" duration="19520000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50422000" />
+    <option name="totallyTimeSpent" value="51234000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -486,6 +486,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Scripts/bookstore.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="127" column="49" lean-forward="true" selection-start-line="127" selection-start-column="49" selection-end-line="127" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="706">
@@ -493,10 +500,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/Scripts/View.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="674" column="41" lean-forward="true" selection-start-line="674" selection-start-column="41" selection-end-line="674" selection-end-column="41" />
+          <folding>
+            <element signature="n#style#0;n#ul#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#div#2;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="193" column="44" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="44" />
+        <state relative-caret-position="254">
+          <caret line="195" column="132" selection-start-line="195" selection-start-column="132" selection-end-line="195" selection-end-column="132" />
           <folding>
             <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#header#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#div#1;n#header#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -506,6 +524,7 @@
             <element signature="n#style#0;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="e#7180#7187#1" expanded="true" />
             <element signature="n#style#0;n#img#0;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#3;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#section#0;n#div#3;n#section#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -513,24 +532,6 @@
             <element signature="n#style#0;n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#section#0;n#div#5;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Scripts/View.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="696" column="29" selection-start-line="696" selection-start-column="29" selection-end-line="696" selection-end-column="36" />
-          <folding>
-            <element signature="n#style#0;n#ul#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#div#2;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Scripts/bookstore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="127" column="49" lean-forward="true" selection-start-line="127" selection-start-column="49" selection-end-line="127" selection-end-column="49" />
         </state>
       </provider>
     </entry>
