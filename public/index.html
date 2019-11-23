@@ -43,7 +43,7 @@
                 <div id="not-loggedin-div">
                     <input style="font-size: 16px;"id="userEmailin" type="email" placeholder="Email"/>
                     <input style="font-size: 16px;" id="userPassword" type="password" placeholder="Password"/>
-                    <a onclick="resetPassword()">Forgot password?</a>
+                    <a id="forgot-password" onclick="resetPassword()">Forgot password?</a>
                     <a onclick="login()">Log In</a>
                     <a id="signup-btn">Create Account</a>
                 </div>
@@ -300,27 +300,28 @@
     <section class="profile-content-section-container">
         <div id="personal-information">
             <h1>Personal Information</h1>
+            <p>*All fields must be filled out when changing, even if it's not being changed</p><br>
             <p class="profile-fName">First Name: </p>
-            <input id="changefName" type="button" onclick="changefName()" value="Edit">
-            <input id="fNameChange" type="hidden" placeholder="New First Name">
-            <input id="saveNewfName" type="hidden" value="Change">
+            <!-- <input id="changefName" type="button" onclick="changefName()" value="Edit"> -->
+            <input id="fNameChange" type="text" placeholder="New First Name">
+            <!-- <input id="saveNewfName" type="hidden" value="Change" onclick="savefName()"> -->
             <br>
             <p class="profile-lName">Last Name: </p>
-            <input id="changelName" type="button" onclick="changelName()" value="Edit">
-            <input id="lNameChange" type="hidden" placeholder="New Last Name">
-            <input id="saveNewlName" type="hidden" value="Change">
+            <!-- <input id="changelName" type="button" onclick="changelName()" value="Edit"> -->
+            <input id="lNameChange" type="text" placeholder="New Last Name">
+            <!-- <input id="saveNewlName" type="hidden" value="Change"> -->
             <br>
             <p class="profile-email">Email: </p>
-            <input id="changeEmail" type="button" onclick="changeEmail()" value="Edit">
-            <input id="emailChange" type="hidden" placeholder="New Email">
-            <input id="saveNewEmail" type="hidden" value="Change">
+            <!-- <input id="changeEmail" type="button" onclick="changeEmail()" value="Edit"> -->
+            <input id="emailChange" type="email" placeholder="New Email">
+            <!-- <input id="saveNewEmail" type="hidden" value="Change"> -->
             <br>
             <p class="profile-password">Password: </p>
-            <input id="changePassword" type="button" onclick="changePassword()" value="Edit">
-            <input id="oldPasswordConfirmation" type="hidden" placeholder="Old Password">
-            <input id="passwordChange" type="hidden" placeholder="New Password">
-            <input id="newPasswordConfirmation" type="hidden" placeholder="Retype New Password">
-            <input id="saveNewPassword" type="hidden" value="Change">
+            <!-- <input id="changePassword" type="button" onclick="changePassword()" value="Edit"> -->
+            <input id="oldPasswordConfirmation" type="text" placeholder="Old Password">
+            <input id="passwordChange" type="text" placeholder="New Password">
+            <input id="newPasswordConfirmation" type="text" placeholder="Retype New Password">
+            <!-- <input id="saveNewPassword" type="hidden" value="Change"> -->
             <br>
             <p class="profile-street">Home Address: </p>
             <br>
@@ -328,15 +329,15 @@
             <p class="profile-state">State: </p>
             <p class="profile-zip">Zip code: </p>
             <p class="profile-country">Country: </p>
-            <input id="changeHomeAdd" type="button" onclick="changeHomeAdd()" value="Edit">
+            <!-- <input id="changeHomeAdd" type="button" onclick="changeHomeAdd()" value="Edit"> -->
             <br>
-            <input id="streetChange" type="hidden" placeholder="New Street Address"/>
-            <input id="cityChange" type="hidden" placeholder="New City"/>
-            <input id="stateChange" type="hidden" placeholder="New State"/>
-            <input id="zipChange" type="hidden" placeholder="New Zip Code"/>
-            <input id="countryChange" type="hidden" placeholder="New Country"/>
+            <input id="streetChange" type="text" placeholder="New Street Address"/>
+            <input id="cityChange" type="text" placeholder="New City"/>
+            <input id="stateChange" type="text" placeholder="New State"/>
+            <input id="zipChange" type="text" placeholder="New Zip Code"/>
+            <input id="countryChange" type="text" placeholder="New Country"/>
             <br>
-            <input id="saveNewHomeAdd" type="hidden" value="Change">
+            <!-- <input id="saveNewHomeAdd" type="hidden" value="Change"> -->
             <br>
             <b>
                 Currently Unavailable: <br>
@@ -370,7 +371,7 @@
 
         </div>
         <br>
-        <div class="profile-save-btn">
+        <div class="profile-save-btn" onclick="saveProfile()">
             <button >SAVE</button>
         </div>
 

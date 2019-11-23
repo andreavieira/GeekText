@@ -162,7 +162,7 @@ Bookstore.prototype.viewProfile = function(doc) {
     email.innerHTML = "<strong>Email: </strong>" + doc.get("email");
 
     var password = profilePage.querySelector(".profile-password");
-    password.innerHTML = "<strong>Password: </strong> CENSORED lol";
+    password.innerHTML = "<strong>Password: </strong>" + doc.get("password");
 
     var street = profilePage.querySelector(".profile-street");
     street.innerHTML = "<strong>Home Address: </strong>" + doc.get("streetAddress");
@@ -178,8 +178,6 @@ Bookstore.prototype.viewProfile = function(doc) {
 
     var country = profilePage.querySelector(".profile-country");
     country.innerHTML = "<strong>Country: </strong>" + doc.get("country");
-
-
 
 }
 
@@ -234,8 +232,23 @@ Bookstore.prototype.viewCart = function (doc) {
 
   //function shows an alert and removes from HTML
   function purchaseClicked() {
-    alert('Thank you for your purchase')
+    window.alert('Thank you for your purchase!')
     var cartItems = document.getElementsByClassName('cart-items')[0]
+
+    let auth = firebase.auth();
+    var userUid = auth.currentUser.uid
+
+    let db = firebase.firestore();
+    let booksPurchased = db.collection('users')
+        .doc(userUid).collection('cart').get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                db.collection('users').doc(userUid).collection('booksBought').add({
+                    bookId: doc.id
+                });
+            });
+        });
+
     while (cartItems.hasChildNodes()) {
         cartItems.removeChild(cartItems.firstChild)
     }
