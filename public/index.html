@@ -346,15 +346,10 @@
         <input id="stateChange" type="text" placeholder="New State"/>
         <input id="zipChange" type="text" placeholder="New Zip Code"/>
         <input id="countryChange" type="text" placeholder="New Country"/>
-        <button onclick="saveNewAddress()">Add New Address</button>
+        <input type="button" onclick="saveNewAddress()" value="Add New Address">
 
         <br>
         <br>
-        <b>
-          Currently Unavailable: <br>
-          Plans to make drop down that is able to add more physical addresses
-          <br>
-        </b>
       </div>
       <br>
       <br>
@@ -363,9 +358,6 @@
         <h1>Payment Information</h1>
         <b>Credit Card Number: </b>
         <input type="number" id="changeCreditCardNumber" placeholder="Credit card number"/>
-        <button>
-          <img src="/images/edit.png" width="25" height="25">
-        </button>
         <br>
         <b>Expiration Date: </b>
         <input type="number" id="changeCreditCardExpDate" placeholder="Expiration Date"/>
@@ -373,15 +365,10 @@
         <b>CVV: </b>
         <input type="number" id="changeCreditCardCVV" placeholder="CVV"/>
         <br>
-        <b>
-          Currently Unavailable: <br>
-          Plans to make drop down that is able to
-          add new credit cards and store multiple card information
-        </b>
       </div>
       <br>
       <div class="profile-save-btn" onclick="saveProfile()">
-        <button >Add Credit Card Information</button>
+        <input type="button" value="Add Credit Card">
       </div>
     </section>
   </div>
