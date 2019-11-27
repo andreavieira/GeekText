@@ -43,6 +43,7 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
+  // Pagination
   this.router
     .on({
       '/page/:page/sort-by/:sort/order/:or': function (params) {
@@ -60,12 +61,32 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
+  // Routing to best sellers  
   this.router
     .on({
-      '/sortByRating': function () { // Home sorted by Rating
-        console.log("Sorting by rating")
+      '/renderBestSellers': function () { // Home sorted by Bestsellers
+        console.log("Sorting by best sellers")
         let bDetails = [];
-        let allItems = booksDocRef.orderBy("Rating", "desc").limit(10).get()
+        let allItems = booksDocRef.where("NumSales", ">", 5).orderBy("NumSales", "desc").limit(10).get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails, 1, "NumSales", "desc");
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+  // Routing to top rated books  
+  this.router
+    .on({
+      '/renderTopRated': function () { // Home sorted by Rating
+        console.log("Rendering top-rated books")
+        let bDetails = [];
+        let allItems = booksDocRef.where("Rating", ">", 3).orderBy("Rating", "desc").limit(10).get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               bDetails.push(doc.data());
@@ -78,12 +99,13 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
+  // Genre routing 
   this.router
     .on({
-      '/sortByGenre': function () { // Home sorted by Genre
-        console.log("Sorting by genre")
+      '/renderPoetryBooks': function () { // Poetry
+        console.log("Rendering poetry books")
         let bDetails = [];
-        let allItems = booksDocRef.orderBy("Genre").limit(10).get()
+        let allItems = booksDocRef.where("Genre", "==", "Poetry").limit(10).get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               bDetails.push(doc.data());
@@ -98,15 +120,15 @@ Bookstore.prototype.initRouter = function () {
 
   this.router
     .on({
-      '/sortByBestSellers': function () { // Home sorted by Bestsellers
-        console.log("Sorting by best sellers")
+      '/renderRomanceBooks': function () { // Romance
+        console.log("Rendering romance books")
         let bDetails = [];
-        let allItems = booksDocRef.orderBy("NumSales", "desc").limit(10).get()
+        let allItems = booksDocRef.where("Genre", "==", "Romance").limit(10).get()
           .then(snapshot => {
             snapshot.forEach(doc => {
               bDetails.push(doc.data());
             });
-            that.viewHome(bDetails, 1, "NumSales", "desc");
+            that.viewHome(bDetails, 1, "Genre", "asc");
           })
           .catch(err => {
             console.log('Error getting documents', err);
@@ -114,6 +136,79 @@ Bookstore.prototype.initRouter = function () {
       }
     }).resolve();
 
+  this.router
+    .on({
+      '/renderMysteryBooks': function () { // Mystery
+        console.log("Rendering mystery books")
+        let bDetails = [];
+        let allItems = booksDocRef.where("Genre", "==", "Mystery").limit(10).get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails, 1, "Genre", "asc");
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+  this.router
+    .on({
+      '/renderSciFiBooks': function () {
+        console.log("Rendering science fiction books")
+        let bDetails = [];
+        let allItems = booksDocRef.where("Genre", "==", "Science Fiction").limit(10).get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails, 1, "Genre", "asc");
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+  this.router
+    .on({
+      '/renderPhilosophyBooks': function () { // Philosophy
+        console.log("Rendering philosophy books")
+        let bDetails = [];
+        let allItems = booksDocRef.where("Genre", "==", "Philosophy").limit(10).get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails, 1, "Genre", "asc");
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+
+  this.router
+    .on({
+      '/renderMagicalRealismBooks': function () { // Magical Realism
+        console.log("Rendering magical realism books")
+        let bDetails = [];
+        let allItems = booksDocRef.where("Genre", "==", "Magical Realism").limit(10).get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              bDetails.push(doc.data());
+            });
+            that.viewHome(bDetails, 1, "Genre", "asc");
+          })
+          .catch(err => {
+            console.log('Error getting documents', err);
+          });
+      }
+    }).resolve();
+    
+  // Sorting routing
   this.router
     .on({
       '/sortByAuthor': function () { // Home sorted by Author
@@ -185,7 +280,6 @@ Bookstore.prototype.initRouter = function () {
           });
       }
     }).resolve();
-
 
   this.router
     .on({

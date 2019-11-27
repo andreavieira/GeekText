@@ -95,22 +95,42 @@ Bookstore.prototype.viewHome = function (bDetails, pageNum, sortType, order) {
     bs.router.navigate('/book/' + bookDetails.id);
   });
 
-  console.log('Paging:', pageNum);
   // Next page
   document.getElementsByClassName('btn-purchase')[0].addEventListener('click', function () {
     bs.router.navigate('/page/' + parseFloat(pageNum) + '/sort-by/' + sortType + '/order/' + order);
   });
 
+  // Render Top Rated
+  document.getElementById("toprated").addEventListener("click", function () {
+    bs.router.navigate('/renderTopRated');
+  });
+
+  // Render Best Sellers
+  document.getElementById("bestsellers").addEventListener("click", function () {
+    bs.router.navigate('/renderBestSellers');
+  });
+
+  // Different Genres
+  document.getElementById("poetry").addEventListener("click", function () {
+    bs.router.navigate('/renderPoetryBooks');
+  });
+  document.getElementById("romance").addEventListener("click", function () {
+    bs.router.navigate('/renderRomanceBooks');
+  });
+  document.getElementById("scifi").addEventListener("click", function () {
+    bs.router.navigate('/renderSciFiBooks');
+  });
+  document.getElementById("mystery").addEventListener("click", function () {
+    bs.router.navigate('/renderMysteryBooks');
+  });
+  document.getElementById("magicalrealism").addEventListener("click", function () {
+    bs.router.navigate('/renderMagicalRealismBooks');
+  });
+  document.getElementById("philosophy").addEventListener("click", function () {
+    bs.router.navigate('/renderPhilosophyBooks');
+  });
+
   // Different sorts
-  document.getElementById("sortByGenre").addEventListener("click", function () {
-    bs.router.navigate('/sortByGenre');
-  });
-  document.getElementById("sortByBestSellers").addEventListener("click", function () {
-    bs.router.navigate('/sortByBestSellers');
-  });
-  document.getElementById("sortByRating").addEventListener("click", function () {
-    bs.router.navigate('/sortByRating');
-  });
   document.getElementById("sortByBookTitle").addEventListener("click", function () {
     bs.router.navigate('/');
   });
