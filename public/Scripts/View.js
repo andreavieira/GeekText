@@ -97,7 +97,7 @@ Bookstore.prototype.viewHome = function (bDetails, pageNum, sortType, order) {
 
   // Next page
   document.getElementsByClassName('btn-purchase')[0].addEventListener('click', function () {
-    bs.router.navigate('/page/' + parseFloat(pageNum) + '/sort-by/' + sortType + '/order/' + order);
+    bs.router.navigate('/page/' + (pageNum + 1) + '/sort-by/' + sortType + '/order/' + order);
   });
 
   // Render Top Rated

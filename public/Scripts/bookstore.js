@@ -207,7 +207,7 @@ Bookstore.prototype.initRouter = function () {
           });
       }
     }).resolve();
-    
+
   // Sorting routing
   this.router
     .on({
