@@ -98,7 +98,7 @@ Bookstore.prototype.viewHome = function (bDetails, pageNum, sortType, order) {
   console.log('Paging:', pageNum);
   // Next page
   document.getElementsByClassName('btn-purchase')[0].addEventListener('click', function () {
-    bs.router.navigate('/page/' + parseFloat((pageNum + 1)) + '/sort-by/' + sortType + '/order/' + order);
+    bs.router.navigate('/page/' + parseFloat(pageNum) + '/sort-by/' + sortType + '/order/' + order);
   });
 
   // Different sorts
